@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,6 +11,18 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::namespace('API')->group(function () {
+
+    Route::namespace('Auth')->prefix('auth')->group(function () {
+
+        Route::post('sign-up', 'RegisterController');
+
+    });
+
+    Route::middleware('auth:api')->group(function () {
+
+        Route::middleware('signup.step')->match(['get', 'put'], 'sign-up/stepper', 'SignUpStepController');
+
+    });
+
 });
