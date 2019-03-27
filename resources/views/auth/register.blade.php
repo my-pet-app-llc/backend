@@ -1,77 +1,109 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Adminator - Sign Up</title>
+    <link rel="stylesheet" href="{{ mix('/css/admin.css') }}">
+    <style>
+        #loader {
+            transition: all 0.3s ease-in-out;
+            opacity: 1;
+            visibility: visible;
+            position: fixed;
+            height: 100vh;
+            width: 100%;
+            background: #fff;
+            z-index: 90000;
+        }
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+        #loader.fadeOut {
+            opacity: 0;
+            visibility: hidden;
+        }
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
+        .spinner {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            top: calc(50% - 20px);
+            left: calc(50% - 20px);
+            background-color: #333;
+            border-radius: 100%;
+            -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
+            animation: sk-scaleout 1.0s infinite ease-in-out;
+        }
 
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+        @-webkit-keyframes sk-scaleout {
+            0% {
+                -webkit-transform: scale(0)
+            }
+            100% {
+                -webkit-transform: scale(1.0);
+                opacity: 0;
+            }
+        }
 
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
+        @keyframes sk-scaleout {
+            0% {
+                -webkit-transform: scale(0);
+                transform: scale(0);
+            }
+            100% {
+                -webkit-transform: scale(1.0);
+                transform: scale(1.0);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="app">
+<div id='loader'>
+    <div class="spinner"></div>
+</div>
 
-                                @if ($errors->has('name'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
-
-                                @if ($errors->has('email'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+<script>
+    window.addEventListener('load', () => {
+        const loader = document.getElementById('loader');
+        setTimeout(() => {
+            loader.classList.add('fadeOut');
+        }, 300);
+    });
+</script>
+<div class="peers ai-s fxw-nw h-100vh">
+    <div class="peer peer-greed h-100 pos-r bgr-n bgpX-c bgpY-c bgsz-cv"
+         style='background-image: url("/assets/static/images/bg.jpg")'>
+        <div class="pos-a centerXY">
+            <div class="bgc-white bdrs-50p pos-r" style='width: 120px; height: 120px;'>
+                <img class="pos-a centerXY" src="/assets/static/images/logo.png" alt="">
             </div>
         </div>
     </div>
+    <div class="col-12 col-md-4 peer pX-40 pY-80 h-100 bgc-white scrollable pos-r" style='min-width: 320px;'>
+        <h4 class="fw-300 c-grey-900 mB-40">Register</h4>
+        <form>
+            <div class="form-group">
+                <label class="text-normal text-dark">Username</label>
+                <input type="text" class="form-control" Placeholder='John Doe'>
+            </div>
+            <div class="form-group">
+                <label class="text-normal text-dark">Email Address</label>
+                <input type="email" class="form-control" Placeholder='name@email.com'>
+            </div>
+            <div class="form-group">
+                <label class="text-normal text-dark">Password</label>
+                <input type="password" class="form-control" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <label class="text-normal text-dark">Confirm Password</label>
+                <input type="password" class="form-control" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary">Register</button>
+            </div>
+        </form>
+    </div>
 </div>
-@endsection
+
+</body>
+</html>
