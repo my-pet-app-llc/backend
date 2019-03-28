@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Auth;
 
 use App\Http\Requests\API\RegisterRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Owner;
 use App\Pet;
 use App\User;
@@ -27,6 +28,11 @@ class RegisterController extends Controller
         $personalAccess = env('APP_PERSONAL_ACCESS_CLIENT');
         $accessToken = $user->createToken($personalAccess)->accessToken;
 
-        return response()->json(['token' => $accessToken]);
+        $responseData = [
+            'token' => $accessToken,
+            'user' => new UserResource($user)
+        ];
+
+        return response()->json($responseData);
     }
 }

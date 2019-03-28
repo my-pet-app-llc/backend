@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Components\Classes\StoreFile\File;
 use App\Http\Requests\API\SignUpStepRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Owner;
 use App\Pet;
 use App\Picture;
@@ -47,8 +48,9 @@ class SignUpStepController extends Controller
     protected function getData()
     {
         $current_step = $this->owner->signup_step;
+        $user = new UserResource($this->owner->user);
 
-        return response()->json(compact('current_step'));
+        return response()->json(compact('current_step', 'user'));
     }
 
     protected function putData()
@@ -87,6 +89,8 @@ class SignUpStepController extends Controller
 
         $this->owner->update($updateOwnerData);
         $this->pet->update($updatePetData);
+
+        $responseData['user'] = new UserResource($this->owner->user);
 
         return response()->json($responseData);
     }

@@ -17,6 +17,14 @@ Route::namespace('API')->group(function () {
 
         Route::post('sign-up', 'RegisterController');
 
+        Route::post('login', 'LoginController');
+
+        Route::middleware('fb.user')->group(function () {
+
+            Route::post('fb/sign-up', 'RegisterFbController');
+
+        });
+
     });
 
     Route::middleware('auth:api')->group(function () {
