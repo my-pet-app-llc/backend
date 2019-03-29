@@ -22,6 +22,7 @@ class ResetPasswordRequest extends MainFormRequest
     public function rules()
     {
         return [
+            'token' => 'required|string',
             'email' => 'required|exists:users,email',
             'password' => 'required|string|min:8|max:128|confirmed',
             'password_confirmation' => 'required'
