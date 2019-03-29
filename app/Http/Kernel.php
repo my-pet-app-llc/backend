@@ -2,6 +2,8 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\FbUser;
+use App\Http\Middleware\SignUpStepMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -60,6 +62,8 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'signup.step' => SignUpStepMiddleware::class,
+        'fb.user' => FbUser::class,
     ];
 
     /**

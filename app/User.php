@@ -2,13 +2,14 @@
 
 namespace App;
 
+use App\Exceptions\NotOwnerException;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'email', 'password', 'facebook_id'
     ];
 
     /**
@@ -28,12 +29,43 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function owner()
+    {
+        return $this->hasOne(Owner::class);
+    }
+
     /**
-     * The attributes that should be cast to native types.
+     * Generate auth user access token
      *
-     * @var array
+     * @return string
+     * @throws NotOwnerException
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    public function apiLogin()
+    {
+        if(!$this->isPetOwner())
+            throw new NotOwnerException();
+
+        $this->tokens()->update(['revoked' => true]);
+
+        $personalAccessClient = env('APP_PERSONAL_ACCESS_CLIENT', 'application');
+        $accessToken = $this->createToken($personalAccessClient)->accessToken;
+
+        return $accessToken;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPetOwner()
+    {
+        return (bool)$this->owner;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFacebookUser()
+    {
+        return (bool)$this->facebook_id;
+    }
 }

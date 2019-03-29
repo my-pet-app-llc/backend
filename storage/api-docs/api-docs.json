@@ -1,0 +1,1792 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "MyPets",
+        "description": "bark",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api",
+            "description": "OpenApi host"
+        }
+    ],
+    "paths": {
+        "api/documentation": {},
+        "auth/password/forgot": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Send recovery password link",
+                "description": "Send link for recovery password.",
+                "operationId": "forgotPassword",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "email"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Link sended",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "User access errors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User is registered through Facebook.|You are not pet owner."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "parameter": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "description": "message",
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/sign-in": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login",
+                "description": "Login method",
+                "operationId": "login",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "description": "User email",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "description": "User password",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Access token, pet owner and pet info and if not done registration - current step of registration.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        },
+                                        "registration_process": {
+                                            "type": "boolean"
+                                        },
+                                        "current_step": {
+                                            "type": "integer"
+                                        },
+                                        "user": {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "owner": {
+                                                    "properties": {
+                                                        "first_name": {
+                                                            "type": "string"
+                                                        },
+                                                        "last_name": {
+                                                            "type": "string"
+                                                        },
+                                                        "gender": {
+                                                            "type": "string"
+                                                        },
+                                                        "age": {
+                                                            "type": "integer"
+                                                        },
+                                                        "birthday": {
+                                                            "type": "date"
+                                                        },
+                                                        "occupation": {
+                                                            "type": "string"
+                                                        },
+                                                        "hobbies": {
+                                                            "type": "string"
+                                                        },
+                                                        "pets_owned": {
+                                                            "type": "string"
+                                                        },
+                                                        "city": {
+                                                            "type": "string"
+                                                        },
+                                                        "state": {
+                                                            "type": "string"
+                                                        },
+                                                        "profile_picture": {
+                                                            "type": "string"
+                                                        },
+                                                        "pet": {
+                                                            "properties": {
+                                                                "name": {
+                                                                    "type": "string"
+                                                                },
+                                                                "gender": {
+                                                                    "type": "string"
+                                                                },
+                                                                "size": {
+                                                                    "type": "string"
+                                                                },
+                                                                "primary_breed": {
+                                                                    "type": "string"
+                                                                },
+                                                                "secondary_breed": {
+                                                                    "type": "string"
+                                                                },
+                                                                "age": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "profile_picture": {
+                                                                    "type": "string"
+                                                                },
+                                                                "friendliness": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "activity_level": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "noise_level": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "odebience_level": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "fetchability": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "swimability": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "like": {
+                                                                    "type": "string"
+                                                                },
+                                                                "dislike": {
+                                                                    "type": "string"
+                                                                },
+                                                                "favorite_toys": {
+                                                                    "type": "string"
+                                                                },
+                                                                "fears": {
+                                                                    "type": "string"
+                                                                },
+                                                                "favorite_places": {
+                                                                    "type": "string"
+                                                                },
+                                                                "spayed": {
+                                                                    "type": "string"
+                                                                },
+                                                                "birthday": {
+                                                                    "type": "date"
+                                                                },
+                                                                "favorite_park": {
+                                                                    "type": "string"
+                                                                },
+                                                                "pictures": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "picture": {
+                                                                                "type": "string"
+                                                                            }
+                                                                        },
+                                                                        "type": "object"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "User not pet owner or credentials not match error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "You are not pet owner.|Credentials don't match."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "parameter": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "description": "message",
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Logout",
+                "description": "Logout method",
+                "operationId": "logout",
+                "responses": {
+                    "200": {
+                        "description": "Success message.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unathenticated user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unathenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/auth/fb/sign-in": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Facebook Login",
+                "description": "Facebook Login method",
+                "operationId": "loginFb",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "fb_token"
+                                ],
+                                "properties": {
+                                    "fb_token": {
+                                        "description": "Facebook User Auth Token",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Access token, pet owner and pet info and if not done registration - current step of registration.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        },
+                                        "registration_process": {
+                                            "type": "boolean"
+                                        },
+                                        "current_step": {
+                                            "type": "integer"
+                                        },
+                                        "user": {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "owner": {
+                                                    "properties": {
+                                                        "first_name": {
+                                                            "type": "string"
+                                                        },
+                                                        "last_name": {
+                                                            "type": "string"
+                                                        },
+                                                        "gender": {
+                                                            "type": "string"
+                                                        },
+                                                        "age": {
+                                                            "type": "integer"
+                                                        },
+                                                        "birthday": {
+                                                            "type": "date"
+                                                        },
+                                                        "occupation": {
+                                                            "type": "string"
+                                                        },
+                                                        "hobbies": {
+                                                            "type": "string"
+                                                        },
+                                                        "pets_owned": {
+                                                            "type": "string"
+                                                        },
+                                                        "city": {
+                                                            "type": "string"
+                                                        },
+                                                        "state": {
+                                                            "type": "string"
+                                                        },
+                                                        "profile_picture": {
+                                                            "type": "string"
+                                                        },
+                                                        "pet": {
+                                                            "properties": {
+                                                                "name": {
+                                                                    "type": "string"
+                                                                },
+                                                                "gender": {
+                                                                    "type": "string"
+                                                                },
+                                                                "size": {
+                                                                    "type": "string"
+                                                                },
+                                                                "primary_breed": {
+                                                                    "type": "string"
+                                                                },
+                                                                "secondary_breed": {
+                                                                    "type": "string"
+                                                                },
+                                                                "age": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "profile_picture": {
+                                                                    "type": "string"
+                                                                },
+                                                                "friendliness": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "activity_level": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "noise_level": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "odebience_level": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "fetchability": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "swimability": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "like": {
+                                                                    "type": "string"
+                                                                },
+                                                                "dislike": {
+                                                                    "type": "string"
+                                                                },
+                                                                "favorite_toys": {
+                                                                    "type": "string"
+                                                                },
+                                                                "fears": {
+                                                                    "type": "string"
+                                                                },
+                                                                "favorite_places": {
+                                                                    "type": "string"
+                                                                },
+                                                                "spayed": {
+                                                                    "type": "string"
+                                                                },
+                                                                "birthday": {
+                                                                    "type": "date"
+                                                                },
+                                                                "favorite_park": {
+                                                                    "type": "string"
+                                                                },
+                                                                "pictures": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "picture": {
+                                                                                "type": "string"
+                                                                            }
+                                                                        },
+                                                                        "type": "object"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "User not pet owner or Facebook error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "You are not pet owner.|Facebook error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "parameter": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "description": "message",
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/sign-up": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Sign-up",
+                "description": "Sign-up method",
+                "operationId": "signUp",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "description": "User email",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "description": "User password",
+                                        "type": "string"
+                                    },
+                                    "password_confirmation": {
+                                        "description": "User password confirm",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Access token, pet owner and pet info.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        },
+                                        "user": {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "owner": {
+                                                    "properties": {
+                                                        "first_name": {
+                                                            "type": "string"
+                                                        },
+                                                        "last_name": {
+                                                            "type": "string"
+                                                        },
+                                                        "gender": {
+                                                            "type": "string"
+                                                        },
+                                                        "age": {
+                                                            "type": "integer"
+                                                        },
+                                                        "birthday": {
+                                                            "type": "date"
+                                                        },
+                                                        "occupation": {
+                                                            "type": "string"
+                                                        },
+                                                        "hobbies": {
+                                                            "type": "string"
+                                                        },
+                                                        "pets_owned": {
+                                                            "type": "string"
+                                                        },
+                                                        "city": {
+                                                            "type": "string"
+                                                        },
+                                                        "state": {
+                                                            "type": "string"
+                                                        },
+                                                        "profile_picture": {
+                                                            "type": "string"
+                                                        },
+                                                        "pet": {
+                                                            "properties": {
+                                                                "name": {
+                                                                    "type": "string"
+                                                                },
+                                                                "gender": {
+                                                                    "type": "string"
+                                                                },
+                                                                "size": {
+                                                                    "type": "string"
+                                                                },
+                                                                "primary_breed": {
+                                                                    "type": "string"
+                                                                },
+                                                                "secondary_breed": {
+                                                                    "type": "string"
+                                                                },
+                                                                "age": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "profile_picture": {
+                                                                    "type": "string"
+                                                                },
+                                                                "friendliness": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "activity_level": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "noise_level": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "odebience_level": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "fetchability": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "swimability": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "like": {
+                                                                    "type": "string"
+                                                                },
+                                                                "dislike": {
+                                                                    "type": "string"
+                                                                },
+                                                                "favorite_toys": {
+                                                                    "type": "string"
+                                                                },
+                                                                "fears": {
+                                                                    "type": "string"
+                                                                },
+                                                                "favorite_places": {
+                                                                    "type": "string"
+                                                                },
+                                                                "spayed": {
+                                                                    "type": "string"
+                                                                },
+                                                                "birthday": {
+                                                                    "type": "date"
+                                                                },
+                                                                "favorite_park": {
+                                                                    "type": "string"
+                                                                },
+                                                                "pictures": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "picture": {
+                                                                                "type": "string"
+                                                                            }
+                                                                        },
+                                                                        "type": "object"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "parameter": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "description": "message",
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/fb/sign-up": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Facebook sign-up",
+                "description": "Facebook sign-up method",
+                "operationId": "signUpFb",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "fb_token"
+                                ],
+                                "properties": {
+                                    "fb_token": {
+                                        "description": "Facebook user auth token",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Access token, pet owner and pet info.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        },
+                                        "user": {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "owner": {
+                                                    "properties": {
+                                                        "first_name": {
+                                                            "type": "string"
+                                                        },
+                                                        "last_name": {
+                                                            "type": "string"
+                                                        },
+                                                        "gender": {
+                                                            "type": "string"
+                                                        },
+                                                        "age": {
+                                                            "type": "integer"
+                                                        },
+                                                        "birthday": {
+                                                            "type": "date"
+                                                        },
+                                                        "occupation": {
+                                                            "type": "string"
+                                                        },
+                                                        "hobbies": {
+                                                            "type": "string"
+                                                        },
+                                                        "pets_owned": {
+                                                            "type": "string"
+                                                        },
+                                                        "city": {
+                                                            "type": "string"
+                                                        },
+                                                        "state": {
+                                                            "type": "string"
+                                                        },
+                                                        "profile_picture": {
+                                                            "type": "string"
+                                                        },
+                                                        "pet": {
+                                                            "properties": {
+                                                                "name": {
+                                                                    "type": "string"
+                                                                },
+                                                                "gender": {
+                                                                    "type": "string"
+                                                                },
+                                                                "size": {
+                                                                    "type": "string"
+                                                                },
+                                                                "primary_breed": {
+                                                                    "type": "string"
+                                                                },
+                                                                "secondary_breed": {
+                                                                    "type": "string"
+                                                                },
+                                                                "age": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "profile_picture": {
+                                                                    "type": "string"
+                                                                },
+                                                                "friendliness": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "activity_level": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "noise_level": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "odebience_level": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "fetchability": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "swimability": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "like": {
+                                                                    "type": "string"
+                                                                },
+                                                                "dislike": {
+                                                                    "type": "string"
+                                                                },
+                                                                "favorite_toys": {
+                                                                    "type": "string"
+                                                                },
+                                                                "fears": {
+                                                                    "type": "string"
+                                                                },
+                                                                "favorite_places": {
+                                                                    "type": "string"
+                                                                },
+                                                                "spayed": {
+                                                                    "type": "string"
+                                                                },
+                                                                "birthday": {
+                                                                    "type": "date"
+                                                                },
+                                                                "favorite_park": {
+                                                                    "type": "string"
+                                                                },
+                                                                "pictures": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "picture": {
+                                                                                "type": "string"
+                                                                            }
+                                                                        },
+                                                                        "type": "object"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Facebook error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Facebook error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "parameter": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "description": "message",
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/password/reset": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Recovery password",
+                "description": "Recovery password",
+                "operationId": "resetPassword",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "token",
+                                    "email",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "token": {
+                                        "description": "Reset password token",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Access token, pet owner and pet info.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        },
+                                        "user": {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "owner": {
+                                                    "properties": {
+                                                        "first_name": {
+                                                            "type": "string"
+                                                        },
+                                                        "last_name": {
+                                                            "type": "string"
+                                                        },
+                                                        "gender": {
+                                                            "type": "string"
+                                                        },
+                                                        "age": {
+                                                            "type": "integer"
+                                                        },
+                                                        "birthday": {
+                                                            "type": "date"
+                                                        },
+                                                        "occupation": {
+                                                            "type": "string"
+                                                        },
+                                                        "hobbies": {
+                                                            "type": "string"
+                                                        },
+                                                        "pets_owned": {
+                                                            "type": "string"
+                                                        },
+                                                        "city": {
+                                                            "type": "string"
+                                                        },
+                                                        "state": {
+                                                            "type": "string"
+                                                        },
+                                                        "profile_picture": {
+                                                            "type": "string"
+                                                        },
+                                                        "pet": {
+                                                            "properties": {
+                                                                "name": {
+                                                                    "type": "string"
+                                                                },
+                                                                "gender": {
+                                                                    "type": "string"
+                                                                },
+                                                                "size": {
+                                                                    "type": "string"
+                                                                },
+                                                                "primary_breed": {
+                                                                    "type": "string"
+                                                                },
+                                                                "secondary_breed": {
+                                                                    "type": "string"
+                                                                },
+                                                                "age": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "profile_picture": {
+                                                                    "type": "string"
+                                                                },
+                                                                "friendliness": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "activity_level": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "noise_level": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "odebience_level": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "fetchability": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "swimability": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "like": {
+                                                                    "type": "string"
+                                                                },
+                                                                "dislike": {
+                                                                    "type": "string"
+                                                                },
+                                                                "favorite_toys": {
+                                                                    "type": "string"
+                                                                },
+                                                                "fears": {
+                                                                    "type": "string"
+                                                                },
+                                                                "favorite_places": {
+                                                                    "type": "string"
+                                                                },
+                                                                "spayed": {
+                                                                    "type": "string"
+                                                                },
+                                                                "birthday": {
+                                                                    "type": "date"
+                                                                },
+                                                                "favorite_park": {
+                                                                    "type": "string"
+                                                                },
+                                                                "pictures": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "picture": {
+                                                                                "type": "string"
+                                                                            }
+                                                                        },
+                                                                        "type": "object"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "User access error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "You are not pet owner."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Token parse error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invalid user.|Invalid password.|Invalid token"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "parameter": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "description": "message",
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sign-up/stepper": {
+            "get": {
+                "tags": [
+                    "Signup Steps"
+                ],
+                "summary": "Get stepper info",
+                "description": "Sign-up stepper information about owner and her pet.",
+                "operationId": "getStpperInfo",
+                "responses": {
+                    "200": {
+                        "description": "Current step of user, pet owner and pet info.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "current_step": {
+                                            "type": "string"
+                                        },
+                                        "user": {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "owner": {
+                                                    "properties": {
+                                                        "first_name": {
+                                                            "type": "string"
+                                                        },
+                                                        "last_name": {
+                                                            "type": "string"
+                                                        },
+                                                        "gender": {
+                                                            "type": "string"
+                                                        },
+                                                        "age": {
+                                                            "type": "integer"
+                                                        },
+                                                        "birthday": {
+                                                            "type": "date"
+                                                        },
+                                                        "occupation": {
+                                                            "type": "string"
+                                                        },
+                                                        "hobbies": {
+                                                            "type": "string"
+                                                        },
+                                                        "pets_owned": {
+                                                            "type": "string"
+                                                        },
+                                                        "city": {
+                                                            "type": "string"
+                                                        },
+                                                        "state": {
+                                                            "type": "string"
+                                                        },
+                                                        "profile_picture": {
+                                                            "type": "string"
+                                                        },
+                                                        "pet": {
+                                                            "properties": {
+                                                                "name": {
+                                                                    "type": "string"
+                                                                },
+                                                                "gender": {
+                                                                    "type": "string"
+                                                                },
+                                                                "size": {
+                                                                    "type": "string"
+                                                                },
+                                                                "primary_breed": {
+                                                                    "type": "string"
+                                                                },
+                                                                "secondary_breed": {
+                                                                    "type": "string"
+                                                                },
+                                                                "age": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "profile_picture": {
+                                                                    "type": "string"
+                                                                },
+                                                                "friendliness": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "activity_level": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "noise_level": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "odebience_level": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "fetchability": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "swimability": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "like": {
+                                                                    "type": "string"
+                                                                },
+                                                                "dislike": {
+                                                                    "type": "string"
+                                                                },
+                                                                "favorite_toys": {
+                                                                    "type": "string"
+                                                                },
+                                                                "fears": {
+                                                                    "type": "string"
+                                                                },
+                                                                "favorite_places": {
+                                                                    "type": "string"
+                                                                },
+                                                                "spayed": {
+                                                                    "type": "string"
+                                                                },
+                                                                "birthday": {
+                                                                    "type": "date"
+                                                                },
+                                                                "favorite_park": {
+                                                                    "type": "string"
+                                                                },
+                                                                "pictures": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "picture": {
+                                                                                "type": "string"
+                                                                            }
+                                                                        },
+                                                                        "type": "object"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error if user done registration.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Registration is  done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Signup Steps"
+                ],
+                "summary": "Update owner and pet info for sign-up steps",
+                "description": "Update information for owner and pet for any steps.",
+                "operationId": "updateStepperInfo",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "step"
+                                ],
+                                "properties": {
+                                    "step": {
+                                        "description": "Required for all steps. If will be send '0' - end registration. Steps count - 12.",
+                                        "type": "integer"
+                                    },
+                                    "owner[first_name]": {
+                                        "description": "Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\\s?)+$",
+                                        "type": "string"
+                                    },
+                                    "owner[last_name]": {
+                                        "description": "Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\\s?)+$",
+                                        "type": "string"
+                                    },
+                                    "pet[name]": {
+                                        "description": "Step 1. Rules: required, min - 1, max - 12, RegExp - ^([[:alpha:]-]+\\s?)+$",
+                                        "type": "string"
+                                    },
+                                    "owner[city]": {
+                                        "description": "Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\\s?)+$",
+                                        "type": "string"
+                                    },
+                                    "owner[state]": {
+                                        "description": "Step 1. Rules: required, min - 2, max - 3, RegExp - ^[A-Z]{2,3}$",
+                                        "type": "string"
+                                    },
+                                    "pet[gender]": {
+                                        "description": "Step 2. Rules: reuqired, in - [male, female]",
+                                        "type": "string"
+                                    },
+                                    "pet[size]": {
+                                        "description": "Step 2. Rules: required, in - [small, medium, large, giant]",
+                                        "type": "string"
+                                    },
+                                    "pet[primary_breed]": {
+                                        "description": "Step 3. Rules: required, min - 1, max - 50",
+                                        "type": "string"
+                                    },
+                                    "pet[secondary_breed]": {
+                                        "description": "Step 3. Rules: required, min - 1, max - 50",
+                                        "type": "string"
+                                    },
+                                    "pet[age]": {
+                                        "description": "Step 3. Rules: required, min - 1, max - 99",
+                                        "type": "integer"
+                                    },
+                                    "pet[profile_picture]": {
+                                        "description": "Step 4. base64 string. Rules: required if pet not has profile picture, correct base64 string, types - 'jpg', 'png'",
+                                        "type": "string"
+                                    },
+                                    "pet[pictures][create][0]": {
+                                        "description": "Step 5. base64 string. Rules: optional, correct base64 string, types - 'jpg', 'png'",
+                                        "type": "string"
+                                    },
+                                    "pet[pictures][delete][0]": {
+                                        "description": "Step 5. Uploaded pictures ids. Rule: optional, exist in pet pictures ids",
+                                        "type": "integer"
+                                    },
+                                    "pet[friendliness]": {
+                                        "description": "Step 6. Rules: required, min - 1, max - 5",
+                                        "type": "integer"
+                                    },
+                                    "pet[activity_level]": {
+                                        "description": "Step 6. Rules: required, min - 1, max - 5",
+                                        "type": "integer"
+                                    },
+                                    "pet[noise_level]": {
+                                        "description": "Step 6. Rules: required, min - 1, max - 5",
+                                        "type": "integer"
+                                    },
+                                    "pet[odebience_level]": {
+                                        "description": "Step 6. Rules: required, min - 1, max - 5",
+                                        "type": "integer"
+                                    },
+                                    "pet[fetchability]": {
+                                        "description": "Step 6. Rules: required, min - 1, max - 5",
+                                        "type": "integer"
+                                    },
+                                    "pet[swimability]": {
+                                        "description": "Step 6. Rules: required, min - 1, max - 5",
+                                        "type": "integer"
+                                    },
+                                    "pet[like]": {
+                                        "description": "Step 8. Rules: required, min - 1, max - 128",
+                                        "type": "string"
+                                    },
+                                    "pet[dislike]": {
+                                        "description": "Step 8. Rules: required, min - 1, max - 128",
+                                        "type": "string"
+                                    },
+                                    "pet[favorite_toys]": {
+                                        "description": "Step 9. Rules: required, min - 1, max - 128",
+                                        "type": "string"
+                                    },
+                                    "pet[fears]": {
+                                        "description": "Step 9. Rules: required, min - 1, max - 128",
+                                        "type": "string"
+                                    },
+                                    "pet[favorite_places]": {
+                                        "description": "Step 10. Rules: required, min - 1, max - 128",
+                                        "type": "string"
+                                    },
+                                    "owner[gender]": {
+                                        "description": "Step 11. Rules: required, min - 1, max - 20, RegExp - ^(male|female|[[:alpha:]]+)$",
+                                        "type": "string"
+                                    },
+                                    "owner[age]": {
+                                        "description": "Step 11. Rules: required, min - 0, max - 99",
+                                        "type": "integer"
+                                    },
+                                    "owner[profile_picture]": {
+                                        "description": "Step 12. base64 string. Rules: required if owner not has profile picture, correct base64 string, types - 'jpg', 'png'",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success message, pet owner and pet info.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "user": {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "owner": {
+                                                    "properties": {
+                                                        "first_name": {
+                                                            "type": "string"
+                                                        },
+                                                        "last_name": {
+                                                            "type": "string"
+                                                        },
+                                                        "gender": {
+                                                            "type": "string"
+                                                        },
+                                                        "age": {
+                                                            "type": "integer"
+                                                        },
+                                                        "birthday": {
+                                                            "type": "date"
+                                                        },
+                                                        "occupation": {
+                                                            "type": "string"
+                                                        },
+                                                        "hobbies": {
+                                                            "type": "string"
+                                                        },
+                                                        "pets_owned": {
+                                                            "type": "string"
+                                                        },
+                                                        "city": {
+                                                            "type": "string"
+                                                        },
+                                                        "state": {
+                                                            "type": "string"
+                                                        },
+                                                        "profile_picture": {
+                                                            "type": "string"
+                                                        },
+                                                        "pet": {
+                                                            "properties": {
+                                                                "name": {
+                                                                    "type": "string"
+                                                                },
+                                                                "gender": {
+                                                                    "type": "string"
+                                                                },
+                                                                "size": {
+                                                                    "type": "string"
+                                                                },
+                                                                "primary_breed": {
+                                                                    "type": "string"
+                                                                },
+                                                                "secondary_breed": {
+                                                                    "type": "string"
+                                                                },
+                                                                "age": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "profile_picture": {
+                                                                    "type": "string"
+                                                                },
+                                                                "friendliness": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "activity_level": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "noise_level": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "odebience_level": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "fetchability": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "swimability": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "like": {
+                                                                    "type": "string"
+                                                                },
+                                                                "dislike": {
+                                                                    "type": "string"
+                                                                },
+                                                                "favorite_toys": {
+                                                                    "type": "string"
+                                                                },
+                                                                "fears": {
+                                                                    "type": "string"
+                                                                },
+                                                                "favorite_places": {
+                                                                    "type": "string"
+                                                                },
+                                                                "spayed": {
+                                                                    "type": "string"
+                                                                },
+                                                                "birthday": {
+                                                                    "type": "date"
+                                                                },
+                                                                "favorite_park": {
+                                                                    "type": "string"
+                                                                },
+                                                                "pictures": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "picture": {
+                                                                                "type": "string"
+                                                                            }
+                                                                        },
+                                                                        "type": "object"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error if user done registration.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Registration is  done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "parameter": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "description": "message",
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    }
+}

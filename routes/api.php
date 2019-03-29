@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,6 +11,34 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::namespace('API')->group(function () {
+
+    Route::namespace('Auth')->prefix('auth')->group(function () {
+
+        Route::post('sign-up', 'RegisterController');
+
+        Route::post('sign-in', 'LoginController@login');
+
+        Route::middleware('auth:api')->post('logout', 'LoginController@logout');
+
+        Route::middleware('fb.user')->group(function () {
+
+            Route::post('fb/sign-up', 'RegisterFbController');
+
+            Route::post('fb/sign-in', 'LoginFbController');
+
+        });
+
+        Route::post('password/forgot', 'ForgotPasswordController');
+
+        Route::post('password/reset', 'ResetPasswordController');
+
+    });
+
+    Route::middleware('auth:api')->group(function () {
+
+        Route::middleware('signup.step')->match(['get', 'put'], 'sign-up/stepper', 'SignUpStepController');
+
+    });
+
 });
