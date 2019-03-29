@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\API;
 
-class RegisterRequest extends MainFormRequest
+class ForgotPasswordRequest extends MainFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,7 @@ class RegisterRequest extends MainFormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|max:128|unique:users,email',
-            'password' => 'required|string|min:8|max:128|confirmed',
-            'password_confirmation' => 'required'
+            'email' => 'required|exists:users,email'
         ];
     }
 }

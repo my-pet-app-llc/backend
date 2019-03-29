@@ -2,37 +2,31 @@
 
 namespace App\Http\Controllers\API\Auth;
 
-use App\Http\Requests\API\LoginRequest;
+use App\Http\Requests\API\LoginFbRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\User;
-use Hash;
 
-class LoginController extends Controller
+class LoginFbController extends Controller
 {
     /**
      * @OA\Post(
-     *     path="/auth/sign-in",
+     *     path="/auth/fb/sign-in",
      *     tags={"Auth"},
-     *     description="Login method",
-     *     summary="Login",
-     *     operationId="login",
+     *     description="Facebook Login method",
+     *     summary="Facebook Login",
+     *     operationId="loginFb",
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\MediaType(
      *             mediaType="multipart/form-data",
      *             @OA\Schema(
      *                 @OA\Property(
-     *                     property="email",
+     *                     property="fb_token",
      *                     type="string",
-     *                     description="User email"
+     *                     description="Facebook User Auth Token"
      *                 ),
-     *                 @OA\Property(
-     *                     property="password",
-     *                     type="string",
-     *                     description="User password"
-     *                 ),
-     *                 required={"email","password"}
+     *                 required={"fb_token"}
      *             )
      *         )
      *     ),
@@ -214,12 +208,12 @@ class LoginController extends Controller
      *     ),
      *     @OA\Response(
      *         response="401",
-     *         description="User not pet owner or credentials not match error",
+     *         description="User not pet owner or Facebook error",
      *         @OA\JsonContent(
      *             @OA\Property(
      *                 property="message",
      *                 type="string",
-     *                 example="You are not pet owner.|Credentials don't match."
+     *                 example="You are not pet owner.|Facebook error"
      *             )
      *         )
      *     ),
@@ -243,85 +237,24 @@ class LoginController extends Controller
     /**
      * Handle the incoming request.
      *
-     * @param  LoginRequest $request
+     * @param  LoginFbRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function login(LoginRequest $request)
+    public function __invoke(LoginFbRequest $request)
     {
-        $email = $request->get('email', '');
-        $password = $request->get('password', '');
-        if(($user = $this->attempt($email, $password))){
-            $token = $user->apiLogin();
-        }else{
-            return response()->json(['message' => "Credentials don't match."], 401);
-        }
+        $user = User::query()->where('facebook_id', $request->get('facebook_id'))->first();
+        $token = $user->apiLogin();
 
-        $response = [
+        $responseData = [
             'token' => $token,
-            'user' => (new UserResource($user))
+            'user' => new UserResource($user)
         ];
 
-        if($user->owner->signup_step > 0){
-            $response['registration_process'] = true;
-            $response['current_step'] = $user->owner->signup_step;
+        if(($step = $user->owner->signup_step) > 0){
+            $responseData['registration_process'] = true;
+            $responseData['current_step'] = $step;
         }
 
-        return response()->json($response);
-    }
-
-    /**
-     * @OA\Post(
-     *     path="/auth/logout",
-     *     tags={"Auth"},
-     *     description="Logout method",
-     *     summary="Logout",
-     *     operationId="logout",
-     *     @OA\Response(
-     *         response="200",
-     *         description="Success message.",
-     *         @OA\JsonContent(
-     *             @OA\Property(
-     *                 type="string",
-     *                 property="message",
-     *                 example="success"
-     *             ),
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response="401",
-     *         description="Unathenticated user",
-     *         @OA\JsonContent(
-     *             @OA\Property(
-     *                 property="message",
-     *                 type="string",
-     *                 example="Unathenticated."
-     *             )
-     *         )
-     *     ),
-     *     security={{"bearerAuth":{}}}
-     * )
-     */
-    /**
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function logout()
-    {
-        $user = auth()->user();
-        $user->token()->revoke();
-
-        return response()->json(['message' => 'success']);
-    }
-
-    private function attempt($email, $password)
-    {
-        $user = User::query()->where('email', $email)->first();
-
-        if(!$user)
-            return null;
-
-        if(Hash::check($password, $user->password))
-            return $user;
-        else
-            return null;
+        return response()->json($responseData);
     }
 }

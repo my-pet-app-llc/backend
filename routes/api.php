@@ -17,13 +17,21 @@ Route::namespace('API')->group(function () {
 
         Route::post('sign-up', 'RegisterController');
 
-        Route::post('login', 'LoginController');
+        Route::post('sign-in', 'LoginController@login');
+
+        Route::middleware('auth:api')->post('logout', 'LoginController@logout');
 
         Route::middleware('fb.user')->group(function () {
 
             Route::post('fb/sign-up', 'RegisterFbController');
 
+            Route::post('fb/sign-in', 'LoginFbController');
+
         });
+
+        Route::post('password/forgot', 'ForgotPasswordController');
+
+        Route::post('password/reset', 'ResetPasswordController');
 
     });
 

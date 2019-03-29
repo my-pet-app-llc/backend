@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Exceptions\NotOwnerException;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
@@ -31,5 +32,40 @@ class User extends Authenticatable
     public function owner()
     {
         return $this->hasOne(Owner::class);
+    }
+
+    /**
+     * Generate auth user access token
+     *
+     * @return string
+     * @throws NotOwnerException
+     */
+    public function apiLogin()
+    {
+        if(!$this->isPetOwner())
+            throw new NotOwnerException();
+
+        $this->tokens()->update(['revoked' => true]);
+
+        $personalAccessClient = env('APP_PERSONAL_ACCESS_CLIENT', 'application');
+        $accessToken = $this->createToken($personalAccessClient)->accessToken;
+
+        return $accessToken;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPetOwner()
+    {
+        return (bool)$this->owner;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFacebookUser()
+    {
+        return (bool)$this->facebook_id;
     }
 }
