@@ -2,19 +2,29 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PetResource extends JsonResource
 {
+    private $withPetPictures;
+
+    public function __construct ($resource, $withPetPictures = true)
+    {
+        $this->withPetPictures = $withPetPictures;
+
+        parent::__construct($resource);
+    }
+
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return array
      */
     public function toArray($request)
     {
-        return [
+        $resourceArr = [
             'name' => $this->name,
             'gender' => $this->gender,
             'size' => $this->size,
@@ -28,15 +38,20 @@ class PetResource extends JsonResource
             'odebience_level' => $this->odebience_level,
             'fetchability' => $this->fetchability,
             'swimability' => $this->swimability,
+            'city' => $this->city,
+            'state' => $this->state,
             'like' => $this->like,
             'dislike' => $this->dislike,
             'favorite_toys' => $this->favorite_toys,
             'fears' => $this->fears,
             'favorite_places' => $this->favorite_places,
             'spayed' => $this->spayed,
-            'birthday' => $this->birthday,
-            'favorite_park' => $this->favorite_park,
-            'pictures' => PetPicturesResource::collection($this->pictures)
+            'birthday' => $this->birthday
         ];
+
+        if($this->withPetPictures)
+            $resourceArr['pictures'] = PetPicturesResource::collection($this->pictures);
+
+        return $resourceArr;
     }
 }

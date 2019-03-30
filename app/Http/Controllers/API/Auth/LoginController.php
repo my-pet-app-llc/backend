@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\User;
 use Hash;
+use Illuminate\Http\Response;
 
 class LoginController extends Controller
 {
@@ -107,6 +108,10 @@ class LoginController extends Controller
      *                         type="string"
      *                     ),
      *                     @OA\Property(
+     *                         property="favorite_park",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
      *                         type="object",
      *                         property="pet",
      *                         @OA\Property(
@@ -190,10 +195,6 @@ class LoginController extends Controller
      *                             type="date"
      *                         ),
      *                         @OA\Property(
-     *                             property="favorite_park",
-     *                             type="string"
-     *                         ),
-     *                         @OA\Property(
      *                             property="pictures",
      *                             type="array",
      *                             @OA\Items(
@@ -244,7 +245,7 @@ class LoginController extends Controller
      * Handle the incoming request.
      *
      * @param  LoginRequest $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function login(LoginRequest $request)
     {

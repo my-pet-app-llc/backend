@@ -66,9 +66,7 @@ class File
         $fullPath = '/' . $path . '/' . $this->fname;
         Storage::put($fullPath, $this->file);
 
-        $publicPath = '/storage' . $fullPath;
-
-        return $publicPath;
+        return $fullPath;
     }
 
     /**

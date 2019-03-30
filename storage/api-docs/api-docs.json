@@ -190,6 +190,9 @@
                                                         "profile_picture": {
                                                             "type": "string"
                                                         },
+                                                        "favorite_park": {
+                                                            "type": "string"
+                                                        },
                                                         "pet": {
                                                             "properties": {
                                                                 "name": {
@@ -251,9 +254,6 @@
                                                                 },
                                                                 "birthday": {
                                                                     "type": "date"
-                                                                },
-                                                                "favorite_park": {
-                                                                    "type": "string"
                                                                 },
                                                                 "pictures": {
                                                                     "type": "array",
@@ -462,6 +462,9 @@
                                                         "profile_picture": {
                                                             "type": "string"
                                                         },
+                                                        "favorite_park": {
+                                                            "type": "string"
+                                                        },
                                                         "pet": {
                                                             "properties": {
                                                                 "name": {
@@ -523,9 +526,6 @@
                                                                 },
                                                                 "birthday": {
                                                                     "type": "date"
-                                                                },
-                                                                "favorite_park": {
-                                                                    "type": "string"
                                                                 },
                                                                 "pictures": {
                                                                     "type": "array",
@@ -689,6 +689,9 @@
                                                         "profile_picture": {
                                                             "type": "string"
                                                         },
+                                                        "favorite_park": {
+                                                            "type": "string"
+                                                        },
                                                         "pet": {
                                                             "properties": {
                                                                 "name": {
@@ -750,9 +753,6 @@
                                                                 },
                                                                 "birthday": {
                                                                     "type": "date"
-                                                                },
-                                                                "favorite_park": {
-                                                                    "type": "string"
                                                                 },
                                                                 "pictures": {
                                                                     "type": "array",
@@ -890,6 +890,9 @@
                                                         "profile_picture": {
                                                             "type": "string"
                                                         },
+                                                        "favorite_park": {
+                                                            "type": "string"
+                                                        },
                                                         "pet": {
                                                             "properties": {
                                                                 "name": {
@@ -951,9 +954,6 @@
                                                                 },
                                                                 "birthday": {
                                                                     "type": "date"
-                                                                },
-                                                                "favorite_park": {
-                                                                    "type": "string"
                                                                 },
                                                                 "pictures": {
                                                                     "type": "array",
@@ -1119,6 +1119,9 @@
                                                         "profile_picture": {
                                                             "type": "string"
                                                         },
+                                                        "favorite_park": {
+                                                            "type": "string"
+                                                        },
                                                         "pet": {
                                                             "properties": {
                                                                 "name": {
@@ -1180,9 +1183,6 @@
                                                                 },
                                                                 "birthday": {
                                                                     "type": "date"
-                                                                },
-                                                                "favorite_park": {
-                                                                    "type": "string"
                                                                 },
                                                                 "pictures": {
                                                                     "type": "array",
@@ -1333,6 +1333,9 @@
                                                         "profile_picture": {
                                                             "type": "string"
                                                         },
+                                                        "favorite_park": {
+                                                            "type": "string"
+                                                        },
                                                         "pet": {
                                                             "properties": {
                                                                 "name": {
@@ -1394,9 +1397,6 @@
                                                                 },
                                                                 "birthday": {
                                                                     "type": "date"
-                                                                },
-                                                                "favorite_park": {
-                                                                    "type": "string"
                                                                 },
                                                                 "pictures": {
                                                                     "type": "array",
@@ -1635,6 +1635,9 @@
                                                         "profile_picture": {
                                                             "type": "string"
                                                         },
+                                                        "favorite_park": {
+                                                            "type": "string"
+                                                        },
                                                         "pet": {
                                                             "properties": {
                                                                 "name": {
@@ -1696,9 +1699,6 @@
                                                                 },
                                                                 "birthday": {
                                                                     "type": "date"
-                                                                },
-                                                                "favorite_park": {
-                                                                    "type": "string"
                                                                 },
                                                                 "pictures": {
                                                                     "type": "array",

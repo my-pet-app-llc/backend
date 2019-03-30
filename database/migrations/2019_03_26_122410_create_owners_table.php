@@ -24,9 +24,8 @@ class CreateOwnersTable extends Migration
             $table->string('occupation', 255)->nullable();
             $table->string('hobbies', 255)->nullable();
             $table->string('pets_owned', 255)->nullable();
-            $table->string('city', 100)->nullable();
-            $table->string('state', 100)->nullable();
             $table->string('profile_picture')->nullable();
+            $table->string('favorite_park', 255)->nullable();
             $table->tinyInteger('signup_step')->default(1);
             $table->timestamps();
 

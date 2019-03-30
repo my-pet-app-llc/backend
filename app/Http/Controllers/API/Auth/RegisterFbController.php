@@ -97,6 +97,10 @@ class RegisterFbController extends Controller
      *                         type="string"
      *                     ),
      *                     @OA\Property(
+     *                         property="favorite_park",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
      *                         type="object",
      *                         property="pet",
      *                         @OA\Property(
@@ -178,10 +182,6 @@ class RegisterFbController extends Controller
      *                         @OA\Property(
      *                             property="birthday",
      *                             type="date"
-     *                         ),
-     *                         @OA\Property(
-     *                             property="favorite_park",
-     *                             type="string"
      *                         ),
      *                         @OA\Property(
      *                             property="pictures",

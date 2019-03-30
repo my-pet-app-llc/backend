@@ -2,19 +2,32 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class OwnerResource extends JsonResource
 {
+    private $withPet;
+
+    private $withPetPictures;
+
+    public function __construct ($resource, $withPet = true, $withPetPictures = true)
+    {
+        $this->withPet = $withPet;
+        $this->withPetPictures = $withPetPictures;
+
+        parent::__construct($resource);
+    }
+
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return array
      */
     public function toArray($request)
     {
-        return [
+        $resourceArr = [
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'gender' => $this->gender,
@@ -23,10 +36,13 @@ class OwnerResource extends JsonResource
             'occupation' => $this->occupation,
             'hobbies' => $this->hobbies,
             'pets_owned' => $this->pets_owned,
-            'city' => $this->city,
-            'state' => $this->state,
             'profile_picture' => config('filesystems.disks')[env('FILESYSTEM_DRIVER', 'public')]['url'] . $this->profile_picture,
-            'pet' => (new PetResource($this->pet))
+            'favorite_park' => $this->favorite_park
         ];
+
+        if($this->withPet)
+            $resourceArr['pet'] = (new PetResource($this->pet, $this->withPetPictures));
+
+        return $resourceArr;
     }
 }

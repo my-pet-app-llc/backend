@@ -39,6 +39,12 @@ Route::namespace('API')->group(function () {
 
         Route::middleware('signup.step')->match(['get', 'put'], 'sign-up/stepper', 'SignUpStepController');
 
+        Route::middleware('signup.done')->group(function () {
+
+            Route::match(['get', 'put'], 'profile', 'ProfileController');
+
+        });
+
     });
 
 });

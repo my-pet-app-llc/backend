@@ -69,15 +69,15 @@ class SignUpStepRequest extends MainFormRequest
         return $rules;
     }
 
-    protected function validationData ()
+    protected function validationData()
     {
         $this->rules = [
             1 => [
                 'owner.first_name' => 'required|string|min:1|max:15|regex:~^([[:alpha:]-]+\s?)+$~',
                 'owner.last_name' => 'required|string|min:1|max:15|regex:~^([[:alpha:]-]+\s?)+$~',
                 'pet.name' => 'required|string|min:1|max:12|regex:~^([[:alpha:]-]+\s?)+$~',
-                'owner.city' => 'required|string|min:1|max:15|regex:~^([[:alpha:]-]+\s?)+$~',
-                'owner.state' => 'required|string|min:2|max:3|regex:~^[A-Z]{2,3}$~'
+                'pet.city' => 'required|string|min:1|max:15|regex:~^([[:alpha:]-]+\s?)+$~',
+                'pet.state' => 'required|string|min:2|max:3|regex:~^[A-Z]{2,3}$~'
             ],
             2 => [
                 'pet.gender' => 'required|string|in:male,female',
@@ -121,7 +121,7 @@ class SignUpStepRequest extends MainFormRequest
                 'owner.age' => 'required|integer|min:0|max:99'
             ],
             12 => [
-                'owner.profile_picture' => ['nullable', (new RequiredIfHasProfilePicture($this, 'pet')), 'string', 'regex:~^(data:image\/(jpeg|png);base64,\S+)$~']
+                'owner.profile_picture' => ['nullable', (new RequiredIfHasProfilePicture($this, 'owner')), 'string', 'regex:~^(data:image\/(jpeg|png);base64,\S+)$~']
             ],
             13 => []
         ];

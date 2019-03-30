@@ -14,7 +14,7 @@ class Pet extends Model
         'fetchability', 'swimability', 'like',
         'dislike', 'favorite_toys', 'fears',
         'favorite_places', 'spayed', 'birthday',
-        'favorite_park'
+        'city', 'state',
     ];
 
     public function owner()
