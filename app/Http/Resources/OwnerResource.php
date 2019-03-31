@@ -11,10 +11,13 @@ class OwnerResource extends JsonResource
 
     private $withPetPictures;
 
-    public function __construct ($resource, $withPet = true, $withPetPictures = true)
+    private $withFriends;
+
+    public function __construct ($resource, $withPet = true, $withPetPictures = true, $withFriends = false)
     {
         $this->withPet = $withPet;
         $this->withPetPictures = $withPetPictures;
+        $this->withFriends = $withFriends;
 
         parent::__construct($resource);
     }
@@ -41,7 +44,7 @@ class OwnerResource extends JsonResource
         ];
 
         if($this->withPet)
-            $resourceArr['pet'] = (new PetResource($this->pet, $this->withPetPictures));
+            $resourceArr['pet'] = (new PetResource($this->pet, $this->withPetPictures, $this->withFriends));
 
         return $resourceArr;
     }

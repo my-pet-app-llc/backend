@@ -26,4 +26,9 @@ class Pet extends Model
     {
         return $this->morphMany(Picture::class, 'picturable');
     }
+
+    public function friends()
+    {
+        return $this->hasMany(Friend::class);
+    }
 }

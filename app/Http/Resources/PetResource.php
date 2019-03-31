@@ -9,9 +9,12 @@ class PetResource extends JsonResource
 {
     private $withPetPictures;
 
-    public function __construct ($resource, $withPetPictures = true)
+    private $withFriends;
+
+    public function __construct ($resource, $withPetPictures = true, $withFriends = false)
     {
         $this->withPetPictures = $withPetPictures;
+        $this->withFriends = $withFriends;
 
         parent::__construct($resource);
     }
@@ -25,6 +28,7 @@ class PetResource extends JsonResource
     public function toArray($request)
     {
         $resourceArr = [
+            'id' => $this->id,
             'name' => $this->name,
             'gender' => $this->gender,
             'size' => $this->size,
@@ -51,6 +55,9 @@ class PetResource extends JsonResource
 
         if($this->withPetPictures)
             $resourceArr['pictures'] = PetPicturesResource::collection($this->pictures);
+
+        if($this->withFriends)
+            $resourceArr['friends'] = FriendResource::collection($this->friends);
 
         return $resourceArr;
     }

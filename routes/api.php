@@ -43,6 +43,8 @@ Route::namespace('API')->group(function () {
 
             Route::match(['get', 'put'], 'profile', 'ProfileController');
 
+            Route::resource('friends', 'FriendController')->only(['index']);
+
         });
 
     });

@@ -104,14 +104,6 @@ class SignUpStepController extends Controller
      *                         type="string"
      *                     ),
      *                     @OA\Property(
-     *                         property="city",
-     *                         type="string"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="state",
-     *                         type="string"
-     *                     ),
-     *                     @OA\Property(
      *                         property="profile_picture",
      *                         type="string"
      *                     ),
@@ -122,6 +114,10 @@ class SignUpStepController extends Controller
      *                     @OA\Property(
      *                         type="object",
      *                         property="pet",
+     *                         @OA\Property(
+     *                             property="id",
+     *                             type="integer"
+     *                         ),
      *                         @OA\Property(
      *                             property="name",
      *                             type="string"
@@ -173,6 +169,14 @@ class SignUpStepController extends Controller
      *                         @OA\Property(
      *                             property="swimability",
      *                             type="integer"
+     *                         ),
+     *                         @OA\Property(
+     *                             property="city",
+     *                             type="string"
+     *                         ),
+     *                         @OA\Property(
+     *                             property="state",
+     *                             type="string"
      *                         ),
      *                         @OA\Property(
      *                             property="like",
@@ -276,12 +280,12 @@ class SignUpStepController extends Controller
      *                     description="Step 1. Rules: required, min - 1, max - 12, RegExp - ^([[:alpha:]-]+\s?)+$"
      *                 ),
      *                 @OA\Property(
-     *                     property="owner[city]",
+     *                     property="pet[city]",
      *                     type="string",
      *                     description="Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\s?)+$"
      *                 ),
      *                 @OA\Property(
-     *                     property="owner[state]",
+     *                     property="pet[state]",
      *                     type="string",
      *                     description="Step 1. Rules: required, min - 2, max - 3, RegExp - ^[A-Z]{2,3}$"
      *                 ),
@@ -451,14 +455,6 @@ class SignUpStepController extends Controller
      *                         type="string"
      *                     ),
      *                     @OA\Property(
-     *                         property="city",
-     *                         type="string"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="state",
-     *                         type="string"
-     *                     ),
-     *                     @OA\Property(
      *                         property="profile_picture",
      *                         type="string"
      *                     ),
@@ -469,6 +465,10 @@ class SignUpStepController extends Controller
      *                     @OA\Property(
      *                         type="object",
      *                         property="pet",
+     *                         @OA\Property(
+     *                             property="id",
+     *                             type="integer"
+     *                         ),
      *                         @OA\Property(
      *                             property="name",
      *                             type="string"
@@ -520,6 +520,14 @@ class SignUpStepController extends Controller
      *                         @OA\Property(
      *                             property="swimability",
      *                             type="integer"
+     *                         ),
+     *                         @OA\Property(
+     *                             property="city",
+     *                             type="string"
+     *                         ),
+     *                         @OA\Property(
+     *                             property="state",
+     *                             type="string"
      *                         ),
      *                         @OA\Property(
      *                             property="like",

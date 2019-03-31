@@ -89,14 +89,6 @@ class LoginFbController extends Controller
      *                         type="string"
      *                     ),
      *                     @OA\Property(
-     *                         property="city",
-     *                         type="string"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="state",
-     *                         type="string"
-     *                     ),
-     *                     @OA\Property(
      *                         property="profile_picture",
      *                         type="string"
      *                     ),
@@ -107,6 +99,10 @@ class LoginFbController extends Controller
      *                     @OA\Property(
      *                         type="object",
      *                         property="pet",
+     *                         @OA\Property(
+     *                             property="id",
+     *                             type="integer"
+     *                         ),
      *                         @OA\Property(
      *                             property="name",
      *                             type="string"
@@ -158,6 +154,14 @@ class LoginFbController extends Controller
      *                         @OA\Property(
      *                             property="swimability",
      *                             type="integer"
+     *                         ),
+     *                         @OA\Property(
+     *                             property="city",
+     *                             type="string"
+     *                         ),
+     *                         @OA\Property(
+     *                             property="state",
+     *                             type="string"
      *                         ),
      *                         @OA\Property(
      *                             property="like",

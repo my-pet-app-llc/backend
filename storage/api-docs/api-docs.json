@@ -181,12 +181,6 @@
                                                         "pets_owned": {
                                                             "type": "string"
                                                         },
-                                                        "city": {
-                                                            "type": "string"
-                                                        },
-                                                        "state": {
-                                                            "type": "string"
-                                                        },
                                                         "profile_picture": {
                                                             "type": "string"
                                                         },
@@ -195,6 +189,9 @@
                                                         },
                                                         "pet": {
                                                             "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
                                                                 "name": {
                                                                     "type": "string"
                                                                 },
@@ -233,6 +230,12 @@
                                                                 },
                                                                 "swimability": {
                                                                     "type": "integer"
+                                                                },
+                                                                "city": {
+                                                                    "type": "string"
+                                                                },
+                                                                "state": {
+                                                                    "type": "string"
                                                                 },
                                                                 "like": {
                                                                     "type": "string"
@@ -453,12 +456,6 @@
                                                         "pets_owned": {
                                                             "type": "string"
                                                         },
-                                                        "city": {
-                                                            "type": "string"
-                                                        },
-                                                        "state": {
-                                                            "type": "string"
-                                                        },
                                                         "profile_picture": {
                                                             "type": "string"
                                                         },
@@ -467,6 +464,9 @@
                                                         },
                                                         "pet": {
                                                             "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
                                                                 "name": {
                                                                     "type": "string"
                                                                 },
@@ -505,6 +505,12 @@
                                                                 },
                                                                 "swimability": {
                                                                     "type": "integer"
+                                                                },
+                                                                "city": {
+                                                                    "type": "string"
+                                                                },
+                                                                "state": {
+                                                                    "type": "string"
                                                                 },
                                                                 "like": {
                                                                     "type": "string"
@@ -680,12 +686,6 @@
                                                         "pets_owned": {
                                                             "type": "string"
                                                         },
-                                                        "city": {
-                                                            "type": "string"
-                                                        },
-                                                        "state": {
-                                                            "type": "string"
-                                                        },
                                                         "profile_picture": {
                                                             "type": "string"
                                                         },
@@ -694,6 +694,9 @@
                                                         },
                                                         "pet": {
                                                             "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
                                                                 "name": {
                                                                     "type": "string"
                                                                 },
@@ -732,6 +735,12 @@
                                                                 },
                                                                 "swimability": {
                                                                     "type": "integer"
+                                                                },
+                                                                "city": {
+                                                                    "type": "string"
+                                                                },
+                                                                "state": {
+                                                                    "type": "string"
                                                                 },
                                                                 "like": {
                                                                     "type": "string"
@@ -881,12 +890,6 @@
                                                         "pets_owned": {
                                                             "type": "string"
                                                         },
-                                                        "city": {
-                                                            "type": "string"
-                                                        },
-                                                        "state": {
-                                                            "type": "string"
-                                                        },
                                                         "profile_picture": {
                                                             "type": "string"
                                                         },
@@ -895,6 +898,9 @@
                                                         },
                                                         "pet": {
                                                             "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
                                                                 "name": {
                                                                     "type": "string"
                                                                 },
@@ -933,6 +939,12 @@
                                                                 },
                                                                 "swimability": {
                                                                     "type": "integer"
+                                                                },
+                                                                "city": {
+                                                                    "type": "string"
+                                                                },
+                                                                "state": {
+                                                                    "type": "string"
                                                                 },
                                                                 "like": {
                                                                     "type": "string"
@@ -1110,12 +1122,6 @@
                                                         "pets_owned": {
                                                             "type": "string"
                                                         },
-                                                        "city": {
-                                                            "type": "string"
-                                                        },
-                                                        "state": {
-                                                            "type": "string"
-                                                        },
                                                         "profile_picture": {
                                                             "type": "string"
                                                         },
@@ -1124,6 +1130,9 @@
                                                         },
                                                         "pet": {
                                                             "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
                                                                 "name": {
                                                                     "type": "string"
                                                                 },
@@ -1162,6 +1171,12 @@
                                                                 },
                                                                 "swimability": {
                                                                     "type": "integer"
+                                                                },
+                                                                "city": {
+                                                                    "type": "string"
+                                                                },
+                                                                "state": {
+                                                                    "type": "string"
                                                                 },
                                                                 "like": {
                                                                     "type": "string"
@@ -1275,6 +1290,899 @@
                 }
             }
         },
+        "friends": {
+            "get": {
+                "tags": [
+                    "Friends"
+                ],
+                "summary": "All friends",
+                "description": "Get pet friends.",
+                "operationId": "friendsAll",
+                "responses": {
+                    "200": {
+                        "description": "Success message, pet owner and pet info.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "gender": {
+                                                "type": "string"
+                                            },
+                                            "size": {
+                                                "type": "string"
+                                            },
+                                            "primary_breed": {
+                                                "type": "string"
+                                            },
+                                            "secondary_breed": {
+                                                "type": "string"
+                                            },
+                                            "age": {
+                                                "type": "integer"
+                                            },
+                                            "profile_picture": {
+                                                "type": "string"
+                                            },
+                                            "friendliness": {
+                                                "type": "integer"
+                                            },
+                                            "activity_level": {
+                                                "type": "integer"
+                                            },
+                                            "noise_level": {
+                                                "type": "integer"
+                                            },
+                                            "odebience_level": {
+                                                "type": "integer"
+                                            },
+                                            "fetchability": {
+                                                "type": "integer"
+                                            },
+                                            "swimability": {
+                                                "type": "integer"
+                                            },
+                                            "city": {
+                                                "type": "string"
+                                            },
+                                            "state": {
+                                                "type": "string"
+                                            },
+                                            "like": {
+                                                "type": "string"
+                                            },
+                                            "dislike": {
+                                                "type": "string"
+                                            },
+                                            "favorite_toys": {
+                                                "type": "string"
+                                            },
+                                            "fears": {
+                                                "type": "string"
+                                            },
+                                            "favorite_places": {
+                                                "type": "string"
+                                            },
+                                            "spayed": {
+                                                "type": "string"
+                                            },
+                                            "birthday": {
+                                                "type": "date"
+                                            },
+                                            "pictures": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "picture": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "profile": {
+            "get": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Profile data",
+                "description": "Get profile data.",
+                "operationId": "profile",
+                "responses": {
+                    "200": {
+                        "description": "Success message, pet owner and pet info.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "user": {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "owner": {
+                                                    "properties": {
+                                                        "first_name": {
+                                                            "type": "string"
+                                                        },
+                                                        "last_name": {
+                                                            "type": "string"
+                                                        },
+                                                        "gender": {
+                                                            "type": "string"
+                                                        },
+                                                        "age": {
+                                                            "type": "integer"
+                                                        },
+                                                        "birthday": {
+                                                            "type": "date"
+                                                        },
+                                                        "occupation": {
+                                                            "type": "string"
+                                                        },
+                                                        "hobbies": {
+                                                            "type": "string"
+                                                        },
+                                                        "pets_owned": {
+                                                            "type": "string"
+                                                        },
+                                                        "profile_picture": {
+                                                            "type": "string"
+                                                        },
+                                                        "favorite_park": {
+                                                            "type": "string"
+                                                        },
+                                                        "pet": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "name": {
+                                                                    "type": "string"
+                                                                },
+                                                                "gender": {
+                                                                    "type": "string"
+                                                                },
+                                                                "size": {
+                                                                    "type": "string"
+                                                                },
+                                                                "primary_breed": {
+                                                                    "type": "string"
+                                                                },
+                                                                "secondary_breed": {
+                                                                    "type": "string"
+                                                                },
+                                                                "age": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "profile_picture": {
+                                                                    "type": "string"
+                                                                },
+                                                                "friendliness": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "activity_level": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "noise_level": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "odebience_level": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "fetchability": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "swimability": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "city": {
+                                                                    "type": "string"
+                                                                },
+                                                                "state": {
+                                                                    "type": "string"
+                                                                },
+                                                                "like": {
+                                                                    "type": "string"
+                                                                },
+                                                                "dislike": {
+                                                                    "type": "string"
+                                                                },
+                                                                "favorite_toys": {
+                                                                    "type": "string"
+                                                                },
+                                                                "fears": {
+                                                                    "type": "string"
+                                                                },
+                                                                "favorite_places": {
+                                                                    "type": "string"
+                                                                },
+                                                                "spayed": {
+                                                                    "type": "string"
+                                                                },
+                                                                "birthday": {
+                                                                    "type": "date"
+                                                                },
+                                                                "pictures": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "picture": {
+                                                                                "type": "string"
+                                                                            }
+                                                                        },
+                                                                        "type": "object"
+                                                                    }
+                                                                },
+                                                                "friends": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "name": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "gender": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "size": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "primary_breed": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "secondary_breed": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "age": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "profile_picture": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "friendliness": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "activity_level": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "noise_level": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "odebience_level": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "fetchability": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "swimability": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "city": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "state": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "like": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "dislike": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "favorite_toys": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "fears": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "favorite_places": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "spayed": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "birthday": {
+                                                                                "type": "date"
+                                                                            },
+                                                                            "pictures": {
+                                                                                "type": "array",
+                                                                                "items": {
+                                                                                    "properties": {
+                                                                                        "id": {
+                                                                                            "type": "integer"
+                                                                                        },
+                                                                                        "picture": {
+                                                                                            "type": "string"
+                                                                                        }
+                                                                                    },
+                                                                                    "type": "object"
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        "type": "object"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Update profile",
+                "description": "Update owner and pet profiles.",
+                "operationId": "profileUpdate",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "owner[first_name]",
+                                    "owner[last_name]",
+                                    "owner[gender]",
+                                    "owner[birthday]",
+                                    "owner[occupation]",
+                                    "owner[hobbies]",
+                                    "owner[favorite_park]",
+                                    "owner[pets_owned]",
+                                    "pet[friendliness]",
+                                    "pet[activity_level]",
+                                    "pet[noise_level]",
+                                    "pet[odebience_level]",
+                                    "pet[fetchability]",
+                                    "pet[swimability]",
+                                    "pet[name]",
+                                    "pet[gender]",
+                                    "pet[spayed]",
+                                    "pet[size]",
+                                    "pet[age]",
+                                    "pet[birthday]",
+                                    "pet[city]",
+                                    "pet[state]",
+                                    "pet[like]",
+                                    "pet[dislike]",
+                                    "pet[favorite_toys]",
+                                    "pet[fears]",
+                                    "pet[favorite_places]"
+                                ],
+                                "properties": {
+                                    "owner[first_name]": {
+                                        "description": "Owner first name. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\\s?)+$",
+                                        "type": "string",
+                                        "example": "Bob"
+                                    },
+                                    "owner[last_name]": {
+                                        "description": "Owner last name.  Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\\s?)+$",
+                                        "type": "string",
+                                        "example": "Marley"
+                                    },
+                                    "owner[gender]": {
+                                        "description": "Owner gender. Rules: required, min - 1, max - 20, RegExp - ^(male|female|[[:alpha:]]+)$",
+                                        "type": "string",
+                                        "example": "male"
+                                    },
+                                    "owner[birthday]": {
+                                        "description": "Owner date of birthday. Rules: required, format - 'Y-m-d', before - 'now - 1 day'",
+                                        "type": "date",
+                                        "example": "2000-01-01"
+                                    },
+                                    "owner[occupation]": {
+                                        "description": "Owner occupation. Rules: required, min - 1, max - 128",
+                                        "type": "string",
+                                        "example": "Developer"
+                                    },
+                                    "owner[hobbies]": {
+                                        "description": "Owner hobbies. Rules: required, min - 1, max - 128",
+                                        "type": "string",
+                                        "example": "Bike"
+                                    },
+                                    "owner[favorite_park]": {
+                                        "description": "Owner favorite dog park. Rules: required, min - 1, max - 128",
+                                        "type": "string",
+                                        "example": "Tarasa Shevchenka"
+                                    },
+                                    "owner[pets_owned]": {
+                                        "description": "Owner pets owned. Rules: required, min - 1, max - 128",
+                                        "type": "string",
+                                        "example": "33 cows"
+                                    },
+                                    "owner[profile_picture]": {
+                                        "description": "Owner profile picture. Rules: optional, correct base64 string",
+                                        "type": "string",
+                                        "example": ""
+                                    },
+                                    "pet[friendliness]": {
+                                        "description": "Pet friendliness. Rules: required, min - 1, max - 5",
+                                        "type": "integer",
+                                        "example": "5"
+                                    },
+                                    "pet[activity_level]": {
+                                        "description": "Pet activity level. Rules: required, min - 1, max - 5",
+                                        "type": "integer",
+                                        "example": "3"
+                                    },
+                                    "pet[noise_level]": {
+                                        "description": "Pet noise level. Rules: required, min - 1, max - 5",
+                                        "type": "integer",
+                                        "example": "4"
+                                    },
+                                    "pet[odebience_level]": {
+                                        "description": "Pet odebience level. Rules: required, min - 1, max - 5",
+                                        "type": "integer",
+                                        "example": "4"
+                                    },
+                                    "pet[fetchability]": {
+                                        "description": "Pet fetchability. Rules: required, min - 1, max - 5",
+                                        "type": "integer",
+                                        "example": "4"
+                                    },
+                                    "pet[swimability]": {
+                                        "description": "Pet swimability. Rules: required, min - 1, max - 5",
+                                        "type": "integer",
+                                        "example": "5"
+                                    },
+                                    "pet[name]": {
+                                        "description": "Pet name. Rules: required, min - 1, max - 12, RegExp - ^([[:alpha:]-]+\\s?)+$",
+                                        "type": "string",
+                                        "example": "Dolly"
+                                    },
+                                    "pet[gender]": {
+                                        "description": "Pet gender. Rules: required, in - [male, female]",
+                                        "type": "string",
+                                        "example": "male"
+                                    },
+                                    "pet[spayed]": {
+                                        "description": "Pet spayed? Rules: required, in - [0, 1]",
+                                        "type": "integer",
+                                        "example": "0"
+                                    },
+                                    "pet[size]": {
+                                        "description": "Pet size. Rules: required, in - [small, medium, large, giant]",
+                                        "type": "string",
+                                        "example": "giant"
+                                    },
+                                    "pet[age]": {
+                                        "description": "Pet age. Rules: required, min - 1, max - 99",
+                                        "type": "integer",
+                                        "example": "18"
+                                    },
+                                    "pet[birthday]": {
+                                        "description": "Pet date of birthday. Rules: required, format - 'Y-m-d', before - 'now - 1 day'",
+                                        "type": "date",
+                                        "example": "1996-06-28"
+                                    },
+                                    "pet[city]": {
+                                        "description": "Pet hometown. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\\s?)+$",
+                                        "type": "string",
+                                        "example": "New-York"
+                                    },
+                                    "pet[state]": {
+                                        "description": "Pet state. Rules: required, min - 2, max - 3, RegExp - ^[A-Z]{2,3}$",
+                                        "type": "string",
+                                        "example": ""
+                                    },
+                                    "pet[like]": {
+                                        "description": "Pet likes. Rules: required, min - 1, max - 128",
+                                        "type": "string",
+                                        "example": "Orange"
+                                    },
+                                    "pet[dislike]": {
+                                        "description": "Pet dislikes. Rules: required, min - 1, max - 128",
+                                        "type": "string",
+                                        "example": "McDonald's"
+                                    },
+                                    "pet[favorite_toys]": {
+                                        "description": "Pet favorite toys. Rules: required, min - 1, max - 128",
+                                        "type": "string",
+                                        "example": "Mr. Sandman"
+                                    },
+                                    "pet[fears]": {
+                                        "description": "Pet fears. Rules: required, min - 1, max - 128",
+                                        "type": "string",
+                                        "example": "Death"
+                                    },
+                                    "pet[favorite_places]": {
+                                        "description": "Pet favorite places. Rules: required, min - 1, max - 128",
+                                        "type": "string",
+                                        "example": "Land"
+                                    },
+                                    "pet[profile_picture]": {
+                                        "description": "Pet profile picture. Rules: optional, correct base64 string",
+                                        "type": "string",
+                                        "example": ""
+                                    },
+                                    "pet[pictures][create][0]": {
+                                        "description": "Upload pet pictures. Rules: optional, correct base64 string",
+                                        "type": "string",
+                                        "example": ""
+                                    },
+                                    "pet[pictures][delete][0]": {
+                                        "description": "Delete pet picture. Rules: optional, picture id, exists in pet pictures",
+                                        "type": "integer",
+                                        "example": ""
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success message, pet owner and pet info.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "user": {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "owner": {
+                                                    "properties": {
+                                                        "first_name": {
+                                                            "type": "string"
+                                                        },
+                                                        "last_name": {
+                                                            "type": "string"
+                                                        },
+                                                        "gender": {
+                                                            "type": "string"
+                                                        },
+                                                        "age": {
+                                                            "type": "integer"
+                                                        },
+                                                        "birthday": {
+                                                            "type": "date"
+                                                        },
+                                                        "occupation": {
+                                                            "type": "string"
+                                                        },
+                                                        "hobbies": {
+                                                            "type": "string"
+                                                        },
+                                                        "pets_owned": {
+                                                            "type": "string"
+                                                        },
+                                                        "profile_picture": {
+                                                            "type": "string"
+                                                        },
+                                                        "favorite_park": {
+                                                            "type": "string"
+                                                        },
+                                                        "pet": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "name": {
+                                                                    "type": "string"
+                                                                },
+                                                                "gender": {
+                                                                    "type": "string"
+                                                                },
+                                                                "size": {
+                                                                    "type": "string"
+                                                                },
+                                                                "primary_breed": {
+                                                                    "type": "string"
+                                                                },
+                                                                "secondary_breed": {
+                                                                    "type": "string"
+                                                                },
+                                                                "age": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "profile_picture": {
+                                                                    "type": "string"
+                                                                },
+                                                                "friendliness": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "activity_level": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "noise_level": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "odebience_level": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "fetchability": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "swimability": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "city": {
+                                                                    "type": "string"
+                                                                },
+                                                                "state": {
+                                                                    "type": "string"
+                                                                },
+                                                                "like": {
+                                                                    "type": "string"
+                                                                },
+                                                                "dislike": {
+                                                                    "type": "string"
+                                                                },
+                                                                "favorite_toys": {
+                                                                    "type": "string"
+                                                                },
+                                                                "fears": {
+                                                                    "type": "string"
+                                                                },
+                                                                "favorite_places": {
+                                                                    "type": "string"
+                                                                },
+                                                                "spayed": {
+                                                                    "type": "string"
+                                                                },
+                                                                "birthday": {
+                                                                    "type": "date"
+                                                                },
+                                                                "pictures": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "picture": {
+                                                                                "type": "string"
+                                                                            }
+                                                                        },
+                                                                        "type": "object"
+                                                                    }
+                                                                },
+                                                                "friends": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "name": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "gender": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "size": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "primary_breed": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "secondary_breed": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "age": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "profile_picture": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "friendliness": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "activity_level": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "noise_level": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "odebience_level": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "fetchability": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "swimability": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "city": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "state": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "like": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "dislike": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "favorite_toys": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "fears": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "favorite_places": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "spayed": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "birthday": {
+                                                                                "type": "date"
+                                                                            },
+                                                                            "pictures": {
+                                                                                "type": "array",
+                                                                                "items": {
+                                                                                    "properties": {
+                                                                                        "id": {
+                                                                                            "type": "integer"
+                                                                                        },
+                                                                                        "picture": {
+                                                                                            "type": "string"
+                                                                                        }
+                                                                                    },
+                                                                                    "type": "object"
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        "type": "object"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "parameter": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "description": "message",
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/sign-up/stepper": {
             "get": {
                 "tags": [
@@ -1324,12 +2232,6 @@
                                                         "pets_owned": {
                                                             "type": "string"
                                                         },
-                                                        "city": {
-                                                            "type": "string"
-                                                        },
-                                                        "state": {
-                                                            "type": "string"
-                                                        },
                                                         "profile_picture": {
                                                             "type": "string"
                                                         },
@@ -1338,6 +2240,9 @@
                                                         },
                                                         "pet": {
                                                             "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
                                                                 "name": {
                                                                     "type": "string"
                                                                 },
@@ -1376,6 +2281,12 @@
                                                                 },
                                                                 "swimability": {
                                                                     "type": "integer"
+                                                                },
+                                                                "city": {
+                                                                    "type": "string"
+                                                                },
+                                                                "state": {
+                                                                    "type": "string"
                                                                 },
                                                                 "like": {
                                                                     "type": "string"
@@ -1482,11 +2393,11 @@
                                         "description": "Step 1. Rules: required, min - 1, max - 12, RegExp - ^([[:alpha:]-]+\\s?)+$",
                                         "type": "string"
                                     },
-                                    "owner[city]": {
+                                    "pet[city]": {
                                         "description": "Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\\s?)+$",
                                         "type": "string"
                                     },
-                                    "owner[state]": {
+                                    "pet[state]": {
                                         "description": "Step 1. Rules: required, min - 2, max - 3, RegExp - ^[A-Z]{2,3}$",
                                         "type": "string"
                                     },
@@ -1626,12 +2537,6 @@
                                                         "pets_owned": {
                                                             "type": "string"
                                                         },
-                                                        "city": {
-                                                            "type": "string"
-                                                        },
-                                                        "state": {
-                                                            "type": "string"
-                                                        },
                                                         "profile_picture": {
                                                             "type": "string"
                                                         },
@@ -1640,6 +2545,9 @@
                                                         },
                                                         "pet": {
                                                             "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
                                                                 "name": {
                                                                     "type": "string"
                                                                 },
@@ -1678,6 +2586,12 @@
                                                                 },
                                                                 "swimability": {
                                                                     "type": "integer"
+                                                                },
+                                                                "city": {
+                                                                    "type": "string"
+                                                                },
+                                                                "state": {
+                                                                    "type": "string"
                                                                 },
                                                                 "like": {
                                                                     "type": "string"
