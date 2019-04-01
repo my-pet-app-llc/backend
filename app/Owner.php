@@ -10,8 +10,7 @@ class Owner extends Model
         'user_id', 'first_name', 'last_name',
         'gender', 'age', 'birthday',
         'occupation', 'hobbies', 'pets_owned',
-        'city', 'state', 'profile_picture',
-        'signup_step'
+        'profile_picture', 'favorite_park', 'signup_step'
     ];
 
     public function user()

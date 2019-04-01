@@ -2,7 +2,7 @@
 
 namespace App\Rules;
 
-use App\Http\Requests\API\SignUpStepRequest;
+use App\Http\Requests\API\MainFormRequest;
 use Illuminate\Contracts\Validation\Rule;
 
 class RequiredIfHasProfilePicture implements Rule
@@ -14,9 +14,10 @@ class RequiredIfHasProfilePicture implements Rule
     /**
      * Create a new rule instance.
      *
-     * @return void
+     * @param MainFormRequest $request
+     * @param string $model
      */
-    public function __construct(SignUpStepRequest $request, string $model)
+    public function __construct(MainFormRequest $request, string $model)
     {
         $this->user = $request->user();
         $this->model = $model;

@@ -104,20 +104,20 @@ class SignUpStepController extends Controller
      *                         type="string"
      *                     ),
      *                     @OA\Property(
-     *                         property="city",
-     *                         type="string"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="state",
-     *                         type="string"
-     *                     ),
-     *                     @OA\Property(
      *                         property="profile_picture",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="favorite_park",
      *                         type="string"
      *                     ),
      *                     @OA\Property(
      *                         type="object",
      *                         property="pet",
+     *                         @OA\Property(
+     *                             property="id",
+     *                             type="integer"
+     *                         ),
      *                         @OA\Property(
      *                             property="name",
      *                             type="string"
@@ -171,6 +171,14 @@ class SignUpStepController extends Controller
      *                             type="integer"
      *                         ),
      *                         @OA\Property(
+     *                             property="city",
+     *                             type="string"
+     *                         ),
+     *                         @OA\Property(
+     *                             property="state",
+     *                             type="string"
+     *                         ),
+     *                         @OA\Property(
      *                             property="like",
      *                             type="string"
      *                         ),
@@ -197,10 +205,6 @@ class SignUpStepController extends Controller
      *                         @OA\Property(
      *                             property="birthday",
      *                             type="date"
-     *                         ),
-     *                         @OA\Property(
-     *                             property="favorite_park",
-     *                             type="string"
      *                         ),
      *                         @OA\Property(
      *                             property="pictures",
@@ -276,12 +280,12 @@ class SignUpStepController extends Controller
      *                     description="Step 1. Rules: required, min - 1, max - 12, RegExp - ^([[:alpha:]-]+\s?)+$"
      *                 ),
      *                 @OA\Property(
-     *                     property="owner[city]",
+     *                     property="pet[city]",
      *                     type="string",
      *                     description="Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\s?)+$"
      *                 ),
      *                 @OA\Property(
-     *                     property="owner[state]",
+     *                     property="pet[state]",
      *                     type="string",
      *                     description="Step 1. Rules: required, min - 2, max - 3, RegExp - ^[A-Z]{2,3}$"
      *                 ),
@@ -451,20 +455,20 @@ class SignUpStepController extends Controller
      *                         type="string"
      *                     ),
      *                     @OA\Property(
-     *                         property="city",
-     *                         type="string"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="state",
-     *                         type="string"
-     *                     ),
-     *                     @OA\Property(
      *                         property="profile_picture",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="favorite_park",
      *                         type="string"
      *                     ),
      *                     @OA\Property(
      *                         type="object",
      *                         property="pet",
+     *                         @OA\Property(
+     *                             property="id",
+     *                             type="integer"
+     *                         ),
      *                         @OA\Property(
      *                             property="name",
      *                             type="string"
@@ -518,6 +522,14 @@ class SignUpStepController extends Controller
      *                             type="integer"
      *                         ),
      *                         @OA\Property(
+     *                             property="city",
+     *                             type="string"
+     *                         ),
+     *                         @OA\Property(
+     *                             property="state",
+     *                             type="string"
+     *                         ),
+     *                         @OA\Property(
      *                             property="like",
      *                             type="string"
      *                         ),
@@ -544,10 +556,6 @@ class SignUpStepController extends Controller
      *                         @OA\Property(
      *                             property="birthday",
      *                             type="date"
-     *                         ),
-     *                         @OA\Property(
-     *                             property="favorite_park",
-     *                             type="string"
      *                         ),
      *                         @OA\Property(
      *                             property="pictures",
