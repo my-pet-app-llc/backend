@@ -1,6 +1,5 @@
 <div class="sidebar">
     <div class="sidebar-inner">
-        <!-- ### $Sidebar Header ### -->
         <div class="sidebar-logo">
             <div class="peers ai-c fxw-nw">
                 <div class="peer peer-greed">
@@ -27,7 +26,6 @@
             </div>
         </div>
 
-        <!-- ### $Sidebar Menu ### -->
         <ul class="sidebar-menu scrollable pos-r">
             <li class="nav-item mT-30 active">
                 <a class="sidebar-link" href="#">
@@ -70,13 +68,18 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class='sidebar-link' href="#">
+                <a class='sidebar-link' href="{{ route('logout') }}" onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();">
                 <span class="icon-holder">
                   <i class="c-indigo-500 ti-bar-chart"></i>
                 </span>
-                    <span class="title">Log Out</span>
+                    <span class="title">{{ __('Logout') }}</span>
                 </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
             </li>
         </ul>
     </div>
 </div>
+                        

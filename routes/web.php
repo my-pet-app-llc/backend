@@ -12,10 +12,13 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
-Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 
 Route::get('reset/password/api', 'Auth\ApiResetPassword')->name('api.reset.password');
+
+Route::group(['namespace'=>'Admin', 'middleware'=>['auth']], function () {
+    Route::get('/home', 'AdminController@index')->name('home');
+});
