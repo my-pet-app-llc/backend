@@ -34,6 +34,11 @@ class User extends Authenticatable
         return $this->hasOne(Owner::class);
     }
 
+    public function pet()
+    {
+        return $this->hasOneThrough(Pet::class, Owner::class);
+    }
+
     /**
      * Generate auth user access token
      *

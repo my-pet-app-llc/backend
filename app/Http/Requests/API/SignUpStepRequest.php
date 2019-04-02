@@ -89,11 +89,11 @@ class SignUpStepRequest extends MainFormRequest
                 'pet.age' => 'required|integer|min:0|max:99'
             ],
             4 => [
-                'pet.profile_picture' => ['nullable', (new RequiredIfHasProfilePicture($this, 'pet')), 'string', 'regex:~^(data:image\/(jpeg|png);base64,\S+)$~']
+                'pet.profile_picture' => ['nullable', (new RequiredIfHasProfilePicture($this, 'pet')), 'string', 'regex:~^(data:image\/(jpeg|png|jpg);base64,\S+)$~']
             ],
             5 => [
                 'pet.pictures' => 'nullable|array',
-                'pet.pictures.create.*' => ['required', 'string', 'regex:~^(data:image\/(jpeg|png);base64,\S+)$~'],
+                'pet.pictures.create.*' => ['required', 'string', 'regex:~^(data:image\/(jpeg|png|jpg);base64,\S+)$~'],
                 'pet.pictures.delete.*' => 'required|integer|exists:pictures,id'
             ],
             6 => [
@@ -121,7 +121,7 @@ class SignUpStepRequest extends MainFormRequest
                 'owner.age' => 'required|integer|min:0|max:99'
             ],
             12 => [
-                'owner.profile_picture' => ['nullable', (new RequiredIfHasProfilePicture($this, 'owner')), 'string', 'regex:~^(data:image\/(jpeg|png);base64,\S+)$~']
+                'owner.profile_picture' => ['nullable', (new RequiredIfHasProfilePicture($this, 'owner')), 'string', 'regex:~^(data:image\/(jpeg|png|jpg);base64,\S+)$~']
             ],
             13 => []
         ];

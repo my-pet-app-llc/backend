@@ -42,7 +42,7 @@ class ProfileUpdateRequest extends MainFormRequest
                 'owner.hobbies' => 'required|string|min:1|max:128',
                 'owner.favorite_park' => 'required|string|min:1|max:128',
                 'owner.pets_owned' => 'required|string|min:1|max:128',
-                'owner.profile_picture' => ['nullable', (new RequiredIfHasProfilePicture($this, 'owner')), 'string', 'regex:~^(data:image\/(jpeg|png);base64,\S+)$~'],
+                'owner.profile_picture' => ['nullable', (new RequiredIfHasProfilePicture($this, 'owner')), 'string', 'regex:~^(data:image\/(jpeg|png|jpg);base64,\S+)$~'],
                 'pet.friendliness' => 'required|integer|min:1|max:5',
                 'pet.activity_level' => 'required|integer|min:1|max:5',
                 'pet.noise_level' => 'required|integer|min:1|max:5',
@@ -62,9 +62,9 @@ class ProfileUpdateRequest extends MainFormRequest
                 'pet.favorite_toys' => 'required|string|min:1|max:128',
                 'pet.fears' => 'required|string|min:1|max:128',
                 'pet.favorite_places' => 'required|string|min:1|max:128',
-                'pet.profile_picture' => ['nullable', (new RequiredIfHasProfilePicture($this, 'pet')), 'string', 'regex:~^(data:image\/(jpeg|png);base64,\S+)$~'],
+                'pet.profile_picture' => ['nullable', (new RequiredIfHasProfilePicture($this, 'pet')), 'string', 'regex:~^(data:image\/(jpeg|png|jpg);base64,\S+)$~'],
                 'pet.pictures' => 'nullable|array',
-                'pet.pictures.create.*' => ['required', 'string', 'regex:~^(data:image\/(jpeg|png);base64,\S+)$~'],
+                'pet.pictures.create.*' => ['required', 'string', 'regex:~^(data:image\/(jpeg|png|jpg);base64,\S+)$~'],
                 'pet.pictures.delete.*' => 'required|integer|exists:pictures,id',
             ];
         }

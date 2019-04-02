@@ -65,6 +65,10 @@ class SignUpStepController extends Controller
      *                 type="object",
      *                 property="user",
      *                 @OA\Property(
+     *                     type="integer",
+     *                     property="id",
+     *                 ),
+     *                 @OA\Property(
      *                     type="string",
      *                     property="email",
      *                 ),
@@ -416,6 +420,10 @@ class SignUpStepController extends Controller
      *                 type="object",
      *                 property="user",
      *                 @OA\Property(
+     *                     type="integer",
+     *                     property="id",
+     *                 ),
+     *                 @OA\Property(
      *                     type="string",
      *                     property="email",
      *                 ),
@@ -690,7 +698,7 @@ class SignUpStepController extends Controller
     private function saveFile($str_file, $path)
     {
         $file = new File($str_file);
-        $file->validation(['jpg', 'png']);
+        $file->validation(['jpg', 'png', 'jpeg']);
         return $file->store($path);
     }
 }

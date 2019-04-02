@@ -69,6 +69,10 @@ class ProfileController extends Controller
      *                 type="object",
      *                 property="user",
      *                 @OA\Property(
+     *                     type="integer",
+     *                     property="id",
+     *                 ),
+     *                 @OA\Property(
      *                     type="string",
      *                     property="email",
      *                 ),
@@ -582,6 +586,10 @@ class ProfileController extends Controller
      *                 type="object",
      *                 property="user",
      *                 @OA\Property(
+     *                     type="integer",
+     *                     property="id",
+     *                 ),
+     *                 @OA\Property(
      *                     type="string",
      *                     property="email",
      *                 ),
@@ -979,7 +987,7 @@ class ProfileController extends Controller
     private function makeFile(string $base64, string $path)
     {
         $file = new File($base64);
-        $file->validation(['jpg', 'png']);
+        $file->validation(['jpg', 'png', 'jpeg']);
         return $file->store($path);
     }
 }

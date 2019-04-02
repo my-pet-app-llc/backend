@@ -50,6 +50,10 @@ class LoginFbController extends Controller
      *                 type="object",
      *                 property="user",
      *                 @OA\Property(
+     *                     type="integer",
+     *                     property="id",
+     *                 ),
+     *                 @OA\Property(
      *                     type="string",
      *                     property="email",
      *                 ),

@@ -52,7 +52,7 @@ class File
      * @param $path
      * @return null|string
      */
-    public function store($path)
+    public function store($path = '')
     {
         if($this->file === false)
             return null;

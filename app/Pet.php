@@ -2,10 +2,13 @@
 
 namespace App;
 
+use App\Components\Traits\Models\PetFriends;
 use Illuminate\Database\Eloquent\Model;
 
 class Pet extends Model
 {
+    use PetFriends;
+
     public $fillable = [
         'owner_id', 'name', 'gender',
         'size', 'primary_breed', 'secondary_breed',
@@ -27,8 +30,12 @@ class Pet extends Model
         return $this->morphMany(Picture::class, 'picturable');
     }
 
-    public function friends()
+    public function chatRooms()
     {
-        return $this->hasMany(Friend::class);
+        return $this->belongsToMany(ChatRoom::class, 'pet_chat_room')
+            ->withPivot(['is_read'])
+            ->with(['pets' => function ($query) {
+                return $query->where('id', '<>', $this->id);
+            }]);
     }
 }
