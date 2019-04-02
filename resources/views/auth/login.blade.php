@@ -2,10 +2,10 @@
 
 @section('login')
     <div class="peers ai-s fxw-nw h-100vh justify-content-center">
-        <div class="col-12 col-md-4 peer pX-40 pY-80 h-100 bgc-white scrollable pos-r" style='min-width: 320px;'>
+        <div class="col-12 col-md-5 peer pX-40 pY-80 h-100 bgc-white scrollable pos-r" style='min-width: 320px;'>
             <div class="form_box">
             <h2 class="fw-300 c-grey-900 mB-40 text-center"><strong>{{ __('admin.auth.mypet_admin') }}</strong></h2>
-            <h4 class="fw-300 c-grey-900 mB-40 text-center">{{ __('admin.auth.welcome_back') }}</h4>
+            <h5 class="fw-300 c-grey-900 mB-40 text-center">{{ __('admin.auth.welcome_back') }}</h5>
             
             <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
                 @csrf

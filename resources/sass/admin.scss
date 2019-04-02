@@ -48,7 +48,43 @@
 }
 
 div.form_box {
-    padding: 0 15px 15px 15px;
+    padding: 16px 15px 15px 15px;
     border: solid #ced4da 1px;
     background-color: #f9fafb;
+}
+
+div.sidebar-logo {
+    background-color: #45763c;
+    div.peer-greed h5.logo-text {
+        color: #fff;
+    }  
+}
+
+div.header-container {
+    background-color: #71a84f;
+    li a i {
+        color: #fff;
+    }
+}
+
+ul.sidebar-menu {
+    background-color: #71a84f;
+    li a {
+        color: #fff;
+    }
+}
+
+.table_head {
+    background-color: #45763c;
+    color: #fff;
+    
+}
+
+button.btn_remove {
+    background-color: red;
+    color: #fff;
+    font-weight: 600;
+    border: solid 1px #fff;
+    border-radius: 3px;
+    padding: 3px 15px 3px 15px;
 }

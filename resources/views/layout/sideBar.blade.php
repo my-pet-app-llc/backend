@@ -11,7 +11,7 @@
                                 </div>
                             </div>
                             <div class="peer peer-greed">
-                                <h5 class="lh-1 mB-0 logo-text">MyPet Admin Panel</h5>
+                            <h5 class="lh-1 mB-0 logo-text">{{ __('admin.title.mypet_admin_panel') }}</h5>
                             </div>
                         </div>
                     </a>
@@ -27,20 +27,12 @@
         </div>
 
         <ul class="sidebar-menu scrollable pos-r">
-            <li class="nav-item mT-30 active">
-                <a class="sidebar-link" href="#">
-                <span class="icon-holder">
-                  <i class="c-blue-500 ti-home"></i>
-                </span>
-                    <span class="title">Dashboard</span>
-                </a>
-            </li>
             <li class="nav-item">
                 <a class='sidebar-link' href="#">
                 <span class="icon-holder">
                   <i class="c-brown-500 ti-email"></i>
                 </span>
-                    <span class="title">Support Tickets</span>
+                    <span class="title">{{ __('admin.side_bar.support_tickets') }}</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -48,15 +40,15 @@
                 <span class="icon-holder">
                   <i class="c-blue-500 ti-user"></i>
                 </span>
-                    <span class="title">Users</span>
+                    <span class="title">{{ __('admin.side_bar.users') }}</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class='sidebar-link' href="#">
+            <a class='sidebar-link' href="{{ route('updates.index') }}">
                 <span class="icon-holder">
                   <i class="c-deep-orange-500 ti-reload"></i>
                 </span>
-                    <span class="title">App Updates</span>
+                    <span class="title">{{ __('admin.side_bar.app_updates') }}</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -64,7 +56,7 @@
                 <span class="icon-holder">
                   <i class="c-deep-purple-500 ti-comment-alt"></i>
                 </span>
-                    <span class="title">Partner Materials</span>
+                    <span class="title">{{ __('admin.side_bar.partner_materials') }}</span>
                 </a>
             </li>
             <li class="nav-item">

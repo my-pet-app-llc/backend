@@ -20,5 +20,7 @@ Auth::routes();
 Route::get('reset/password/api', 'Auth\ApiResetPassword')->name('api.reset.password');
 
 Route::group(['namespace'=>'Admin', 'middleware'=>['auth']], function () {
-    Route::get('/home', 'AdminController@index')->name('home');
+    Route::get('/home',         'AdminController@index')->name('home');
+    Route::resource('updates',  'UpdatesController');
+    Route::get('/data/updates', 'UpdatesController@data')->name('data_updates');
 });

@@ -8,9 +8,8 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
     <title>Adminator - @yield('title')</title>
     <link rel="stylesheet" href="{{  mix('/css/admin.css') }}">
-    <style>
-
-    </style>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 <body class="app">
     <div id='loader'>
@@ -28,7 +27,6 @@
                         @yield('mainContent')
                     </div>
                 </main>
-                @include('layout.footer')
             </div>
         </div>
     @endguest
@@ -41,5 +39,6 @@
         });
     </script>
     <script src="{{ mix('/js/admin.js') }}"></script>
+    <script src="{{ mix('/js/updates.js') }}"></script>
 </body>
 </html>
