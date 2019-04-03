@@ -8,8 +8,8 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
     <title>Adminator - @yield('title')</title>
     <link rel="stylesheet" href="{{  mix('/css/admin.css') }}">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+
 </head>
 <body class="app">
     <div id='loader'>
@@ -25,6 +25,7 @@
                 <main class='main-content bgc-grey-100'>
                     <div id='mainContent'>
                         @yield('mainContent')
+                        @yield('modals')
                     </div>
                 </main>
             </div>
@@ -40,5 +41,7 @@
     </script>
     <script src="{{ mix('/js/admin.js') }}"></script>
     <script src="{{ mix('/js/updates.js') }}"></script>
+    <script src="{{ mix('/js/helper.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/js/fileinput.min.js"></script>
 </body>
 </html>

@@ -20,5 +20,23 @@ return [
     ],
     'buttons' => [
         'remove' => 'Remove',
+        'send'   => 'Send',
+        'cancel' => 'Cancel',
+        'delete' => 'Delete'
     ],
+
+    'updates' => [
+        'update_title'   => 'Update Title',
+        'date_added'     => 'Date Added',
+        'add_new_update' => 'Add New Update:',
+        'update_image'   => 'Update Image',
+        'update_text'    => 'Update Text',
+        'update_title'   => 'Update Title',
+    ],
+
+    'messages' => [
+        'update_save'    => 'Update successfully added!',
+        'warning_update' => 'Are you sure you want to delete the update? <br/> This cannot be undone!',
+        'remove_update'  => 'Update deleted successfully!'
+    ]
 ];

@@ -74,17 +74,39 @@ ul.sidebar-menu {
     }
 }
 
-.table_head {
-    background-color: #45763c;
-    color: #fff;
-    
+#message_wrap {
+    position: absolute;
+    top: 5%;
+    right: 5%;
 }
 
-button.btn_remove {
-    background-color: red;
+.alert_message {
+    background-color: #2196f3;
     color: #fff;
-    font-weight: 600;
-    border: solid 1px #fff;
-    border-radius: 3px;
-    padding: 3px 15px 3px 15px;
 }
+
+.updates_section {
+    .table_head {
+        background-color: #45763c;
+        color: #fff; 
+    }
+    
+    button.btn_remove {
+        background-color: red;
+        color: #fff;
+        font-weight: 600;
+        border: solid 1px #fff;
+        border-radius: 5px;
+        padding: 3px 15px 3px 15px;
+    }
+
+    .error_message_image {
+        color: #f44342;
+        font-size: 11px;
+    }
+    .error_image {
+        border: solid 1px #f44342;
+        border-radius: 5px;
+    }
+}
+

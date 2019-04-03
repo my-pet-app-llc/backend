@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreUpdateRequest;
 use App\Update;
 use App\Http\Controllers\Controller;
 use \Yajra\DataTables\Facades\DataTables;
@@ -31,7 +32,7 @@ class UpdatesController extends Controller
                 return $update->created_at->format('m/d/Y');
             })
             ->addColumn('remove_btn', function($update) {
-                return view('updates._remove')->render();
+                return view('updates._remove', compact('update'))->render();
             });
 
         $datatables->rawColumns(['remove_btn']);
@@ -54,9 +55,18 @@ class UpdatesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUpdateRequest $request, Update $update)
     {
-        //
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('uploads', 'public');
+            $update->image = $path;
+        }
+
+        $update->title = $request->title;
+        $update->description = $request->description;
+        $update->save();
+
+        return redirect()->route('updates.index')->with('flash_message', __('admin.messages.update_save'));
     }
 
     /**
@@ -96,11 +106,11 @@ class UpdatesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  $update
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Update $update)
     {
-        //
+        $update->delete();
     }
 }
