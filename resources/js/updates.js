@@ -15,14 +15,13 @@ $(function() {
 
     function datatable() {
         table.DataTable({
-            processing: true,
             serverSide: true,
             ajax: url,
             columns: columns
         });
     }
 
-    $(document).on('click', '.remove_update', function (e) {
+    $(document).on('click', '.delete_update', function (e) {
         $('#deleteUpdate').modal();
         const form = $(e.target).closest('form');
         const url = form.attr('action');
@@ -31,8 +30,6 @@ $(function() {
         $('#removeUpdate').attr('data-route', url);
         $('#removeUpdate').attr('data-token', token);
     });
-
-      
 
     $('.remove_update').on('click', function (e) {
         e.preventDefault();

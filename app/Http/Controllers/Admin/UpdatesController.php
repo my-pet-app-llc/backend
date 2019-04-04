@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreUpdateRequest;
 use App\Update;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use \Yajra\DataTables\Facades\DataTables;
 
@@ -111,6 +112,8 @@ class UpdatesController extends Controller
      */
     public function destroy(Update $update)
     {
+        Storage::disk('public')->delete($update->image);
+        
         $update->delete();
     }
 }

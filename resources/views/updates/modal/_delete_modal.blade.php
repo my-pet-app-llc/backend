@@ -5,11 +5,12 @@
                 <span class="pull-right mr-2" aria-hidden="true">&times;</span>
             </button>
             <div class="modal-header">
-                <h4 class="text-center">{!! __('admin.messages.warning_update') !!}</h4>
+                <h4 class="text-center">{!! __('admin.messages.update_warning') !!}</h4>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('admin.buttons.cancel') }}</button>
-            <button id="removeUpdate" data-flash-message="{{ __('admin.messages.remove_update') }}" type="button" class="btn btn-danger remove_update">{{ __('admin.buttons.delete') }}</button>
+                <button id="removeUpdate" data-flash-message="{{ __('admin.messages.update_remove') }}" 
+                        type="button" class="btn btn-danger remove_update">{{ __('admin.buttons.delete') }}</button>
             </div>
         </div>
     </div>

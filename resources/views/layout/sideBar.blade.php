@@ -3,7 +3,7 @@
         <div class="sidebar-logo">
             <div class="peers ai-c fxw-nw">
                 <div class="peer peer-greed">
-                    <a class="sidebar-link td-n" href="index.html">
+                    <a class="sidebar-link td-n" href="#">
                         <div class="peers ai-c fxw-nw">
                             <div class="peer">
                                 <div class="logo">
@@ -52,7 +52,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class='sidebar-link' href="#">
+                <a class='sidebar-link' href="{{ route('materials.index') }}">
                 <span class="icon-holder">
                   <i class="c-deep-purple-500 ti-comment-alt"></i>
                 </span>

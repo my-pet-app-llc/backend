@@ -1,4 +1,4 @@
-function showMessage(messageText, className = 'alert_message', list = [], timeout = 3000) {
+export function showMessage(messageText, className = 'alert_message', list = [], timeout = 3000) {
     const div = document.getElementById('message_wrap') ?
         document.getElementById('message_wrap') :
         document.createElement('div');
@@ -7,7 +7,7 @@ function showMessage(messageText, className = 'alert_message', list = [], timeou
     const renderedList = list.length ? list.map((el) => `<li>${ el }</li>`) : "";
     const messageBlock = document.createElement('div');
         messageBlock.setAttribute('class', `alert ${ className }`);
-        messageBlock.setAttribute('style', 'width: 250px; position: fixed; z-index: 9999; display: block; opacity: 0; right: 100px');
+        messageBlock.setAttribute('style', 'width: 260px; position: fixed; z-index: 9999; display: block; opacity: 0; right: 100px');
         messageBlock.innerHTML =
         `
         <strong>${ messageText }</strong>
@@ -38,5 +38,3 @@ function animate(elem, property, startVal, endVal, time, dimension = "") {
         }
     }, 1 / frameRate);
 }
-
-export {showMessage}

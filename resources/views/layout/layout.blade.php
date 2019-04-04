@@ -6,10 +6,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
-    <title>Adminator - @yield('title')</title>
+    <title>{{ __('admin.title.mypet_admin_panel') }}</title>
     <link rel="stylesheet" href="{{  mix('/css/admin.css') }}">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" /> 
 </head>
 <body class="app">
     <div id='loader'>
@@ -39,9 +38,9 @@
             }, 300);
         });
     </script>
-    <script src="{{ mix('/js/admin.js') }}"></script>
-    <script src="{{ mix('/js/updates.js') }}"></script>
-    <script src="{{ mix('/js/helper.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/js/fileinput.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNSsSHCDXZ3DgXfDGCSklTLNbrQNgpAZE&libraries=places"></script>
+    <script defer src="{{mix('/js/app.js')}}"></script>
 </body>
 </html>

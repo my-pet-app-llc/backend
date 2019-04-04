@@ -35,5 +35,8 @@
         "skycons": "^1.0.0",
         "vue": "^2.5.17",
         "vue-template-compiler": "^2.6.10"
+    },
+    "dependencies": {
+        "jquery-mask-plugin": "^1.14.15"
     }
 }
