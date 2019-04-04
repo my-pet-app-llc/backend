@@ -9,7 +9,7 @@ class ChatMessage extends Model
     const TYPES = [
         'text' => 1,
         'image' => 2,
-//        'event' => 3
+        'event' => 3
     ];
 
     protected $fillable = [

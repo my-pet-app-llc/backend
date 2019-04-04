@@ -38,4 +38,19 @@ class Pet extends Model
                 return $query->where('id', '<>', $this->id);
             }]);
     }
+
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
+
+    public function eventInvites()
+    {
+        return $this->hasMany(EventInvite::class);
+    }
+
+    public function invitedEvents()
+    {
+        return $this->belongsToMany(Event::class, 'event_invites');
+    }
 }

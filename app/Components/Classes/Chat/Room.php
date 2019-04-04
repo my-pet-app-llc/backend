@@ -2,6 +2,7 @@
 
 namespace App\Components\Classes\Chat;
 
+use App\ChatEventMessage;
 use App\ChatImageMessage;
 use App\ChatMessage;
 use App\ChatRoom;
@@ -11,6 +12,9 @@ use App\Events\NewChatMessage;
 use App\Events\NewEvent;
 use App\Http\Resources\ChatMessageResource;
 use App\Pet;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\ValidationException;
 use Validator;
 
@@ -54,17 +58,17 @@ class Room
     /**
      * Make message and broadcast message
      *
-     * @param string $message
+     * @param mixed $message
      * @param string $type
+     * @param bool $validate
      * @return ChatMessage
      */
-    public function send(string $message, string $type)
+    public function send($message, string $type, bool $validate = true)
     {
         if(!isset(ChatMessage::TYPES[$type]))
             abort(404, 'Message type not found.');
 
-        $action = 'make' . ucfirst(strtolower($type)) . 'Message';
-        $chatMessage = $this->$action($message);
+        $chatMessage = $this->makeMessageHandler($message, $type, $validate);
 
         $this->room->pets()->updateExistingPivot($this->recipient->id, ['is_read' => false]);
 
@@ -161,39 +165,54 @@ class Room
     }
 
     /**
+     * @param $message
+     * @param $type
+     * @param $validate
+     * @return ChatMessage
+     */
+    private function makeMessageHandler($message, $type, $validate)
+    {
+        if($validate)
+            $this->validateMessage($message, $type);
+
+        $action = 'make' . ucfirst(strtolower($type)) . 'Message';
+        $message = $this->$action($message);
+
+        return $this->createChatMessage($message, $type);
+    }
+
+    /**
      * Make text message
      *
      * @param $message
-     * @return ChatMessage
-     * @throws ValidationException
+     * @return Builder|Model
      */
     protected function makeTextMessage($message)
     {
-        $type = 'text';
-        $this->validateMessage($message, $type);
-
-        $textMessage = ChatTextMessage::query()->create(['text' => $message]);
-
-        return $this->createChatMessage($textMessage, $type);
+        return ChatTextMessage::query()->create(['text' => $message]);
     }
 
     /**
      * @param $message
-     * @return ChatMessage
+     * @return Builder|Model
      * @throws ValidationException
      */
     protected function makeImageMessage($message)
     {
-        $type = 'image';
-        $this->validateMessage($message, $type);
-
         $file = new File($message);
         $file->validation(['jpg', 'png', 'jpeg']);
         $path = $file->store('chat');
 
-        $imageMessage = ChatImageMessage::query()->create(['path' => $path]);
+        return ChatImageMessage::query()->create(['path' => $path]);
+    }
 
-        return $this->createChatMessage($imageMessage, $type);
+    /**
+     * @param $message
+     * @return Builder|Model
+     */
+    public function makeEventMessage($message)
+    {
+        return ChatEventMessage::query()->create($message);
     }
 
     /**
@@ -214,9 +233,8 @@ class Room
     }
 
     /**
-     * @param $message
+     * @param mixed $message
      * @param $type
-     * @throws ValidationException
      */
     protected function validateMessage($message, $type)
     {
@@ -226,7 +244,7 @@ class Room
         $validator = Validator::make(['message' => $message], $rules);
 
         if($validator->fails())
-            throw new ValidationException($validator);
+            throw new HttpResponseException(response()->json($validator->errors(), 422));
     }
 
     /**
@@ -246,6 +264,17 @@ class Room
     {
         return [
             'message' => ['required', 'string', 'regex:~^(data:image\/(jpeg|png|jpg);base64,\S+)$~']
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getEventRules()
+    {
+        return [
+            'message.event_id' => "required|exists:events,id,pet_id,{$this->sender->id}",
+            'message.event_invite_id' => "required|exists:event_invites,id,pet_id,{$this->recipient->id}"
         ];
     }
 }

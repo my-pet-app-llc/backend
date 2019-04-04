@@ -45,6 +45,12 @@ Route::namespace('API')->group(function () {
 
             Route::resource('friends', 'FriendController')->only(['index']);
 
+            Route::get('events/friends/{event?}', 'EventController@friends');
+
+            Route::resource('events', 'EventController')->except(['edit', 'create']);
+
+            Route::post('invited-events/accept', 'AcceptInviteEventController');
+
         });
 
     });

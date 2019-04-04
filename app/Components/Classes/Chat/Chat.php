@@ -53,4 +53,35 @@ class Chat
 
         return new Room($roomWithPets, $pet, $roomWithPets->pets->first());
     }
+
+    /**
+     * Find rooms. If room doesn't exist - create new room
+     *
+     * @param array $recipientsIds
+     * @return RoomsRepository|null
+     */
+    public static function bulkFindOrCreate(array $recipientsIds)
+    {
+        $pet = auth()->user()->pet;
+
+        if(!($friends = $pet->findFriends($recipientsIds)))
+            abort(404, 'Some friends not found.');
+
+        $friendsIdsWithRoom = $pet->chatRooms->pluck('pets')->collapse()->pluck('id')->toArray();
+        $friendsIdsWithoutRoom = array_diff($recipientsIds, $friendsIdsWithRoom);
+        $friendsWithoutRoom = $friends->whereIn('id', $friendsIdsWithoutRoom);
+
+        foreach ($friendsWithoutRoom as $friend) {
+            $room = ChatRoom::query()->create();
+            $pet->chatRooms()->attach([$room->id], ['is_read' => true]);
+            $friend->chatRooms()->attach([$room->id]);
+        }
+
+        $rooms = $pet->chatRooms()->whereHas('pets', function($query) use ($recipientsIds, $pet) {
+            $query->where('id', '<>', $pet->id)->whereIn('id', $recipientsIds);
+        })->get();
+
+        $roomsRepository = new RoomsRepository($pet);
+        return $roomsRepository->load($rooms);
+    }
 }

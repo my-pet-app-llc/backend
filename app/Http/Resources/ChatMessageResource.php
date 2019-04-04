@@ -10,7 +10,8 @@ class ChatMessageResource extends JsonResource
 {
     const RESOURCES = [
         'text' => ChatTextMessageResource::class,
-        'image' => ChatImageMessageResource::class
+        'image' => ChatImageMessageResource::class,
+        'event' => ChatEventMessageResource::class,
     ];
 
     /**

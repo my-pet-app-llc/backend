@@ -30,6 +30,16 @@ trait PetFriends
             return null;
     }
 
+    public function findFriends(array $friendsIds)
+    {
+        $friendsRel = $this->friends()->whereIn('friend_id', $friendsIds)->with('friend')->get();
+
+        if(count($friendsIds) == $friendsRel->count())
+            return $friendsRel->pluck('friend');
+        else
+            return null;
+    }
+
     /**
      * @param int $friendId
      * @return bool
