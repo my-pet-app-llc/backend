@@ -37,6 +37,8 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "jquery-mask-plugin": "^1.14.15"
+        "jquery-mask-plugin": "^1.14.15",
+        "laravel-echo": "^1.5.3",
+        "socket.io-client": "^2.2.0"
     }
 }
