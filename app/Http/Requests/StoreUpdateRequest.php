@@ -24,7 +24,7 @@ class StoreUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'image'       => 'nullable|image|max:2000',
+            'image'       => 'required|image|max:2000',
             'title'       => 'required|max:15',
             'description' => 'required'
         ];

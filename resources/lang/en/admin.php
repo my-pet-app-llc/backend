@@ -26,6 +26,15 @@ return [
         'delete'       => 'Delete'
     ],
 
+    'users' => [
+        'username'    => 'User Name',
+        'user_e-mail' => 'User E-mail',
+        'data_joined' => 'Date Joined',
+        'age'         => 'Age',
+        'location'    => 'Location',
+        'status'      => 'Status',
+    ],
+
     'updates' => [
         'update_title'   => 'Update Title:',
         'date_added'     => 'Date Added',
