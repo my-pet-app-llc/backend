@@ -51,6 +51,8 @@ Route::namespace('API')->group(function () {
 
             Route::post('invited-events/accept', 'AcceptInviteEventController');
 
+            Route::resource('updates', 'UpdateController')->only(['index', 'show']);
+
         });
 
     });
