@@ -5,11 +5,164 @@ namespace App\Http\Controllers\API;
 use App\Components\Classes\Chat\Chat;
 use App\Http\Resources\ChatMessageResource;
 use App\Http\Resources\ChatRoomResource;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class ChatController extends Controller
 {
+    /**
+     * @OA\Get(
+     *     path="/chats",
+     *     tags={"Chat"},
+     *     description="Get chat rooms",
+     *     summary="Get chats",
+     *     operationId="chatsGet",
+     *     @OA\Response(
+     *         response="200",
+     *         description="List of chats",
+     *         @OA\JsonContent(
+     *             @OA\Items(
+     *                 @OA\Property(
+     *                     type="integer",
+     *                     property="id",
+     *                     description="Chat room ID",
+     *                     example="1"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="picture",
+     *                     description="URl of profile picture collocutor pet",
+     *                     example="http://mypets.com/storage/profile_picture/picture.png"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="name",
+     *                     description="Name of collocutor pet",
+     *                     example="Dog"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="object",
+     *                     property="owner",
+     *                     description="Owner data of collocutor pet",
+     *                     @OA\Property(
+     *                         type="string",
+     *                         property="first_name",
+     *                         description="Collocutor pet owner first name",
+     *                         example="John"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="string",
+     *                         property="last_name",
+     *                         description="Collocutor pet owner last name",
+     *                         example="Doe"
+     *                     )
+     *                 ),
+     *                 @OA\Property(
+     *                     type="integer",
+     *                     property="is_read",
+     *                     description="1 or 0. Readed chat messages - 1, Not readed chat messages - 0",
+     *                     example="0"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="object",
+     *                     property="last_message",
+     *                     @OA\Property(
+     *                         type="integer",
+     *                         property="id",
+     *                         description="Message ID",
+     *                         example="1"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="string",
+     *                         property="type",
+     *                         description="Message types: text, image, event",
+     *                         example="text"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="object",
+     *                         property="message",
+     *                         description="This message type 'text'. Refer to another sections of the documentation to find out what data comes in different types",
+     *                         @OA\Property(
+     *                             type="string",
+     *                             property="message",
+     *                             description="Displayed message",
+     *                             example="Hello world!"
+     *                         )
+     *                     ),
+     *                     @OA\Property(
+     *                         type="string",
+     *                         property="date_time_created",
+     *                         description="Date and time for message created.",
+     *                         example="2019-04-04 16:50:59"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="integer",
+     *                         property="like",
+     *                         description="0 or 1. Liked - 1, Not liked - 0",
+     *                         example="1"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="object",
+     *                         property="sender",
+     *                         description="Who send this message",
+     *                         @OA\Property(
+     *                             type="integer",
+     *                             property="id",
+     *                             description="Sender pet ID",
+     *                             example="2"
+     *                         ),
+     *                         @OA\Property(
+     *                             type="string",
+     *                             property="name",
+     *                             description="Name of sender pet",
+     *                             example="Cat"
+     *                         ),
+     *                         @OA\Property(
+     *                             type="string",
+     *                             property="profile_picture",
+     *                             description="URL of the sender pet profile picture",
+     *                             example="http://mypets.com/storage/profile_picture/example.jpg"
+     *                         ),
+     *                         @OA\Property(
+     *                             type="object",
+     *                             property="owner",
+     *                             description="Owner data for sender pet",
+     *                             @OA\Property(
+     *                                 type="string",
+     *                                 property="first_name",
+     *                                 description="Sender pet owner first name",
+     *                                 example="John"
+     *                             ),
+     *                             @OA\Property(
+     *                                 type="string",
+     *                                 property="last_name",
+     *                                 description="Sender pet owner last name",
+     *                                 example="Doe"
+     *                             ),
+     *                         ),
+     *                     ),
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Unauthenticated error or registration error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Unauthenticated.|Sign-Up steps not done."
+     *             )
+     *         )
+     *     ),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
+    /**
+     * @return JsonResponse
+     */
     public function chats()
     {
         $pet = auth()->user()->pet;
@@ -18,6 +171,80 @@ class ChatController extends Controller
         return response()->json($responseData);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/chats",
+     *     tags={"Chat"},
+     *     description="Create new chat.",
+     *     summary="Create chat",
+     *     operationId="chatCreate",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/from-data",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     type="integer",
+     *                     property="friend_id",
+     *                     description="Friend with whom you want to create a chat",
+     *                     example="2"
+     *                 ),
+     *                 required={"friend_id"}
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Created room ID",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="integer",
+     *                 property="room_id",
+     *                 description="Room ID",
+     *                 example="1"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Unauthenticated error or registration error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Unauthenticated.|Sign-Up steps not done."
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Forbidden error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Chat with this friend already exist."
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Not found error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Friend not found."
+     *             )
+     *         )
+     *     ),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function create(Request $request)
     {
         $friend = $request->get('friend_id');
@@ -26,6 +253,145 @@ class ChatController extends Controller
         return response()->json(['room_id' => $chat->getRoom()->id]);
     }
 
+    /**
+     * @OA\Get(
+     *     path="/chats/{room_id}",
+     *     tags={"Chat"},
+     *     description="Messages in chat",
+     *     summary="Chat messages",
+     *     operationId="chatMessages",
+     *     @OA\Parameter(
+     *         name="room_id",
+     *         description="Room ID",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="page",
+     *         description="Page pagination. Count messages in page - 25",
+     *         in="query",
+     *         required=true,
+     *         example="1",
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Messages list",
+     *         @OA\JsonContent(
+     *             @OA\Items(
+     *                 @OA\Property(
+     *                     type="integer",
+     *                     property="id",
+     *                     description="Message ID",
+     *                     example="1"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="type",
+     *                     description="Message types: text, image, event",
+     *                     example="image"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="object",
+     *                     property="message",
+     *                     description="This message type 'image'. Refer to another sections of the documentation to find out what data comes in different types",
+     *                     @OA\Property(
+     *                         type="string",
+     *                         property="message",
+     *                         description="URL for image message",
+     *                         example="http://mypets.com/storage/pictures/example.com"
+     *                     )
+     *                 ),
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="date_time_created",
+     *                     description="Date and time for message created.",
+     *                     example="2019-04-04 16:50:59"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="integer",
+     *                     property="like",
+     *                     description="0 or 1. Liked - 1, Not liked - 0",
+     *                     example="1"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="object",
+     *                     property="sender",
+     *                     description="Who send this message",
+     *                     @OA\Property(
+     *                         type="integer",
+     *                         property="id",
+     *                         description="Sender pet ID",
+     *                         example="2"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="string",
+     *                         property="name",
+     *                         description="Name of sender pet",
+     *                         example="Cat"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="string",
+     *                         property="profile_picture",
+     *                         description="URL of the sender pet profile picture",
+     *                         example="http://mypets.com/storage/profile_picture/example.jpg"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="object",
+     *                         property="owner",
+     *                         description="Owner data for sender pet",
+     *                         @OA\Property(
+     *                             type="string",
+     *                             property="first_name",
+     *                             description="Sender pet owner first name",
+     *                             example="John"
+     *                         ),
+     *                         @OA\Property(
+     *                             type="string",
+     *                             property="last_name",
+     *                             description="Sender pet owner last name",
+     *                             example="Doe"
+     *                         ),
+     *                     ),
+     *                 ),
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Unauthenticated error or registration error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Unauthenticated.|Sign-Up steps not done."
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Not found error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Room not found."
+     *             )
+     *         )
+     *     ),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
+    /**
+     * @param Request $request
+     * @param $room
+     * @return JsonResponse
+     */
     public function roomMessages(Request $request, $room)
     {
         $chat = Chat::get((int)$room);
@@ -36,6 +402,229 @@ class ChatController extends Controller
         return response()->json($chat->getMessages());
     }
 
+    /**
+     * @OA\Post(
+     *     path="/chats/{room_id}",
+     *     tags={"Chat"},
+     *     description="Send message for chat.",
+     *     summary="Send message",
+     *     operationId="chatSend",
+     *     @OA\Parameter(
+     *         name="room_id",
+     *         description="Room ID",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="type",
+     *                     description="Type of message. Message types: text, image, event",
+     *                     example="event"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="message",
+     *                     description="Message for send",
+     *                     example="1"
+     *                 ),
+     *                 required={"type", "message"}
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="New message",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="integer",
+     *                 property="id",
+     *                 description="Message ID",
+     *                 example="1"
+     *             ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="type",
+     *                 description="Message types: text, image, event",
+     *                 example="event"
+     *             ),
+     *             @OA\Property(
+     *                 type="object",
+     *                 property="message",
+     *                 description="This message type 'event'. Refer to another sections of the documentation to find out what data comes in different types",
+     *                 @OA\Property(
+     *                     type="object",
+     *                     property="message",
+     *                     @OA\Property(
+     *                         type="integer",
+     *                         property="id",
+     *                         description="Invite ID",
+     *                         example="1"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="integer",
+     *                         property="accepted",
+     *                         description="Is accept or decline ivent. 0 - Decline, 1 - Accept, null - not accept and decline",
+     *                         example="1"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="string",
+     *                         property="type",
+     *                         description="Social or care",
+     *                         example="social"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="string",
+     *                         property="name",
+     *                         description="Name of event",
+     *                         example="First event"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="string",
+     *                         property="from_date",
+     *                         description="Date for start event",
+     *                         example="2019-04-08"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="string",
+     *                         property="from_time",
+     *                         description="Time for start event",
+     *                         example="12:30"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="string",
+     *                         property="to_time",
+     *                         description="Time for end event",
+     *                         example="13:30"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="array",
+     *                         property="repeat",
+     *                         description="Numbers days of week for repeat event",
+     *                         @OA\Items(type="integer")
+     *                     ),
+     *                     @OA\Property(
+     *                         type="string",
+     *                         property="where",
+     *                         description="Where will be event",
+     *                         example="Park"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="string",
+     *                         property="notes",
+     *                         description="Notes for event",
+     *                         example="I'm stupid"
+     *                     ),
+     *                 ),
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="deleted_at",
+     *                     description="If event has been deleted",
+     *                     example="2019-04-04 18:06:15"
+     *                 )
+     *             ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="date_time_created",
+     *                 description="Date and time for message created.",
+     *                 example="2019-04-04 16:50:59"
+     *             ),
+     *             @OA\Property(
+     *                 type="integer",
+     *                 property="like",
+     *                 description="0 or 1. Liked - 1, Not liked - 0",
+     *                 example="1"
+     *             ),
+     *             @OA\Property(
+     *                 type="object",
+     *                 property="sender",
+     *                 description="Who send this message",
+     *                 @OA\Property(
+     *                     type="integer",
+     *                     property="id",
+     *                     description="Sender pet ID",
+     *                     example="2"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="name",
+     *                     description="Name of sender pet",
+     *                     example="Cat"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="profile_picture",
+     *                     description="URL of the sender pet profile picture",
+     *                     example="http://mypets.com/storage/profile_picture/example.jpg"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="object",
+     *                     property="owner",
+     *                     description="Owner data for sender pet",
+     *                     @OA\Property(
+     *                         type="string",
+     *                         property="first_name",
+     *                         description="Sender pet owner first name",
+     *                         example="John"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="string",
+     *                         property="last_name",
+     *                         description="Sender pet owner last name",
+     *                         example="Doe"
+     *                     ),
+     *                 ),
+     *             ),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Unauthenticated error or registration error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Unauthenticated.|Sign-Up steps not done."
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Not found error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Room not found."
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="422",
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="array",
+     *                 property="field",
+     *                 @OA\Items(type="string", example="Invalid data")
+     *             )
+     *         )
+     *     ),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
+    /**
+     * @param Request $request
+     * @param $room
+     * @return JsonResponse
+     */
     public function send(Request $request, $room)
     {
         $chat = Chat::get((int)$room);
@@ -48,6 +637,63 @@ class ChatController extends Controller
         return response()->json(new ChatMessageResource($chatMessage));
     }
 
+    /**
+     * @OA\Delete(
+     *     path="/chats/{room_id}",
+     *     tags={"Chat"},
+     *     description="Delete chat",
+     *     summary="Delete chat",
+     *     operationId="chatDelete",
+     *     @OA\Parameter(
+     *         name="room_id",
+     *         description="Room ID",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Success message",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="success"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Unauthenticated error or registration error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Unauthenticated.|Sign-Up steps not done."
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Not found error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Room not found."
+     *             )
+     *         )
+     *     ),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
+    /**
+     * @param $room
+     * @return JsonResponse
+     * @throws \Exception
+     */
     public function destroy($room)
     {
         $chat = Chat::get((int)$room);
@@ -56,20 +702,287 @@ class ChatController extends Controller
         return response()->json(['message' => 'success']);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/chats/to/read",
+     *     tags={"Chat"},
+     *     description="Make chat read",
+     *     summary="Read chat",
+     *     operationId="chatToRead",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     type="integer",
+     *                     property="room_id",
+     *                     description="Room ID",
+     *                     example="1"
+     *                 ),
+     *                 required={"room_id"}
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Success message",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="success"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Unauthenticated error or registration error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Unauthenticated.|Sign-Up steps not done."
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Not found error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Room not found."
+     *             )
+     *         )
+     *     ),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function read(Request $request)
     {
         $room = $request->get('room_id');
 
         $chat = Chat::get((int)$room);
         $chat->updateRead();
+
+        return response()->json(['message' => 'success']);
     }
 
+    /**
+     * @OA\Get(
+     *     path="/cahts/is/read",
+     *     tags={"Chat"},
+     *     description="Check readed chats",
+     *     summary="Check readed chats",
+     *     operationId="chatsIsRead",
+     *     @OA\Response(
+     *         response="200",
+     *         description="Chats readed",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="is_read",
+     *                 description="0 or 1. If 1 - chats readed else chats not readed",
+     *                 example="0"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Unauthenticated error or registration error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Unauthenticated.|Sign-Up steps not done."
+     *             )
+     *         )
+     *     ),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
+    /**
+     * @return JsonResponse
+     */
     public function isRead()
     {
         $notReadRooms = auth()->user()->pet->chatRooms()->wherePivot('is_read', false)->count();
         return response()->json(['is_read' => !$notReadRooms]);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/chats/to/chat-search",
+     *     tags={"Chat"},
+     *     description="Search chats buy pet name",
+     *     summary="Search chat",
+     *     operationId="chtasSearch",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="search",
+     *                     description="Search by this field"
+     *                 ),
+     *                 required={"search"}
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="List of chats",
+     *         @OA\JsonContent(
+     *             @OA\Items(
+     *                 @OA\Property(
+     *                     type="integer",
+     *                     property="id",
+     *                     description="Chat room ID",
+     *                     example="1"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="picture",
+     *                     description="URl of profile picture collocutor pet",
+     *                     example="http://mypets.com/storage/profile_picture/picture.png"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="name",
+     *                     description="Name of collocutor pet",
+     *                     example="Dog"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="object",
+     *                     property="owner",
+     *                     description="Owner data of collocutor pet",
+     *                     @OA\Property(
+     *                         type="string",
+     *                         property="first_name",
+     *                         description="Collocutor pet owner first name",
+     *                         example="John"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="string",
+     *                         property="last_name",
+     *                         description="Collocutor pet owner last name",
+     *                         example="Doe"
+     *                     )
+     *                 ),
+     *                 @OA\Property(
+     *                     type="integer",
+     *                     property="is_read",
+     *                     description="1 or 0. Readed chat messages - 1, Not readed chat messages - 0",
+     *                     example="0"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="object",
+     *                     property="last_message",
+     *                     @OA\Property(
+     *                         type="integer",
+     *                         property="id",
+     *                         description="Message ID",
+     *                         example="1"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="string",
+     *                         property="type",
+     *                         description="Message types: text, image, event",
+     *                         example="text"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="object",
+     *                         property="message",
+     *                         description="This message type 'text'. Refer to another sections of the documentation to find out what data comes in different types",
+     *                         @OA\Property(
+     *                             type="string",
+     *                             property="message",
+     *                             description="Displayed message",
+     *                             example="Hello world!"
+     *                         )
+     *                     ),
+     *                     @OA\Property(
+     *                         type="string",
+     *                         property="date_time_created",
+     *                         description="Date and time for message created.",
+     *                         example="2019-04-04 16:50:59"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="integer",
+     *                         property="like",
+     *                         description="0 or 1. Liked - 1, Not liked - 0",
+     *                         example="1"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="object",
+     *                         property="sender",
+     *                         description="Who send this message",
+     *                         @OA\Property(
+     *                             type="integer",
+     *                             property="id",
+     *                             description="Sender pet ID",
+     *                             example="2"
+     *                         ),
+     *                         @OA\Property(
+     *                             type="string",
+     *                             property="name",
+     *                             description="Name of sender pet",
+     *                             example="Cat"
+     *                         ),
+     *                         @OA\Property(
+     *                             type="string",
+     *                             property="profile_picture",
+     *                             description="URL of the sender pet profile picture",
+     *                             example="http://mypets.com/storage/profile_picture/example.jpg"
+     *                         ),
+     *                         @OA\Property(
+     *                             type="object",
+     *                             property="owner",
+     *                             description="Owner data for sender pet",
+     *                             @OA\Property(
+     *                                 type="string",
+     *                                 property="first_name",
+     *                                 description="Sender pet owner first name",
+     *                                 example="John"
+     *                             ),
+     *                             @OA\Property(
+     *                                 type="string",
+     *                                 property="last_name",
+     *                                 description="Sender pet owner last name",
+     *                                 example="Doe"
+     *                             ),
+     *                         ),
+     *                     ),
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Unauthenticated error or registration error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Unauthenticated.|Sign-Up steps not done."
+     *             )
+     *         )
+     *     ),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function searchChat(Request $request)
     {
         $search = $request->get('search', '');
@@ -83,6 +996,72 @@ class ChatController extends Controller
         return response()->json($responseData);
     }
 
+    /**
+     * @OA\Get(
+     *     path="/chats/{room_id}/{messages_id}/like",
+     *     tags={"Chat"},
+     *     description="Like message in chat. Invert like value",
+     *     summary="Like message",
+     *     operationId="chatLikeMessage",
+     *     @OA\Parameter(
+     *         name="room_id",
+     *         description="Room ID",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="message_id",
+     *         description="Message ID",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Success message",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="success"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Unauthenticated error or registration error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Unauthenticated.|Sign-Up steps not done."
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Not found error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Room not found."
+     *             )
+     *         )
+     *     ),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
+    /**
+     * @param $room
+     * @param $message
+     * @return JsonResponse
+     */
     public function likeMessage($room, $message)
     {
         $chat = Chat::get((int)$room);
