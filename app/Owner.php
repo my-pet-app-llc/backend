@@ -22,4 +22,9 @@ class Owner extends Model
     {
         return $this->hasOne(Pet::class);
     }
+
+    public function getFullNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
 }

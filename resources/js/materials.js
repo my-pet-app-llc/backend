@@ -61,12 +61,16 @@ $(function() {
 
 const input = document.getElementById('materialAddress');
 
-function init(input) {
-    
-    return new google.maps.places.Autocomplete(input);
-}
-
 if (input) {
-    google.maps.event.addDomListener(window, 'load', init(input));
+    const autocomplete = new google.maps.places.Autocomplete(input);
+    google.maps.event.addDomListener(window, 'load', autocomplete);
+    
+    google.maps.event.addDomListener(autocomplete, 'place_changed', function() {
+        const place = autocomplete.getPlace();
+        const lat = place.geometry.location.lat();
+        const lng = place.geometry.location.lng();
+        $('#sendMaterials').find('[name="lat"]').val(lat);
+        $('#sendMaterials').find('[name="lng"]').val(lng);
+    });
 }
     
