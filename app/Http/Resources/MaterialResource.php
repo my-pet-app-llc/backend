@@ -23,7 +23,9 @@ class MaterialResource extends JsonResource
             'full_text' => $this->full_text,
             'address' => $this->address,
             'phone_number' => $this->phone_number,
-            'website' => $this->website
+            'website' => $this->website,
+            'lat' => $this->lat,
+            'lng' => $this->lng
         ];
     }
 }

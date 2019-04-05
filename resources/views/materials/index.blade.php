@@ -20,8 +20,10 @@
 
         <div class="col-sm-6 form_box">
             <h2><strong>{{ __('admin.materials.add_new_promotion') }}</strong></h2>
-            <form method="POST" action="{{ route('materials.store') }}" enctype="multipart/form-data">
+            <form id="sendMaterials" method="POST" action="{{ route('materials.store') }}" enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" name="lat">
+                <input type="hidden" name="lng">
                 <div class="form-group">
                     <label for="input-b2">{{__('admin.materials.promotion_image') }}</label>
                     <div class="{{ $errors->has('image') ? 'error_image' : '' }}">

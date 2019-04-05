@@ -81,4 +81,5 @@ class User extends Authenticatable
     {
         return (bool)$this->facebook_id;
     }
+    
 }
