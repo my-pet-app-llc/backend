@@ -15,7 +15,7 @@ $(function() {
 
     function datatable() {
         table.DataTable({
-            serverSide: true,
+            serverSide: false,
             ajax: url,
             columns: columns
         });
