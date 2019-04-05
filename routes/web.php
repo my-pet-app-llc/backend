@@ -27,4 +27,7 @@ Route::group(['namespace'=>'Admin', 'middleware'=>['auth']], function () {
 
     Route::resource('materials',  'MaterialsController');
     Route::get('/data/materials', 'MaterialsController@data')->name('data_materials');
+
+    Route::get('/users',          'UsersController@index')->name('users.index');
+    Route::get('/data/users',     'UsersController@data')->name('data_users');
 });
