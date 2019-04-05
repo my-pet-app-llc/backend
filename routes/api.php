@@ -53,6 +53,8 @@ Route::namespace('API')->group(function () {
 
             Route::resource('updates', 'UpdateController')->only(['index', 'show']);
 
+            Route::resource('materials', 'MaterialController')->only(['index', 'show']);
+
         });
 
     });

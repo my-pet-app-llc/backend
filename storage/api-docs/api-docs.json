@@ -2515,41 +2515,49 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "items": {
-                                        "properties": {
-                                            "id": {
-                                                "type": "integer"
-                                            },
-                                            "type": {
-                                                "type": "string"
-                                            },
-                                            "name": {
-                                                "type": "string"
-                                            },
-                                            "from_date": {
-                                                "type": "date"
-                                            },
-                                            "from_time": {
-                                                "type": "time"
-                                            },
-                                            "to_time": {
-                                                "type": "time"
-                                            },
-                                            "repeat": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "integer"
+                                    "properties": {
+                                        "date_of_selected_period": {
+                                            "properties": {
+                                                "event_id_as_object_key": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "type": {
+                                                            "type": "string"
+                                                        },
+                                                        "name": {
+                                                            "type": "string"
+                                                        },
+                                                        "from_date": {
+                                                            "type": "date"
+                                                        },
+                                                        "from_time": {
+                                                            "type": "time"
+                                                        },
+                                                        "to_time": {
+                                                            "type": "time"
+                                                        },
+                                                        "repeat": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "integer"
+                                                            }
+                                                        },
+                                                        "where": {
+                                                            "type": "string"
+                                                        },
+                                                        "is_creator": {
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    "type": "object"
                                                 }
                                             },
-                                            "where": {
-                                                "type": "string"
-                                            },
-                                            "is_creator": {
-                                                "type": "boolean"
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
