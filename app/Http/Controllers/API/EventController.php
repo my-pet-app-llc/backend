@@ -46,44 +46,50 @@ class EventController extends Controller
      *         response="200",
      *         description="Events",
      *         @OA\JsonContent(
-     *             @OA\Items(
+     *             @OA\Property(
+     *                 type="object",
+     *                 property="date_of_selected_period",
      *                 @OA\Property(
-     *                 type="integer",
-     *                 property="id"
-     *             ),
-     *             @OA\Property(
-     *                 type="string",
-     *                 property="type"
-     *             ),
-     *             @OA\Property(
-     *                 type="string",
-     *                 property="name"
-     *             ),
-     *             @OA\Property(
-     *                 type="date",
-     *                 property="from_date"
-     *             ),
-     *             @OA\Property(
-     *                 type="time",
-     *                 property="from_time"
-     *             ),
-     *             @OA\Property(
-     *                 type="time",
-     *                 property="to_time"
-     *             ),
-     *             @OA\Property(
-     *                 type="array",
-     *                 property="repeat",
-     *                 @OA\Items(type="integer")
-     *             ),
-     *             @OA\Property(
-     *                 type="string",
-     *                 property="where"
-     *             ),
-     *             @OA\Property(
-     *                 type="boolean",
-     *                 property="is_creator"
-     *             )
+     *                     type="object",
+     *                     property="event_id_as_object_key",
+     *                     @OA\Property(
+     *                         type="integer",
+     *                         property="id"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="string",
+     *                         property="type"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="string",
+     *                         property="name"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="date",
+     *                         property="from_date"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="time",
+     *                         property="from_time"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="time",
+     *                         property="to_time"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="array",
+     *                         property="repeat",
+     *                         @OA\Items(type="integer")
+     *                     ),
+     *                     @OA\Property(
+     *                         type="string",
+     *                         property="where"
+     *                     ),
+     *                     @OA\Property(
+     *                         type="boolean",
+     *                         property="is_creator"
+     *                     )
+     *                 )
      *             )
      *         )
      *     ),
@@ -151,22 +157,7 @@ class EventController extends Controller
         }
 
         $pet = auth()->user()->pet;
-
-        $petEvents = $pet->events()
-            ->whereDate('from_date', '>=', $fromDate)
-            ->whereDate('from_date', '<=', $toDate)
-            ->get();
-        $invitedEvents = $pet->eventInvites()
-            ->with('event')
-            ->whereHas('event', function ($query) use ($fromDate, $toDate) {
-                $query->whereDate('from_date', '>=', $fromDate)->whereDate('from_date', '<=', $toDate);
-            })
-            ->where('accepted', true)
-            ->get()
-            ->pluck('event');
-
-        $allEvents = $petEvents->merge($invitedEvents)->sortBy('from_date')->values();
-        $responseData = PreviewEventResource::collection($allEvents);
+        $responseData = $pet->getEventsByDates($fromDate, $toDate);
 
         return response()->json($responseData);
     }
