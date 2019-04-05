@@ -13,6 +13,113 @@
     ],
     "paths": {
         "api/documentation": {},
+        "invited-events/accept": {
+            "post": {
+                "tags": [
+                    "Chat"
+                ],
+                "summary": "Accept or decline invite",
+                "description": "Accept or decline invitation to event.",
+                "operationId": "inviteAccept",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "accept",
+                                    "invite_id"
+                                ],
+                                "properties": {
+                                    "accept": {
+                                        "description": "Must be 1 or 0. 1 - Accept, 0 - Decline",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "invite_id": {
+                                        "description": "Pet invite ID",
+                                        "type": "integer",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success message",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Exist feedback from invite error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invite already accepted.|Invite already declined."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found exseption",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No query result from model."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "auth/password/forgot": {
             "post": {
                 "tags": [
@@ -78,20 +185,12 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "message": {
-                                            "type": "string"
-                                        },
-                                        "errors": {
-                                            "properties": {
-                                                "parameter": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "description": "message",
-                                                        "type": "string"
-                                                    }
-                                                }
-                                            },
-                                            "type": "object"
+                                        "field": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Invalid data"
+                                            }
                                         }
                                     },
                                     "type": "object"
@@ -312,20 +411,12 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "message": {
-                                            "type": "string"
-                                        },
-                                        "errors": {
-                                            "properties": {
-                                                "parameter": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "description": "message",
-                                                        "type": "string"
-                                                    }
-                                                }
-                                            },
-                                            "type": "object"
+                                        "field": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Invalid data"
+                                            }
                                         }
                                     },
                                     "type": "object"
@@ -590,20 +681,12 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "message": {
-                                            "type": "string"
-                                        },
-                                        "errors": {
-                                            "properties": {
-                                                "parameter": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "description": "message",
-                                                        "type": "string"
-                                                    }
-                                                }
-                                            },
-                                            "type": "object"
+                                        "field": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Invalid data"
+                                            }
                                         }
                                     },
                                     "type": "object"
@@ -807,20 +890,12 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "message": {
-                                            "type": "string"
-                                        },
-                                        "errors": {
-                                            "properties": {
-                                                "parameter": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "description": "message",
-                                                        "type": "string"
-                                                    }
-                                                }
-                                            },
-                                            "type": "object"
+                                        "field": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Invalid data"
+                                            }
                                         }
                                     },
                                     "type": "object"
@@ -1030,20 +1105,12 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "message": {
-                                            "type": "string"
-                                        },
-                                        "errors": {
-                                            "properties": {
-                                                "parameter": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "description": "message",
-                                                        "type": "string"
-                                                    }
-                                                }
-                                            },
-                                            "type": "object"
+                                        "field": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Invalid data"
+                                            }
                                         }
                                     },
                                     "type": "object"
@@ -1281,20 +1348,12 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "message": {
-                                            "type": "string"
-                                        },
-                                        "errors": {
-                                            "properties": {
-                                                "parameter": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "description": "message",
-                                                        "type": "string"
-                                                    }
-                                                }
-                                            },
-                                            "type": "object"
+                                        "field": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Invalid data"
+                                            }
                                         }
                                     },
                                     "type": "object"
@@ -1305,7 +1364,1124 @@
                 }
             }
         },
-        "events": {
+        "/chats": {
+            "get": {
+                "tags": [
+                    "Chat"
+                ],
+                "summary": "Get chats",
+                "description": "Get chat rooms",
+                "operationId": "chatsGet",
+                "responses": {
+                    "200": {
+                        "description": "List of chats",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "Chat room ID",
+                                                "type": "integer",
+                                                "example": "1"
+                                            },
+                                            "picture": {
+                                                "description": "URl of profile picture collocutor pet",
+                                                "type": "string",
+                                                "example": "http://mypets.com/storage/profile_picture/picture.png"
+                                            },
+                                            "name": {
+                                                "description": "Name of collocutor pet",
+                                                "type": "string",
+                                                "example": "Dog"
+                                            },
+                                            "owner": {
+                                                "description": "Owner data of collocutor pet",
+                                                "properties": {
+                                                    "first_name": {
+                                                        "description": "Collocutor pet owner first name",
+                                                        "type": "string",
+                                                        "example": "John"
+                                                    },
+                                                    "last_name": {
+                                                        "description": "Collocutor pet owner last name",
+                                                        "type": "string",
+                                                        "example": "Doe"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "is_read": {
+                                                "description": "1 or 0. Readed chat messages - 1, Not readed chat messages - 0",
+                                                "type": "integer",
+                                                "example": "0"
+                                            },
+                                            "last_message": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Message ID",
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "type": {
+                                                        "description": "Message types: text, image, event",
+                                                        "type": "string",
+                                                        "example": "text"
+                                                    },
+                                                    "message": {
+                                                        "description": "This message type 'text'. Refer to another sections of the documentation to find out what data comes in different types",
+                                                        "properties": {
+                                                            "message": {
+                                                                "description": "Displayed message",
+                                                                "type": "string",
+                                                                "example": "Hello world!"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "date_time_created": {
+                                                        "description": "Date and time for message created.",
+                                                        "type": "string",
+                                                        "example": "2019-04-04 16:50:59"
+                                                    },
+                                                    "like": {
+                                                        "description": "0 or 1. Liked - 1, Not liked - 0",
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "sender": {
+                                                        "description": "Who send this message",
+                                                        "properties": {
+                                                            "id": {
+                                                                "description": "Sender pet ID",
+                                                                "type": "integer",
+                                                                "example": "2"
+                                                            },
+                                                            "name": {
+                                                                "description": "Name of sender pet",
+                                                                "type": "string",
+                                                                "example": "Cat"
+                                                            },
+                                                            "profile_picture": {
+                                                                "description": "URL of the sender pet profile picture",
+                                                                "type": "string",
+                                                                "example": "http://mypets.com/storage/profile_picture/example.jpg"
+                                                            },
+                                                            "owner": {
+                                                                "description": "Owner data for sender pet",
+                                                                "properties": {
+                                                                    "first_name": {
+                                                                        "description": "Sender pet owner first name",
+                                                                        "type": "string",
+                                                                        "example": "John"
+                                                                    },
+                                                                    "last_name": {
+                                                                        "description": "Sender pet owner last name",
+                                                                        "type": "string",
+                                                                        "example": "Doe"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Chat"
+                ],
+                "summary": "Create chat",
+                "description": "Create new chat.",
+                "operationId": "chatCreate",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/from-data": {
+                            "schema": {
+                                "required": [
+                                    "friend_id"
+                                ],
+                                "properties": {
+                                    "friend_id": {
+                                        "description": "Friend with whom you want to create a chat",
+                                        "type": "integer",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Created room ID",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "room_id": {
+                                            "description": "Room ID",
+                                            "type": "integer",
+                                            "example": "1"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Chat with this friend already exist."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Friend not found."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/chats/{room_id}": {
+            "get": {
+                "tags": [
+                    "Chat"
+                ],
+                "summary": "Chat messages",
+                "description": "Messages in chat",
+                "operationId": "chatMessages",
+                "parameters": [
+                    {
+                        "name": "room_id",
+                        "in": "path",
+                        "description": "Room ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page pagination. Count messages in page - 25",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Messages list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "Message ID",
+                                                "type": "integer",
+                                                "example": "1"
+                                            },
+                                            "type": {
+                                                "description": "Message types: text, image, event",
+                                                "type": "string",
+                                                "example": "image"
+                                            },
+                                            "message": {
+                                                "description": "This message type 'image'. Refer to another sections of the documentation to find out what data comes in different types",
+                                                "properties": {
+                                                    "message": {
+                                                        "description": "URL for image message",
+                                                        "type": "string",
+                                                        "example": "http://mypets.com/storage/pictures/example.com"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "date_time_created": {
+                                                "description": "Date and time for message created.",
+                                                "type": "string",
+                                                "example": "2019-04-04 16:50:59"
+                                            },
+                                            "like": {
+                                                "description": "0 or 1. Liked - 1, Not liked - 0",
+                                                "type": "integer",
+                                                "example": "1"
+                                            },
+                                            "sender": {
+                                                "description": "Who send this message",
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Sender pet ID",
+                                                        "type": "integer",
+                                                        "example": "2"
+                                                    },
+                                                    "name": {
+                                                        "description": "Name of sender pet",
+                                                        "type": "string",
+                                                        "example": "Cat"
+                                                    },
+                                                    "profile_picture": {
+                                                        "description": "URL of the sender pet profile picture",
+                                                        "type": "string",
+                                                        "example": "http://mypets.com/storage/profile_picture/example.jpg"
+                                                    },
+                                                    "owner": {
+                                                        "description": "Owner data for sender pet",
+                                                        "properties": {
+                                                            "first_name": {
+                                                                "description": "Sender pet owner first name",
+                                                                "type": "string",
+                                                                "example": "John"
+                                                            },
+                                                            "last_name": {
+                                                                "description": "Sender pet owner last name",
+                                                                "type": "string",
+                                                                "example": "Doe"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Room not found."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Chat"
+                ],
+                "summary": "Send message",
+                "description": "Send message for chat.",
+                "operationId": "chatSend",
+                "parameters": [
+                    {
+                        "name": "room_id",
+                        "in": "path",
+                        "description": "Room ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "type",
+                                    "message"
+                                ],
+                                "properties": {
+                                    "type": {
+                                        "description": "Type of message. Message types: text, image, event",
+                                        "type": "string",
+                                        "example": "event"
+                                    },
+                                    "message": {
+                                        "description": "Message for send",
+                                        "type": "string",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "New message",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "Message ID",
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "type": {
+                                            "description": "Message types: text, image, event",
+                                            "type": "string",
+                                            "example": "event"
+                                        },
+                                        "message": {
+                                            "description": "This message type 'event'. Refer to another sections of the documentation to find out what data comes in different types",
+                                            "properties": {
+                                                "message": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "description": "Invite ID",
+                                                            "type": "integer",
+                                                            "example": "1"
+                                                        },
+                                                        "accepted": {
+                                                            "description": "Is accept or decline ivent. 0 - Decline, 1 - Accept, null - not accept and decline",
+                                                            "type": "integer",
+                                                            "example": "1"
+                                                        },
+                                                        "type": {
+                                                            "description": "Social or care",
+                                                            "type": "string",
+                                                            "example": "social"
+                                                        },
+                                                        "name": {
+                                                            "description": "Name of event",
+                                                            "type": "string",
+                                                            "example": "First event"
+                                                        },
+                                                        "from_date": {
+                                                            "description": "Date for start event",
+                                                            "type": "string",
+                                                            "example": "2019-04-08"
+                                                        },
+                                                        "from_time": {
+                                                            "description": "Time for start event",
+                                                            "type": "string",
+                                                            "example": "12:30"
+                                                        },
+                                                        "to_time": {
+                                                            "description": "Time for end event",
+                                                            "type": "string",
+                                                            "example": "13:30"
+                                                        },
+                                                        "repeat": {
+                                                            "description": "Numbers days of week for repeat event",
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "integer"
+                                                            }
+                                                        },
+                                                        "where": {
+                                                            "description": "Where will be event",
+                                                            "type": "string",
+                                                            "example": "Park"
+                                                        },
+                                                        "notes": {
+                                                            "description": "Notes for event",
+                                                            "type": "string",
+                                                            "example": "I'm stupid"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "deleted_at": {
+                                                    "description": "If event has been deleted",
+                                                    "type": "string",
+                                                    "example": "2019-04-04 18:06:15"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "date_time_created": {
+                                            "description": "Date and time for message created.",
+                                            "type": "string",
+                                            "example": "2019-04-04 16:50:59"
+                                        },
+                                        "like": {
+                                            "description": "0 or 1. Liked - 1, Not liked - 0",
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "sender": {
+                                            "description": "Who send this message",
+                                            "properties": {
+                                                "id": {
+                                                    "description": "Sender pet ID",
+                                                    "type": "integer",
+                                                    "example": "2"
+                                                },
+                                                "name": {
+                                                    "description": "Name of sender pet",
+                                                    "type": "string",
+                                                    "example": "Cat"
+                                                },
+                                                "profile_picture": {
+                                                    "description": "URL of the sender pet profile picture",
+                                                    "type": "string",
+                                                    "example": "http://mypets.com/storage/profile_picture/example.jpg"
+                                                },
+                                                "owner": {
+                                                    "description": "Owner data for sender pet",
+                                                    "properties": {
+                                                        "first_name": {
+                                                            "description": "Sender pet owner first name",
+                                                            "type": "string",
+                                                            "example": "John"
+                                                        },
+                                                        "last_name": {
+                                                            "description": "Sender pet owner last name",
+                                                            "type": "string",
+                                                            "example": "Doe"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Room not found."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "field": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Invalid data"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Chat"
+                ],
+                "summary": "Delete chat",
+                "description": "Delete chat",
+                "operationId": "chatDelete",
+                "parameters": [
+                    {
+                        "name": "room_id",
+                        "in": "path",
+                        "description": "Room ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success message",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Room not found."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/chats/to/read": {
+            "post": {
+                "tags": [
+                    "Chat"
+                ],
+                "summary": "Read chat",
+                "description": "Make chat read",
+                "operationId": "chatToRead",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "room_id"
+                                ],
+                                "properties": {
+                                    "room_id": {
+                                        "description": "Room ID",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success message",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Room not found."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/cahts/is/read": {
+            "get": {
+                "tags": [
+                    "Chat"
+                ],
+                "summary": "Check readed chats",
+                "description": "Check readed chats",
+                "operationId": "chatsIsRead",
+                "responses": {
+                    "200": {
+                        "description": "Chats readed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "is_read": {
+                                            "description": "0 or 1. If 1 - chats readed else chats not readed",
+                                            "type": "string",
+                                            "example": "0"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/chats/to/chat-search": {
+            "post": {
+                "tags": [
+                    "Chat"
+                ],
+                "summary": "Search chat",
+                "description": "Search chats buy pet name",
+                "operationId": "chtasSearch",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "search"
+                                ],
+                                "properties": {
+                                    "search": {
+                                        "description": "Search by this field",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "List of chats",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "Chat room ID",
+                                                "type": "integer",
+                                                "example": "1"
+                                            },
+                                            "picture": {
+                                                "description": "URl of profile picture collocutor pet",
+                                                "type": "string",
+                                                "example": "http://mypets.com/storage/profile_picture/picture.png"
+                                            },
+                                            "name": {
+                                                "description": "Name of collocutor pet",
+                                                "type": "string",
+                                                "example": "Dog"
+                                            },
+                                            "owner": {
+                                                "description": "Owner data of collocutor pet",
+                                                "properties": {
+                                                    "first_name": {
+                                                        "description": "Collocutor pet owner first name",
+                                                        "type": "string",
+                                                        "example": "John"
+                                                    },
+                                                    "last_name": {
+                                                        "description": "Collocutor pet owner last name",
+                                                        "type": "string",
+                                                        "example": "Doe"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "is_read": {
+                                                "description": "1 or 0. Readed chat messages - 1, Not readed chat messages - 0",
+                                                "type": "integer",
+                                                "example": "0"
+                                            },
+                                            "last_message": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Message ID",
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "type": {
+                                                        "description": "Message types: text, image, event",
+                                                        "type": "string",
+                                                        "example": "text"
+                                                    },
+                                                    "message": {
+                                                        "description": "This message type 'text'. Refer to another sections of the documentation to find out what data comes in different types",
+                                                        "properties": {
+                                                            "message": {
+                                                                "description": "Displayed message",
+                                                                "type": "string",
+                                                                "example": "Hello world!"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "date_time_created": {
+                                                        "description": "Date and time for message created.",
+                                                        "type": "string",
+                                                        "example": "2019-04-04 16:50:59"
+                                                    },
+                                                    "like": {
+                                                        "description": "0 or 1. Liked - 1, Not liked - 0",
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "sender": {
+                                                        "description": "Who send this message",
+                                                        "properties": {
+                                                            "id": {
+                                                                "description": "Sender pet ID",
+                                                                "type": "integer",
+                                                                "example": "2"
+                                                            },
+                                                            "name": {
+                                                                "description": "Name of sender pet",
+                                                                "type": "string",
+                                                                "example": "Cat"
+                                                            },
+                                                            "profile_picture": {
+                                                                "description": "URL of the sender pet profile picture",
+                                                                "type": "string",
+                                                                "example": "http://mypets.com/storage/profile_picture/example.jpg"
+                                                            },
+                                                            "owner": {
+                                                                "description": "Owner data for sender pet",
+                                                                "properties": {
+                                                                    "first_name": {
+                                                                        "description": "Sender pet owner first name",
+                                                                        "type": "string",
+                                                                        "example": "John"
+                                                                    },
+                                                                    "last_name": {
+                                                                        "description": "Sender pet owner last name",
+                                                                        "type": "string",
+                                                                        "example": "Doe"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/chats/{room_id}/{messages_id}/like": {
+            "get": {
+                "tags": [
+                    "Chat"
+                ],
+                "summary": "Like message",
+                "description": "Like message in chat. Invert like value",
+                "operationId": "chatLikeMessage",
+                "parameters": [
+                    {
+                        "name": "room_id",
+                        "in": "path",
+                        "description": "Room ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "message_id",
+                        "in": "path",
+                        "description": "Message ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success message",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Room not found."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/events": {
             "get": {
                 "tags": [
                     "Events"
@@ -1316,7 +2492,7 @@
                 "parameters": [
                     {
                         "name": "from_date",
-                        "in": "path",
+                        "in": "query",
                         "description": "From date",
                         "schema": {
                             "type": "date",
@@ -1325,7 +2501,7 @@
                     },
                     {
                         "name": "to_date",
-                        "in": "path",
+                        "in": "query",
                         "description": "To date",
                         "schema": {
                             "type": "date",
@@ -1419,6 +2595,967 @@
                         "bearerAuth": []
                     }
                 ]
+            },
+            "post": {
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Create event",
+                "description": "Create new event.",
+                "operationId": "eventCreate",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "type",
+                                    "from_date",
+                                    "from_time",
+                                    "to_time",
+                                    "where"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "Name of event",
+                                        "type": "string",
+                                        "example": "New event"
+                                    },
+                                    "type": {
+                                        "description": "Must be social or care",
+                                        "type": "string",
+                                        "example": "social"
+                                    },
+                                    "from_date": {
+                                        "description": "Date for event. Format Y-m-d. Date from now.",
+                                        "type": "string",
+                                        "example": "2019-03-27"
+                                    },
+                                    "from_time": {
+                                        "description": "Time start event. Format H:i",
+                                        "type": "string",
+                                        "example": "12:30"
+                                    },
+                                    "to_time": {
+                                        "description": "Time finish event. Format H:i. Must be more event start time.",
+                                        "type": "string",
+                                        "example": "13:30"
+                                    },
+                                    "repeat[0]": {
+                                        "description": "Number day of week",
+                                        "type": "integer",
+                                        "example": "2"
+                                    },
+                                    "where": {
+                                        "description": "Where to be event",
+                                        "type": "string",
+                                        "example": "Park"
+                                    },
+                                    "notes": {
+                                        "description": "Notes for event",
+                                        "type": "string",
+                                        "example": "I'm stupid"
+                                    },
+                                    "invite[0]": {
+                                        "description": "Id of the pet friends",
+                                        "type": "integer",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Event data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "Event ID",
+                                            "type": "integer",
+                                            "example": "3"
+                                        },
+                                        "type": {
+                                            "description": "Type of event. Social or care",
+                                            "type": "string",
+                                            "example": "social"
+                                        },
+                                        "name": {
+                                            "description": "Event name",
+                                            "type": "string",
+                                            "example": "First event"
+                                        },
+                                        "from_date": {
+                                            "description": "Event start date",
+                                            "type": "string",
+                                            "example": "2019-03-27"
+                                        },
+                                        "from_time": {
+                                            "description": "Event start time",
+                                            "type": "string",
+                                            "example": "12:30"
+                                        },
+                                        "to_time": {
+                                            "description": "Event end time",
+                                            "type": "string",
+                                            "example": "13:30"
+                                        },
+                                        "repeat": {
+                                            "type": "array",
+                                            "items": {
+                                                "description": "Number day of week repeat event",
+                                                "type": "integer",
+                                                "example": "2"
+                                            }
+                                        },
+                                        "where": {
+                                            "description": "Where event to be",
+                                            "type": "string",
+                                            "example": "Park"
+                                        },
+                                        "notes": {
+                                            "description": "Event notes",
+                                            "type": "string",
+                                            "example": "I'm stupid"
+                                        },
+                                        "invited": {
+                                            "type": "array",
+                                            "items": {
+                                                "description": "Invited pets",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "gender": {
+                                                        "type": "string"
+                                                    },
+                                                    "size": {
+                                                        "type": "string"
+                                                    },
+                                                    "primary_breed": {
+                                                        "type": "string"
+                                                    },
+                                                    "secondary_breed": {
+                                                        "type": "string"
+                                                    },
+                                                    "age": {
+                                                        "type": "integer"
+                                                    },
+                                                    "profile_picture": {
+                                                        "type": "string"
+                                                    },
+                                                    "friendliness": {
+                                                        "type": "integer"
+                                                    },
+                                                    "activity_level": {
+                                                        "type": "integer"
+                                                    },
+                                                    "noise_level": {
+                                                        "type": "integer"
+                                                    },
+                                                    "odebience_level": {
+                                                        "type": "integer"
+                                                    },
+                                                    "fetchability": {
+                                                        "type": "integer"
+                                                    },
+                                                    "swimability": {
+                                                        "type": "integer"
+                                                    },
+                                                    "city": {
+                                                        "type": "string"
+                                                    },
+                                                    "state": {
+                                                        "type": "string"
+                                                    },
+                                                    "like": {
+                                                        "type": "string"
+                                                    },
+                                                    "dislike": {
+                                                        "type": "string"
+                                                    },
+                                                    "favorite_toys": {
+                                                        "type": "string"
+                                                    },
+                                                    "fears": {
+                                                        "type": "string"
+                                                    },
+                                                    "favorite_places": {
+                                                        "type": "string"
+                                                    },
+                                                    "spayed": {
+                                                        "type": "string"
+                                                    },
+                                                    "birthday": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found exseption",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Some friends not found."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "field": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Invalid data"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/events/{event_id}": {
+            "get": {
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Get event",
+                "description": "Get event data.",
+                "operationId": "eventGet",
+                "parameters": [
+                    {
+                        "name": "event_id",
+                        "in": "path",
+                        "description": "Event ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Event data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "Event ID",
+                                            "type": "integer",
+                                            "example": "3"
+                                        },
+                                        "type": {
+                                            "description": "Type of event. Social or care",
+                                            "type": "string",
+                                            "example": "social"
+                                        },
+                                        "name": {
+                                            "description": "Event name",
+                                            "type": "string",
+                                            "example": "First event"
+                                        },
+                                        "from_date": {
+                                            "description": "Event start date",
+                                            "type": "string",
+                                            "example": "2019-03-27"
+                                        },
+                                        "from_time": {
+                                            "description": "Event start time",
+                                            "type": "string",
+                                            "example": "12:30"
+                                        },
+                                        "to_time": {
+                                            "description": "Event end time",
+                                            "type": "string",
+                                            "example": "13:30"
+                                        },
+                                        "repeat": {
+                                            "type": "array",
+                                            "items": {
+                                                "description": "Number day of week repeat event",
+                                                "type": "integer",
+                                                "example": "2"
+                                            }
+                                        },
+                                        "where": {
+                                            "description": "Where event to be",
+                                            "type": "string",
+                                            "example": "Park"
+                                        },
+                                        "notes": {
+                                            "description": "Event notes",
+                                            "type": "string",
+                                            "example": "I'm stupid"
+                                        },
+                                        "invited": {
+                                            "type": "array",
+                                            "items": {
+                                                "description": "Invited pets",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "gender": {
+                                                        "type": "string"
+                                                    },
+                                                    "size": {
+                                                        "type": "string"
+                                                    },
+                                                    "primary_breed": {
+                                                        "type": "string"
+                                                    },
+                                                    "secondary_breed": {
+                                                        "type": "string"
+                                                    },
+                                                    "age": {
+                                                        "type": "integer"
+                                                    },
+                                                    "profile_picture": {
+                                                        "type": "string"
+                                                    },
+                                                    "friendliness": {
+                                                        "type": "integer"
+                                                    },
+                                                    "activity_level": {
+                                                        "type": "integer"
+                                                    },
+                                                    "noise_level": {
+                                                        "type": "integer"
+                                                    },
+                                                    "odebience_level": {
+                                                        "type": "integer"
+                                                    },
+                                                    "fetchability": {
+                                                        "type": "integer"
+                                                    },
+                                                    "swimability": {
+                                                        "type": "integer"
+                                                    },
+                                                    "city": {
+                                                        "type": "string"
+                                                    },
+                                                    "state": {
+                                                        "type": "string"
+                                                    },
+                                                    "like": {
+                                                        "type": "string"
+                                                    },
+                                                    "dislike": {
+                                                        "type": "string"
+                                                    },
+                                                    "favorite_toys": {
+                                                        "type": "string"
+                                                    },
+                                                    "fears": {
+                                                        "type": "string"
+                                                    },
+                                                    "favorite_places": {
+                                                        "type": "string"
+                                                    },
+                                                    "spayed": {
+                                                        "type": "string"
+                                                    },
+                                                    "birthday": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Update event",
+                "description": "Update exist event.",
+                "operationId": "eventUpdate",
+                "parameters": [
+                    {
+                        "name": "event_id",
+                        "in": "path",
+                        "description": "Event ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "type",
+                                    "from_date",
+                                    "from_time",
+                                    "to_time",
+                                    "where"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "Name of event",
+                                        "type": "string",
+                                        "example": "New event"
+                                    },
+                                    "type": {
+                                        "description": "Must be social or care",
+                                        "type": "string",
+                                        "example": "social"
+                                    },
+                                    "from_date": {
+                                        "description": "Date for event. Format Y-m-d. Date from now.",
+                                        "type": "string",
+                                        "example": "2019-03-27"
+                                    },
+                                    "from_time": {
+                                        "description": "Time start event. Format H:i",
+                                        "type": "string",
+                                        "example": "12:30"
+                                    },
+                                    "to_time": {
+                                        "description": "Time finish event. Format H:i. Must be more event start time.",
+                                        "type": "string",
+                                        "example": "13:30"
+                                    },
+                                    "repeat[0]": {
+                                        "description": "Number day of week",
+                                        "type": "integer",
+                                        "example": "2"
+                                    },
+                                    "where": {
+                                        "description": "Where to be event",
+                                        "type": "string",
+                                        "example": "Park"
+                                    },
+                                    "notes": {
+                                        "description": "Notes for event",
+                                        "type": "string",
+                                        "example": "I'm stupid"
+                                    },
+                                    "invite[0]": {
+                                        "description": "ID of the pet friends for new invite",
+                                        "type": "integer",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Event data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "Event ID",
+                                            "type": "integer",
+                                            "example": "3"
+                                        },
+                                        "type": {
+                                            "description": "Type of event. Social or care",
+                                            "type": "string",
+                                            "example": "social"
+                                        },
+                                        "name": {
+                                            "description": "Event name",
+                                            "type": "string",
+                                            "example": "First event"
+                                        },
+                                        "from_date": {
+                                            "description": "Event start date",
+                                            "type": "string",
+                                            "example": "2019-03-27"
+                                        },
+                                        "from_time": {
+                                            "description": "Event start time",
+                                            "type": "string",
+                                            "example": "12:30"
+                                        },
+                                        "to_time": {
+                                            "description": "Event end time",
+                                            "type": "string",
+                                            "example": "13:30"
+                                        },
+                                        "repeat": {
+                                            "type": "array",
+                                            "items": {
+                                                "description": "Number day of week repeat event",
+                                                "type": "integer",
+                                                "example": "2"
+                                            }
+                                        },
+                                        "where": {
+                                            "description": "Where event to be",
+                                            "type": "string",
+                                            "example": "Park"
+                                        },
+                                        "notes": {
+                                            "description": "Event notes",
+                                            "type": "string",
+                                            "example": "I'm stupid"
+                                        },
+                                        "invited": {
+                                            "type": "array",
+                                            "items": {
+                                                "description": "Invited pets",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "gender": {
+                                                        "type": "string"
+                                                    },
+                                                    "size": {
+                                                        "type": "string"
+                                                    },
+                                                    "primary_breed": {
+                                                        "type": "string"
+                                                    },
+                                                    "secondary_breed": {
+                                                        "type": "string"
+                                                    },
+                                                    "age": {
+                                                        "type": "integer"
+                                                    },
+                                                    "profile_picture": {
+                                                        "type": "string"
+                                                    },
+                                                    "friendliness": {
+                                                        "type": "integer"
+                                                    },
+                                                    "activity_level": {
+                                                        "type": "integer"
+                                                    },
+                                                    "noise_level": {
+                                                        "type": "integer"
+                                                    },
+                                                    "odebience_level": {
+                                                        "type": "integer"
+                                                    },
+                                                    "fetchability": {
+                                                        "type": "integer"
+                                                    },
+                                                    "swimability": {
+                                                        "type": "integer"
+                                                    },
+                                                    "city": {
+                                                        "type": "string"
+                                                    },
+                                                    "state": {
+                                                        "type": "string"
+                                                    },
+                                                    "like": {
+                                                        "type": "string"
+                                                    },
+                                                    "dislike": {
+                                                        "type": "string"
+                                                    },
+                                                    "favorite_toys": {
+                                                        "type": "string"
+                                                    },
+                                                    "fears": {
+                                                        "type": "string"
+                                                    },
+                                                    "favorite_places": {
+                                                        "type": "string"
+                                                    },
+                                                    "spayed": {
+                                                        "type": "string"
+                                                    },
+                                                    "birthday": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found exseption",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Some friends not found.|No query result from model."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "field": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Invalid data"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Delete event",
+                "description": "Delete exist event.",
+                "operationId": "eventDelete",
+                "parameters": [
+                    {
+                        "name": "event_id",
+                        "in": "path",
+                        "description": "Event ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success message",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found exseption",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No query result from model."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/events/friends/{event_id}": {
+            "get": {
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Friends of pet for event.",
+                "description": "Get friends of pet who were not invited or declined the invited.",
+                "operationId": "eventsFriends",
+                "parameters": [
+                    {
+                        "name": "event_id",
+                        "in": "path",
+                        "description": "Event ID if event already exist",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Friends of pet who were not invited or declined the invited.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "gender": {
+                                                "type": "string"
+                                            },
+                                            "size": {
+                                                "type": "string"
+                                            },
+                                            "primary_breed": {
+                                                "type": "string"
+                                            },
+                                            "secondary_breed": {
+                                                "type": "string"
+                                            },
+                                            "age": {
+                                                "type": "integer"
+                                            },
+                                            "profile_picture": {
+                                                "type": "string"
+                                            },
+                                            "friendliness": {
+                                                "type": "integer"
+                                            },
+                                            "activity_level": {
+                                                "type": "integer"
+                                            },
+                                            "noise_level": {
+                                                "type": "integer"
+                                            },
+                                            "odebience_level": {
+                                                "type": "integer"
+                                            },
+                                            "fetchability": {
+                                                "type": "integer"
+                                            },
+                                            "swimability": {
+                                                "type": "integer"
+                                            },
+                                            "city": {
+                                                "type": "string"
+                                            },
+                                            "state": {
+                                                "type": "string"
+                                            },
+                                            "like": {
+                                                "type": "string"
+                                            },
+                                            "dislike": {
+                                                "type": "string"
+                                            },
+                                            "favorite_toys": {
+                                                "type": "string"
+                                            },
+                                            "fears": {
+                                                "type": "string"
+                                            },
+                                            "favorite_places": {
+                                                "type": "string"
+                                            },
+                                            "spayed": {
+                                                "type": "string"
+                                            },
+                                            "birthday": {
+                                                "type": "date"
+                                            },
+                                            "pictures": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "picture": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found exseption",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No query result from model."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "friends": {
@@ -1431,7 +3568,7 @@
                 "operationId": "friendsAll",
                 "responses": {
                     "200": {
-                        "description": "Success message, pet owner and pet info.",
+                        "description": "Friends of pet.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -2291,20 +4428,12 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "message": {
-                                            "type": "string"
-                                        },
-                                        "errors": {
-                                            "properties": {
-                                                "parameter": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "description": "message",
-                                                        "type": "string"
-                                                    }
-                                                }
-                                            },
-                                            "type": "object"
+                                        "field": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Invalid data"
+                                            }
                                         }
                                     },
                                     "type": "object"
@@ -2808,20 +4937,12 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "message": {
-                                            "type": "string"
-                                        },
-                                        "errors": {
-                                            "properties": {
-                                                "parameter": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "description": "message",
-                                                        "type": "string"
-                                                    }
-                                                }
-                                            },
-                                            "type": "object"
+                                        "field": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Invalid data"
+                                            }
                                         }
                                     },
                                     "type": "object"

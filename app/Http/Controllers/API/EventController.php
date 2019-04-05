@@ -19,7 +19,7 @@ class EventController extends Controller
 {
     /**
      * @OA\Get(
-     *     path="events",
+     *     path="/events",
      *     tags={"Events"},
      *     description="Get events for buy date. If not send date from and to - get events for current month.",
      *     summary="Get events",
@@ -27,7 +27,7 @@ class EventController extends Controller
      *     @OA\Parameter(
      *         name="from_date",
      *         description="From date",
-     *         in="path",
+     *         in="query",
      *         @OA\Schema(
      *             type="date",
      *             format="Y-m-d"
@@ -36,7 +36,7 @@ class EventController extends Controller
      *     @OA\Parameter(
      *         name="to_date",
      *         description="To date",
-     *         in="path",
+     *         in="query",
      *         @OA\Schema(
      *             type="date",
      *             format="Y-m-d"
@@ -182,6 +182,270 @@ class EventController extends Controller
     }
 
     /**
+     * @OA\Post(
+     *     path="/events",
+     *     tags={"Events"},
+     *     description="Create new event.",
+     *     summary="Create event",
+     *     operationId="eventCreate",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="name",
+     *                     description="Name of event",
+     *                     example="New event"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="type",
+     *                     description="Must be social or care",
+     *                     example="social"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="from_date",
+     *                     description="Date for event. Format Y-m-d. Date from now.",
+     *                     example="2019-03-27"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="from_time",
+     *                     description="Time start event. Format H:i",
+     *                     example="12:30"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="to_time",
+     *                     description="Time finish event. Format H:i. Must be more event start time.",
+     *                     example="13:30"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="integer",
+     *                     property="repeat[0]",
+     *                     description="Number day of week",
+     *                     example="2"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="where",
+     *                     description="Where to be event",
+     *                     example="Park"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="notes",
+     *                     description="Notes for event",
+     *                     example="I'm stupid"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="integer",
+     *                     property="invite[0]",
+     *                     description="Id of the pet friends",
+     *                     example="2"
+     *                 ),
+     *                 required={"name", "type", "from_date", "from_time", "to_time", "where"}
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Event data",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="integer",
+     *                 property="id",
+     *                 description="Event ID",
+     *                 example="3"
+     *             ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="type",
+     *                 description="Type of event. Social or care",
+     *                 example="social"
+     *             ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="name",
+     *                 description="Event name",
+     *                 example="First event"
+     *             ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="from_date",
+     *                 description="Event start date",
+     *                 example="2019-03-27"
+     *             ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="from_time",
+     *                 description="Event start time",
+     *                 example="12:30"
+     *             ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="to_time",
+     *                 description="Event end time",
+     *                 example="13:30"
+     *             ),
+     *             @OA\Property(
+     *                 type="array",
+     *                 property="repeat",
+     *                 @OA\Items(type="integer", description="Number day of week repeat event", example="2")
+     *             ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="where",
+     *                 description="Where event to be",
+     *                 example="Park"
+     *             ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="notes",
+     *                 description="Event notes",
+     *                 example="I'm stupid"
+     *             ),
+     *             @OA\Property(
+     *                 type="array",
+     *                 property="invited",
+     *                 @OA\Items(
+     *                     description="Invited pets",
+     *                     @OA\Property(
+     *                         property="id",
+     *                         type="integer"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="name",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="gender",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="size",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="primary_breed",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="secondary_breed",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="age",
+     *                         type="integer"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="profile_picture",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="friendliness",
+     *                         type="integer"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="activity_level",
+     *                         type="integer"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="noise_level",
+     *                         type="integer"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="odebience_level",
+     *                         type="integer"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="fetchability",
+     *                         type="integer"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="swimability",
+     *                         type="integer"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="city",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="state",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="like",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="dislike",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="favorite_toys",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="fears",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="favorite_places",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="spayed",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="birthday",
+     *                         type="date"
+     *                     ),
+     *                 )
+     *             ),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Unauthenticated error or registration error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Unauthenticated.|Sign-Up steps not done."
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Not found exseption",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Some friends not found."
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="422",
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="array",
+     *                 property="field",
+     *                 @OA\Items(type="string", example="Invalid data")
+     *             )
+     *         )
+     *     ),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
+    /**
      * Store a newly created resource in storage.
      *
      * @param EventStoreRequest $request
@@ -217,6 +481,194 @@ class EventController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *     path="/events/{event_id}",
+     *     tags={"Events"},
+     *     description="Get event data.",
+     *     summary="Get event",
+     *     operationId="eventGet",
+     *     @OA\Parameter(
+     *         name="event_id",
+     *         description="Event ID",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Event data",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="integer",
+     *                 property="id",
+     *                 description="Event ID",
+     *                 example="3"
+     *             ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="type",
+     *                 description="Type of event. Social or care",
+     *                 example="social"
+     *             ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="name",
+     *                 description="Event name",
+     *                 example="First event"
+     *             ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="from_date",
+     *                 description="Event start date",
+     *                 example="2019-03-27"
+     *             ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="from_time",
+     *                 description="Event start time",
+     *                 example="12:30"
+     *             ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="to_time",
+     *                 description="Event end time",
+     *                 example="13:30"
+     *             ),
+     *             @OA\Property(
+     *                 type="array",
+     *                 property="repeat",
+     *                 @OA\Items(type="integer", description="Number day of week repeat event", example="2")
+     *             ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="where",
+     *                 description="Where event to be",
+     *                 example="Park"
+     *             ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="notes",
+     *                 description="Event notes",
+     *                 example="I'm stupid"
+     *             ),
+     *             @OA\Property(
+     *                 type="array",
+     *                 property="invited",
+     *                 @OA\Items(
+     *                     description="Invited pets",
+     *                     @OA\Property(
+     *                         property="id",
+     *                         type="integer"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="name",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="gender",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="size",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="primary_breed",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="secondary_breed",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="age",
+     *                         type="integer"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="profile_picture",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="friendliness",
+     *                         type="integer"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="activity_level",
+     *                         type="integer"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="noise_level",
+     *                         type="integer"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="odebience_level",
+     *                         type="integer"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="fetchability",
+     *                         type="integer"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="swimability",
+     *                         type="integer"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="city",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="state",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="like",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="dislike",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="favorite_toys",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="fears",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="favorite_places",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="spayed",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="birthday",
+     *                         type="date"
+     *                     ),
+     *                 )
+     *             ),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Unauthenticated error or registration error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Unauthenticated.|Sign-Up steps not done."
+     *             )
+     *         )
+     *     ),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
+    /**
      * Display the specified resource.
      *
      * @param  Event  $event
@@ -238,6 +690,279 @@ class EventController extends Controller
         //
     }
 
+    /**
+     * @OA\Put(
+     *     path="/events/{event_id}",
+     *     tags={"Events"},
+     *     description="Update exist event.",
+     *     summary="Update event",
+     *     operationId="eventUpdate",
+     *     @OA\Parameter(
+     *         name="event_id",
+     *         description="Event ID",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="name",
+     *                     description="Name of event",
+     *                     example="New event"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="type",
+     *                     description="Must be social or care",
+     *                     example="social"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="from_date",
+     *                     description="Date for event. Format Y-m-d. Date from now.",
+     *                     example="2019-03-27"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="from_time",
+     *                     description="Time start event. Format H:i",
+     *                     example="12:30"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="to_time",
+     *                     description="Time finish event. Format H:i. Must be more event start time.",
+     *                     example="13:30"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="integer",
+     *                     property="repeat[0]",
+     *                     description="Number day of week",
+     *                     example="2"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="where",
+     *                     description="Where to be event",
+     *                     example="Park"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="notes",
+     *                     description="Notes for event",
+     *                     example="I'm stupid"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="integer",
+     *                     property="invite[0]",
+     *                     description="ID of the pet friends for new invite",
+     *                     example="2"
+     *                 ),
+     *                 required={"name", "type", "from_date", "from_time", "to_time", "where"}
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Event data",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="integer",
+     *                 property="id",
+     *                 description="Event ID",
+     *                 example="3"
+     *             ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="type",
+     *                 description="Type of event. Social or care",
+     *                 example="social"
+     *             ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="name",
+     *                 description="Event name",
+     *                 example="First event"
+     *             ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="from_date",
+     *                 description="Event start date",
+     *                 example="2019-03-27"
+     *             ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="from_time",
+     *                 description="Event start time",
+     *                 example="12:30"
+     *             ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="to_time",
+     *                 description="Event end time",
+     *                 example="13:30"
+     *             ),
+     *             @OA\Property(
+     *                 type="array",
+     *                 property="repeat",
+     *                 @OA\Items(type="integer", description="Number day of week repeat event", example="2")
+     *             ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="where",
+     *                 description="Where event to be",
+     *                 example="Park"
+     *             ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="notes",
+     *                 description="Event notes",
+     *                 example="I'm stupid"
+     *             ),
+     *             @OA\Property(
+     *                 type="array",
+     *                 property="invited",
+     *                 @OA\Items(
+     *                     description="Invited pets",
+     *                     @OA\Property(
+     *                         property="id",
+     *                         type="integer"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="name",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="gender",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="size",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="primary_breed",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="secondary_breed",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="age",
+     *                         type="integer"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="profile_picture",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="friendliness",
+     *                         type="integer"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="activity_level",
+     *                         type="integer"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="noise_level",
+     *                         type="integer"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="odebience_level",
+     *                         type="integer"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="fetchability",
+     *                         type="integer"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="swimability",
+     *                         type="integer"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="city",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="state",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="like",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="dislike",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="favorite_toys",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="fears",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="favorite_places",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="spayed",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="birthday",
+     *                         type="date"
+     *                     ),
+     *                 )
+     *             ),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Unauthenticated error or registration error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Unauthenticated.|Sign-Up steps not done."
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Not found exseption",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Some friends not found.|No query result from model."
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="422",
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="array",
+     *                 property="field",
+     *                 @OA\Items(type="string", example="Invalid data")
+     *             )
+     *         )
+     *     ),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
     /**
      * Update the specified resource in storage.
      *
@@ -279,6 +1004,58 @@ class EventController extends Controller
     }
 
     /**
+     * @OA\Delete(
+     *     path="/events/{event_id}",
+     *     tags={"Events"},
+     *     description="Delete exist event.",
+     *     summary="Delete event",
+     *     operationId="eventDelete",
+     *     @OA\Parameter(
+     *         name="event_id",
+     *         description="Event ID",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Success message",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="success"
+     *             ),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Unauthenticated error or registration error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Unauthenticated.|Sign-Up steps not done."
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Not found exseption",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="No query result from model."
+     *             )
+     *         )
+     *     ),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
+    /**
      * Remove the specified resource from storage.
      *
      * @param  Event $event
@@ -295,6 +1072,160 @@ class EventController extends Controller
         return response()->json(['message' => 'success']);
     }
 
+    /**
+     * @OA\Get(
+     *     path="/events/friends/{event_id}",
+     *     tags={"Events"},
+     *     description="Get friends of pet who were not invited or declined the invited.",
+     *     summary="Friends of pet for event.",
+     *     operationId="eventsFriends",
+     *     @OA\Parameter(
+     *         name="event_id",
+     *         description="Event ID if event already exist",
+     *         in="path",
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Friends of pet who were not invited or declined the invited.",
+     *         @OA\JsonContent(
+     *             @OA\Items(
+     *                 @OA\Property(
+     *                     property="id",
+     *                     type="integer"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="name",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="gender",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="size",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="primary_breed",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="secondary_breed",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="age",
+     *                     type="integer"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="profile_picture",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="friendliness",
+     *                     type="integer"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="activity_level",
+     *                     type="integer"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="noise_level",
+     *                     type="integer"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="odebience_level",
+     *                     type="integer"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="fetchability",
+     *                     type="integer"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="swimability",
+     *                     type="integer"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="city",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="state",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="like",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="dislike",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="favorite_toys",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="fears",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="favorite_places",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="spayed",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="birthday",
+     *                     type="date"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="pictures",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         @OA\Property(
+     *                             property="id",
+     *                             type="integer"
+     *                         ),
+     *                         @OA\Property(
+     *                             property="picture",
+     *                             type="string"
+     *                         )
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Unauthenticated error or registration error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Unauthenticated.|Sign-Up steps not done."
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Not found exseption",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="No query result from model."
+     *             )
+     *         )
+     *     ),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
     /**
      * @param Event|null $event
      * @return JsonResponse

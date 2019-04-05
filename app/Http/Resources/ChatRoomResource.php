@@ -19,11 +19,16 @@ class ChatRoomResource extends JsonResource
         $friend = $this->pets->where('id', '!=', $request->user()->id)->first();
         $picture = $friend->profile_picture;
         $name = $friend->name;
+        $owner = [
+            'first_name' => $friend->owner->first_name,
+            'last_name' => $friend->owner->last_name
+        ];
 
         return [
             'id' => $this->id,
             'picture' => config('filesystems.disks')[env('FILESYSTEM_DRIVER', 'public')]['url'] . $picture,
             'name' => $name,
+            'owner' => $owner,
             'is_read' => $this->pivot->is_read,
             'last_message' => $last_message ? (new ChatMessageResource($last_message)) : null
         ];
