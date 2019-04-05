@@ -29,14 +29,15 @@ class CreatePetsTable extends Migration
             $table->tinyInteger('odebience_level')->nullable();
             $table->tinyInteger('fetchability')->nullable();
             $table->tinyInteger('swimability')->nullable();
+            $table->string('city', 100)->nullable();
+            $table->string('state', 100)->nullable();
             $table->string('like', 255)->nullable();
             $table->string('dislike', 255)->nullable();
             $table->string('favorite_toys', 255)->nullable();
             $table->string('fears', 255)->nullable();
             $table->string('favorite_places', 255)->nullable();
-            $table->boolean('spayed')->nullable();
+            $table->boolean('spayed')->default(false);
             $table->date('birthday')->nullable();
-            $table->string('favorite_park', 255)->nullable();
             $table->timestamps();
 
             $table->foreign('owner_id')->references('id')->on('owners')->onDelete('cascade');

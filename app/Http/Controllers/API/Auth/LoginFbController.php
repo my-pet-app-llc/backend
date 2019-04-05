@@ -50,6 +50,10 @@ class LoginFbController extends Controller
      *                 type="object",
      *                 property="user",
      *                 @OA\Property(
+     *                     type="integer",
+     *                     property="id",
+     *                 ),
+     *                 @OA\Property(
      *                     type="string",
      *                     property="email",
      *                 ),
@@ -89,20 +93,20 @@ class LoginFbController extends Controller
      *                         type="string"
      *                     ),
      *                     @OA\Property(
-     *                         property="city",
-     *                         type="string"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="state",
-     *                         type="string"
-     *                     ),
-     *                     @OA\Property(
      *                         property="profile_picture",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="favorite_park",
      *                         type="string"
      *                     ),
      *                     @OA\Property(
      *                         type="object",
      *                         property="pet",
+     *                         @OA\Property(
+     *                             property="id",
+     *                             type="integer"
+     *                         ),
      *                         @OA\Property(
      *                             property="name",
      *                             type="string"
@@ -156,6 +160,14 @@ class LoginFbController extends Controller
      *                             type="integer"
      *                         ),
      *                         @OA\Property(
+     *                             property="city",
+     *                             type="string"
+     *                         ),
+     *                         @OA\Property(
+     *                             property="state",
+     *                             type="string"
+     *                         ),
+     *                         @OA\Property(
      *                             property="like",
      *                             type="string"
      *                         ),
@@ -182,10 +194,6 @@ class LoginFbController extends Controller
      *                         @OA\Property(
      *                             property="birthday",
      *                             type="date"
-     *                         ),
-     *                         @OA\Property(
-     *                             property="favorite_park",
-     *                             type="string"
      *                         ),
      *                         @OA\Property(
      *                             property="pictures",
@@ -222,16 +230,12 @@ class LoginFbController extends Controller
      *         description="Validation error",
      *         @OA\JsonContent(
      *             @OA\Property(
-     *                 type="string",
-     *                 property="message",
-     *             ),
-     *             @OA\Property(
-     *                 type="object",
-     *                 property="errors",
-     *                 @OA\Property(type="array", property="parameter", @OA\Items(type="string",description="message"))
+     *                 type="array",
+     *                 property="field",
+     *                 @OA\Items(type="string", example="Invalid data")
      *             )
      *         )
-     *     )
+     *     ),
      * )
      */
     /**

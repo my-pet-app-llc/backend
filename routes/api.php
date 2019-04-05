@@ -39,6 +39,20 @@ Route::namespace('API')->group(function () {
 
         Route::middleware('signup.step')->match(['get', 'put'], 'sign-up/stepper', 'SignUpStepController');
 
+        Route::middleware('signup.done')->group(function () {
+
+            Route::match(['get', 'put'], 'profile', 'ProfileController');
+
+            Route::resource('friends', 'FriendController')->only(['index']);
+
+            Route::get('events/friends/{event?}', 'EventController@friends');
+
+            Route::resource('events', 'EventController')->except(['edit', 'create']);
+
+            Route::post('invited-events/accept', 'AcceptInviteEventController');
+
+        });
+
     });
 
 });
