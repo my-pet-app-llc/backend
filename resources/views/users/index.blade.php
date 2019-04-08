@@ -1,7 +1,7 @@
 @extends('layout.layout')
 
 @section('mainContent')
-    <div class="row updates_section">
+    <div class="row users_section">
         <div class="col-sm-12">
             <table class="table table-bordered" id="users-table" data-url="{{ route('data_users') }}">
                 <thead>
@@ -17,4 +17,8 @@
             </table>
         </div>
     </div>
+@endsection
+
+@section('modals')
+    @include('users.modal._delete_modal')
 @endsection

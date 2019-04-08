@@ -23,7 +23,10 @@ return [
         'add_update'   => 'Add Update',
         'add_material' => 'Add Material',
         'cancel'       => 'Cancel',
-        'delete'       => 'Delete'
+        'delete'       => 'Delete',
+        'email'        => 'Email',
+        'ban'          => 'Ban',
+        'confirm'      => 'Confirm',
     ],
 
     'users' => [
@@ -33,6 +36,13 @@ return [
         'age'         => 'Age',
         'location'    => 'Location',
         'status'      => 'Status',
+        'state' => [
+            'in_progress' => 'Support Ticket in Progress',
+            'reported'    => 'REPORTED/Support Ticket',
+            'reporting'   => 'REPORTING/Support Ticket',
+            'banned'      => 'Banned',
+            'normal'      => 'Normal',
+        ], 
     ],
 
     'updates' => [
@@ -58,9 +68,11 @@ return [
     'messages' => [
         'update_save'      => 'Update successfully added!',
         'material_save'    => 'Material successfully added!',
+        'user_ban'         => 'User was banned!',
         'update_warning'   => 'Are you sure you want to delete the update? <br/> This cannot be undone!',
         'material_warning' => 'Are you sure you want to delete the material? <br/> This cannot be undone!',
         'update_remove'    => 'Update deleted successfully!',
         'material_remove'  => 'Material deleted successfully!',
+        'confirm_user_ban' => 'Are you sure want to ban the user?',
     ]
 ];

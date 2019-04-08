@@ -85,7 +85,7 @@ ul.sidebar-menu {
     color: #fff;
 }
 
-.updates_section {
+.updates_section, .users_section {
     .table_head {
         background-color: #45763c;
         color: #fff; 
@@ -108,5 +108,35 @@ ul.sidebar-menu {
         border: solid 1px #f44342;
         border-radius: 5px;
     }
+
+}
+div.user_info {
+    border: solid 1px #e9eaeb;
+    background-color: #f9fafb;
+    margin: 20px 0 0 0;
+    padding: 0 5px 0 3px;
+}
+
+.bg_status_1 {
+    background-color: #fec526;
+}
+
+.bg_status_2 {
+    background-color: #ff7171;
+    color: #fff;
+}
+
+.bg_status_3 {
+    background-color: #2680eb;
+    color: #fff;
+}
+
+.bg_status_4 {
+    background-color: #a826eb;
+    color: #fff;
+}
+
+.bg_status_5 {
+    background-color: #7eff60;
 }
 

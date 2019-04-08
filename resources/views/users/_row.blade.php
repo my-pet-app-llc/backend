@@ -1,0 +1,1 @@
+<span class='click_row' data-owner-url="{{ route('users.show', $owner->user) }}"></span>
