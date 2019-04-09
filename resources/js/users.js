@@ -104,5 +104,13 @@ $(function() {
             $(this).css('cursor', 'pointer')
         });
     }
-
+    
+    $('.sidebar-link').each(function () {
+        let href = window.location.href;
+        let url = $(this).attr('href');
+        if (href === url) {
+            $(this).addClass('active_item');
+            $(this).closest('li').addClass('active_item');
+        }
+    }); 
 });

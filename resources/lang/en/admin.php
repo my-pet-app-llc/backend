@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'greeting' => 'Welcome <br/> to <br/> MyPet Admin Panel!',
     'title' => [
         'mypet_admin_panel'  => 'MyPet Admin Panel',
     ],
@@ -43,6 +44,14 @@ return [
             'banned'      => 'Banned',
             'normal'      => 'Normal',
         ], 
+    ],
+
+    'tickets' => [
+        'date'     => 'Date',
+        'time'     => 'Time',
+        'ticket'   => 'Ticket #',
+        'status'   => 'Ticket Status',
+        'messages' => 'Message Thread'
     ],
 
     'updates' => [
