@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Friend extends Model
 {
-    public $fillable = [
+    protected $fillable = [
         'pet_id', 'friend_id'
     ];
 

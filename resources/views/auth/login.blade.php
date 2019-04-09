@@ -1,112 +1,49 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Adminator - Sign In</title>
-    <link rel="stylesheet" href="{{ mix('/css/admin.css') }}">
-    <style>
-        #loader {
-            transition: all 0.3s ease-in-out;
-            opacity: 1;
-            visibility: visible;
-            position: fixed;
-            height: 100vh;
-            width: 100%;
-            background: #fff;
-            z-index: 90000;
-        }
+@extends('layout.layout')
 
-        #loader.fadeOut {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .spinner {
-            width: 40px;
-            height: 40px;
-            position: absolute;
-            top: calc(50% - 20px);
-            left: calc(50% - 20px);
-            background-color: #333;
-            border-radius: 100%;
-            -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
-            animation: sk-scaleout 1.0s infinite ease-in-out;
-        }
-
-        @-webkit-keyframes sk-scaleout {
-            0% {
-                -webkit-transform: scale(0)
-            }
-            100% {
-                -webkit-transform: scale(1.0);
-                opacity: 0;
-            }
-        }
-
-        @keyframes sk-scaleout {
-            0% {
-                -webkit-transform: scale(0);
-                transform: scale(0);
-            }
-            100% {
-                -webkit-transform: scale(1.0);
-                transform: scale(1.0);
-                opacity: 0;
-            }
-        }
-    </style>
-</head>
-<body class="app">
-<div id='loader'>
-    <div class="spinner"></div>
-</div>
-
-<script>
-    window.addEventListener('load', () => {
-        const loader = document.getElementById('loader');
-        setTimeout(() => {
-            loader.classList.add('fadeOut');
-        }, 300);
-    });
-</script>
-<div class="peers ai-s fxw-nw h-100vh">
-    <div class="d-n@sm- peer peer-greed h-100 pos-r bgr-n bgpX-c bgpY-c bgsz-cv"
-         style='background-image: url("/assets/static/images/bg.jpg")'>
-        <div class="pos-a centerXY">
-            <div class="bgc-white bdrs-50p pos-r" style='width: 120px; height: 120px;'>
-                <img class="pos-a centerXY" src="/assets/static/images/logo.png" alt="">
-            </div>
-        </div>
-    </div>
-    <div class="col-12 col-md-4 peer pX-40 pY-80 h-100 bgc-white scrollable pos-r" style='min-width: 320px;'>
-        <h4 class="fw-300 c-grey-900 mB-40">Login</h4>
-        <form>
-            <div class="form-group">
-                <label class="text-normal text-dark">Username</label>
-                <input type="email" class="form-control" placeholder="John Doe">
-            </div>
-            <div class="form-group">
-                <label class="text-normal text-dark">Password</label>
-                <input type="password" class="form-control" placeholder="Password">
-            </div>
-            <div class="form-group">
-                <div class="peers ai-c jc-sb fxw-nw">
-                    <div class="peer">
-                        <div class="checkbox checkbox-circle checkbox-info peers ai-c">
-                            <input type="checkbox" id="inputCall1" name="inputCheckboxesCall" class="peer">
-                            <label for="inputCall1" class=" peers peer-greed js-sb ai-c">
-                                <span class="peer peer-greed">Remember Me</span>
-                            </label>
+@section('login')
+    <div class="peers ai-s fxw-nw h-100vh justify-content-center">
+        <div class="col-12 col-md-5 peer pX-40 pY-80 h-100 bgc-white scrollable pos-r" style='min-width: 320px;'>
+            <div class="form_box">
+            <h2 class="fw-300 c-grey-900 mB-40 text-center"><strong>{{ __('admin.auth.mypet_admin') }}</strong></h2>
+            <h5 class="fw-300 c-grey-900 mB-40 text-center">{{ __('admin.auth.welcome_back') }}</h5>
+            
+            <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
+                @csrf
+                <div class="form-group">
+                <label class="text-normal text-dark">{{ __('admin.auth.username') }}</label>
+                    <input id="email" type="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" autofocus">
+                    @if ($errors->has('email'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('email') }}</strong>
+                        </span>
+                    @endif
+                </div>
+                <div class="form-group">
+                    <label class="text-normal text-dark">{{ __('admin.auth.password') }}</label>
+                    <input type="password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" name="password">
+                    @if ($errors->has('password'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('password') }}</strong>
+                        </span>
+                    @endif
+                </div>
+                <div class="form-group">
+                    <div class="peers ai-c jc-sb fxw-nw">
+                        <div class="peer">
+                            <div class="checkbox checkbox-circle checkbox-info peers ai-c">
+                                <input checked type="checkbox" id="inputCall1" name="inputCheckboxesCall" class="peer" {{ old('remember') ? 'checked' : ''}}>
+                                <label for="inputCall1" class=" peers peer-greed js-sb ai-c">
+                                    <span class="peer peer-greed">{{ __('admin.auth.remember_me') }}</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="peer">
+                            <button class="btn btn-primary">{{ __('admin.auth.login') }}</button>
                         </div>
                     </div>
-                    <div class="peer">
-                        <button class="btn btn-primary">Login</button>
-                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
+        </div>
     </div>
-</div>
-</body>
-</html>
+@endsection

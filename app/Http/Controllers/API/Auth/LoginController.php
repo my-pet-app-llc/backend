@@ -57,6 +57,10 @@ class LoginController extends Controller
      *                 type="object",
      *                 property="user",
      *                 @OA\Property(
+     *                     type="integer",
+     *                     property="id",
+     *                 ),
+     *                 @OA\Property(
      *                     type="string",
      *                     property="email",
      *                 ),
@@ -233,16 +237,12 @@ class LoginController extends Controller
      *         description="Validation error",
      *         @OA\JsonContent(
      *             @OA\Property(
-     *                 type="string",
-     *                 property="message",
-     *             ),
-     *             @OA\Property(
-     *                 type="object",
-     *                 property="errors",
-     *                 @OA\Property(type="array", property="parameter", @OA\Items(type="string",description="message"))
+     *                 type="array",
+     *                 property="field",
+     *                 @OA\Items(type="string", example="Invalid data")
      *             )
      *         )
-     *     )
+     *     ),
      * )
      */
     /**

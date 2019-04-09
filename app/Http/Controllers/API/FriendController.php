@@ -19,7 +19,7 @@ class FriendController extends Controller
      *     operationId="friendsAll",
      *     @OA\Response(
      *         response="200",
-     *         description="Success message, pet owner and pet info.",
+     *         description="Friends of pet.",
      *         @OA\JsonContent(
      *             @OA\Items(
      *                 @OA\Property(

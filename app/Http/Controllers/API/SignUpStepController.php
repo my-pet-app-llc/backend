@@ -65,6 +65,10 @@ class SignUpStepController extends Controller
      *                 type="object",
      *                 property="user",
      *                 @OA\Property(
+     *                     type="integer",
+     *                     property="id",
+     *                 ),
+     *                 @OA\Property(
      *                     type="string",
      *                     property="email",
      *                 ),
@@ -416,6 +420,10 @@ class SignUpStepController extends Controller
      *                 type="object",
      *                 property="user",
      *                 @OA\Property(
+     *                     type="integer",
+     *                     property="id",
+     *                 ),
+     *                 @OA\Property(
      *                     type="string",
      *                     property="email",
      *                 ),
@@ -592,13 +600,9 @@ class SignUpStepController extends Controller
      *         description="Validation error",
      *         @OA\JsonContent(
      *             @OA\Property(
-     *                 type="string",
-     *                 property="message",
-     *             ),
-     *             @OA\Property(
-     *                 type="object",
-     *                 property="errors",
-     *                 @OA\Property(type="array", property="parameter", @OA\Items(type="string",description="message"))
+     *                 type="array",
+     *                 property="field",
+     *                 @OA\Items(type="string", example="Invalid data")
      *             )
      *         )
      *     ),
@@ -690,7 +694,7 @@ class SignUpStepController extends Controller
     private function saveFile($str_file, $path)
     {
         $file = new File($str_file);
-        $file->validation(['jpg', 'png']);
+        $file->validation(['jpg', 'png', 'jpeg']);
         return $file->store($path);
     }
 }

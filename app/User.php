@@ -3,6 +3,8 @@
 namespace App;
 
 use App\Exceptions\NotOwnerException;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
@@ -29,9 +31,20 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * @return HasOne
+     */
     public function owner()
     {
         return $this->hasOne(Owner::class);
+    }
+
+    /**
+     * @return HasOneThrough
+     */
+    public function pet()
+    {
+        return $this->hasOneThrough(Pet::class, Owner::class);
     }
 
     /**
@@ -68,4 +81,5 @@ class User extends Authenticatable
     {
         return (bool)$this->facebook_id;
     }
+    
 }

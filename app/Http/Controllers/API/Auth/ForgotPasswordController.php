@@ -59,21 +59,17 @@ class ForgotPasswordController extends Controller
      *              )
      *          )
      *      ),
-     *      @OA\Response(
-     *          response="422",
-     *          description="Validation error",
-     *          @OA\JsonContent(
-     *              @OA\Property(
-     *                  type="string",
-     *                  property="message",
-     *              ),
-     *              @OA\Property(
-     *                  type="object",
-     *                  property="errors",
-     *                  @OA\Property(type="array", property="parameter", @OA\Items(type="string",description="message"))
-     *              )
-     *          )
-     *      )
+     *     @OA\Response(
+     *         response="422",
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="array",
+     *                 property="field",
+     *                 @OA\Items(type="string", example="Invalid data")
+     *             )
+     *         )
+     *     ),
      * )
      */
     /**
