@@ -32,4 +32,7 @@ Route::group(['namespace'=>'Admin', 'middleware'=>['auth']], function () {
     Route::get('/users/{user}',     'UsersController@show')->name('users.show');
     Route::get('/data/users',       'UsersController@data')->name('data_users');
     Route::get('/users/ban/{user}', 'UsersController@userBan')->name('users.ban');
+
+    Route::get('/tickets',          'TicketsController@index')->name('tickets.index');
+    Route::get('/data/tickets',     'TicketsController@data')->name('data_tickets');
 });
