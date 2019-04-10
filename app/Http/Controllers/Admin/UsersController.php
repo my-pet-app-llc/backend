@@ -35,7 +35,7 @@ class UsersController extends Controller
                 return 'example location';
             })
             ->addColumn('status', function($owner) {
-                return $owner->statusName . view('users._status', compact('owner'))->render();;
+                return $owner->statusName . view('users._status', compact('owner'))->render();
             });
 
         $datatables->rawColumns(['username', 'status']);
