@@ -172,6 +172,10 @@ ul li:hover {
   background-color: #2680eb;
 }
 
+ul li:hover a span {
+  color: #fff;
+}
+
 .tickets_chat {
   padding: 0;
   margin-top: 43px;

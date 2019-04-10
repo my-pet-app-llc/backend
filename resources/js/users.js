@@ -22,23 +22,17 @@ $(function() {
             "autoWidth": true,
             ajax: url,
             columns: columns,
-            "initComplete": function(settings, json) {
-                addClickByRow();
-                highlightStatus(); 
-            }
+            "createdRow": function(row) {
+                const td = $(row).find('td').last();
+                const status = td.find('.user_state').attr('data-status');
+                const stateClass = 'bg_status_' + status;
+                td.addClass(stateClass);
+
+                $(row).css('cursor', 'pointer')
+                $(row).addClass('press_row');
+              }
         });
     }
-
-    table.on( 'order.dt', function () {
-        highlightStatus(); 
-    });
-
-    table.on( 'search.dt', function () {
-        setTimeout(function () {
-            highlightStatus(); 
-            addClickByRow();
-        },100)
-    });
 
     $(document).on('click', '.btn_ban', function (e) {
         const path = $(e.target).attr('data-ban-url');
@@ -87,21 +81,6 @@ $(function() {
             },
             error: function($error) {
             }
-        });
-    }
-
-    function highlightStatus () {
-        $('.user_state').each(function () {
-            let state = $(this).data('status');
-            let stateClass = 'bg_status_' + state;
-            $(this).closest('td').addClass(stateClass);
-        });
-    }
-
-    function addClickByRow() {
-        rows = $(table).find('.click_row').closest('tr').addClass('press_row');
-        rows.each(function() {
-            $(this).css('cursor', 'pointer')
         });
     }
     
