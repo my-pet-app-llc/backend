@@ -11,13 +11,11 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class NewEvent implements ShouldBroadcast
+class ChatMessageEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     private $user;
-
-    private $type;
 
     private $data;
 
@@ -25,13 +23,11 @@ class NewEvent implements ShouldBroadcast
      * Create a new event instance.
      *
      * @param User $user
-     * @param string $type
      * @param array $data
      */
-    public function __construct(User $user, string $type, array $data = [])
+    public function __construct(User $user, array $data = [])
     {
         $this->user = $user;
-        $this->type = $type;
         $this->data = $data;
     }
 
@@ -42,21 +38,18 @@ class NewEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        $channelName = 'new_event.' . $this->user->id;
+        $channelName = 'events.' . $this->user->id;
 
         return new PrivateChannel($channelName);
     }
 
     public function broadcastAs()
     {
-        return 'new.event';
+        return 'chat.message';
     }
 
     public function broadcastWith()
     {
-        return [
-            'type' => $this->type,
-            'data' => $this->data
-        ];
+        return $this->data;
     }
 }

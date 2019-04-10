@@ -55,6 +55,12 @@ Route::namespace('API')->group(function () {
 
             Route::resource('materials', 'MaterialController')->only(['index', 'show']);
 
+            Route::get('location', 'LocationController');
+
+            Route::resource('connect', 'ConnectController')->only(['index', 'store', 'update']);
+
+            Route::resource('friend-requests', 'FriendRequestController')->only(['index', 'store', 'update']);
+
         });
 
     });
