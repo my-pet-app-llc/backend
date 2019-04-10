@@ -3696,6 +3696,209 @@
                 ]
             }
         },
+        "/materials": {
+            "get": {
+                "tags": [
+                    "Materials"
+                ],
+                "summary": "Get materials",
+                "description": "Get list of partner materials",
+                "operationId": "materialsGet",
+                "responses": {
+                    "200": {
+                        "description": "List of partner materials",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "Material ID",
+                                                "type": "integer",
+                                                "example": "1"
+                                            },
+                                            "image": {
+                                                "description": "URL of the materialimage",
+                                                "type": "string",
+                                                "example": "http://mypets.com/storage/materials/example.com"
+                                            },
+                                            "title": {
+                                                "description": "Title of material",
+                                                "type": "string",
+                                                "example": "Title"
+                                            },
+                                            "short_text": {
+                                                "description": "Short text for preview material",
+                                                "type": "string",
+                                                "example": "That's short text"
+                                            },
+                                            "full_text": {
+                                                "description": "Full text of material",
+                                                "type": "string",
+                                                "example": "That's long long full text...."
+                                            },
+                                            "address": {
+                                                "description": "Address of partner",
+                                                "type": "string",
+                                                "example": "Avenida Corrientes 1400, Автономный город Буэнос-Айрес, Аргентина"
+                                            },
+                                            "lat": {
+                                                "description": "Latitude for address of partner",
+                                                "type": "string",
+                                                "example": "12.23324234"
+                                            },
+                                            "lng": {
+                                                "description": "Longitude for address of partner",
+                                                "type": "string",
+                                                "example": "-34.123213123"
+                                            },
+                                            "phone_number": {
+                                                "description": "Phone number of partner",
+                                                "type": "string",
+                                                "example": "(098) 764-1920"
+                                            },
+                                            "website": {
+                                                "description": "Website of partner",
+                                                "type": "string",
+                                                "example": "https://google.com"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/materials/{material_id}": {
+            "get": {
+                "tags": [
+                    "Materials"
+                ],
+                "summary": "Material details",
+                "description": "Get material details",
+                "operationId": "materialsDetails",
+                "parameters": [
+                    {
+                        "name": "material_id",
+                        "in": "path",
+                        "description": "Material ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of partner materials",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "Material ID",
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "image": {
+                                            "description": "URL of the materialimage",
+                                            "type": "string",
+                                            "example": "http://mypets.com/storage/materials/example.com"
+                                        },
+                                        "title": {
+                                            "description": "Title of material",
+                                            "type": "string",
+                                            "example": "Title"
+                                        },
+                                        "short_text": {
+                                            "description": "Short text for preview material",
+                                            "type": "string",
+                                            "example": "That's short text"
+                                        },
+                                        "full_text": {
+                                            "description": "Full text of material",
+                                            "type": "string",
+                                            "example": "That's long long full text...."
+                                        },
+                                        "address": {
+                                            "description": "Address of partner",
+                                            "type": "string",
+                                            "example": "Avenida Corrientes 1400, Автономный город Буэнос-Айрес, Аргентина"
+                                        },
+                                        "lat": {
+                                            "description": "Latitude for address of partner",
+                                            "type": "string",
+                                            "example": "12.23324234"
+                                        },
+                                        "lng": {
+                                            "description": "Longitude for address of partner",
+                                            "type": "string",
+                                            "example": "-34.123213123"
+                                        },
+                                        "phone_number": {
+                                            "description": "Phone number of partner",
+                                            "type": "string",
+                                            "example": "(098) 764-1920"
+                                        },
+                                        "website": {
+                                            "description": "Website of partner",
+                                            "type": "string",
+                                            "example": "https://google.com"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "profile": {
             "get": {
                 "tags": [
