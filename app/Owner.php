@@ -27,6 +27,8 @@ class Owner extends Model
 
     const RADIUS = 20;
 
+    const PRE_RADIUS = 30;
+
     const DISTANCE_IN_MILE = 69.0585729;
 
     public function user()

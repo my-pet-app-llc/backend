@@ -68,6 +68,10 @@ class LoginController extends Controller
      *                     type="object",
      *                     property="owner",
      *                     @OA\Property(
+     *                         property="id",
+     *                         type="integer"
+     *                     ),
+     *                     @OA\Property(
      *                         property="first_name",
      *                         type="string"
      *                     ),

@@ -76,6 +76,10 @@ class SignUpStepController extends Controller
      *                     type="object",
      *                     property="owner",
      *                     @OA\Property(
+     *                         property="id",
+     *                         type="integer"
+     *                     ),
+     *                     @OA\Property(
      *                         property="first_name",
      *                         type="string"
      *                     ),
@@ -430,6 +434,10 @@ class SignUpStepController extends Controller
      *                 @OA\Property(
      *                     type="object",
      *                     property="owner",
+     *                     @OA\Property(
+     *                         property="id",
+     *                         type="integer"
+     *                     ),
      *                     @OA\Property(
      *                         property="first_name",
      *                         type="string"

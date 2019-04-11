@@ -229,18 +229,7 @@ class ChatController extends Controller
      *             @OA\Property(
      *                 type="string",
      *                 property="message",
-     *                 example="Chat with this friend already exist."
-     *             )
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response="404",
-     *         description="Not found error",
-     *         @OA\JsonContent(
-     *             @OA\Property(
-     *                 type="string",
-     *                 property="message",
-     *                 example="Friend not found."
+     *                 example="Chat with this friend already exist.|Cannot create chat with this user."
      *             )
      *         )
      *     ),

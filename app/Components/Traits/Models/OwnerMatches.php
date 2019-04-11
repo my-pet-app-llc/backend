@@ -9,6 +9,7 @@ use Grimzy\LaravelMysqlSpatial\Types\Point;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Query\Builder;
+use Predis\Client;
 
 /**
  * Trait OwnerMatches
@@ -114,13 +115,39 @@ trait OwnerMatches
             ->distance(
                 'location_point',
                 (new Point($this->location_point->getLat(), $this->location_point->getLng())),
-                self::RADIUS/self::DISTANCE_IN_MILE,
+                self::PRE_RADIUS/self::DISTANCE_IN_MILE,
                 true
             )
             ->with('pet.pictures')
             ->get();
 
-        return $matches->first();
+        if($matches->count()){
+            $geoadd = ['GEOADD', 'locs'];
+            $zrem = ['ZREM', 'locs'];
+            foreach ($matches as $match) {
+                $geoadd[] = $match->location_point->getLng();
+                $geoadd[] = $match->location_point->getLat();
+                $geoadd[] = (string)$match->id;
+                $zrem[] = (string)$match->id;
+            }
+            $georadius = ['GEORADIUS', 'locs', $this->location_point->getLng(), $this->location_point->getLat(), self::RADIUS, 'mi'];
+
+            $redis = new Client();
+            try{
+                $redis->connect();
+            }catch(\Exception $e){
+                return $matches->first();
+            }
+            $redis->executeRaw($geoadd);
+            $inRadius = $redis->executeRaw($georadius);
+            $redis->executeRaw($zrem);
+
+            $match = $inRadius ? $matches->where('id', $inRadius[0])->first() : null;
+        }else{
+            $match = null;
+        }
+
+        return $match;
     }
 
     /**

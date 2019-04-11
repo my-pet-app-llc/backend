@@ -20,7 +20,7 @@ class Chat
         $friend = $pet->findFriend($recipientId);
         $connects = $pet->owner->matched()->where('owner_id', $recipientId)->first();
         if(!$friend && !$connects)
-            abort(404, 'Cannot create chat with this user.');
+            abort(403, 'Cannot create chat with this user.');
 
         if(!$friend)
             $friend = Pet::query()->where('owner_id', $connects->owner_id)->first();
