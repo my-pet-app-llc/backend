@@ -14,7 +14,7 @@ class FriendController extends Controller
 {
     /**
      * @OA\Get(
-     *     path="friends",
+     *     path="/friends",
      *     tags={"Friends"},
      *     description="Get pet friends.",
      *     summary="All friends",
