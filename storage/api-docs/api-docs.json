@@ -1608,23 +1608,7 @@
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Chat with this friend already exist."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not found error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Friend not found."
+                                            "example": "Chat with this friend already exist.|Cannot create chat with this user."
                                         }
                                     },
                                     "type": "object"
@@ -3978,7 +3962,7 @@
                 ]
             }
         },
-        "friends": {
+        "/friends": {
             "get": {
                 "tags": [
                     "Friends"
