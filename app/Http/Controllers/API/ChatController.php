@@ -30,6 +30,12 @@ class ChatController extends Controller
      *                     example="1"
      *                 ),
      *                 @OA\Property(
+     *                     type="integer",
+     *                     property="pet_id",
+     *                     description="Pet(friend) ID",
+     *                     example="1"
+     *                 ),
+     *                 @OA\Property(
      *                     type="string",
      *                     property="picture",
      *                     description="URl of profile picture collocutor pet",
@@ -185,11 +191,11 @@ class ChatController extends Controller
      *             @OA\Schema(
      *                 @OA\Property(
      *                     type="integer",
-     *                     property="friend_id",
-     *                     description="Friend with whom you want to create a chat",
+     *                     property="pet_id",
+     *                     description="Pet with whom you want to create a chat",
      *                     example="2"
      *                 ),
-     *                 required={"friend_id"}
+     *                 required={"pet_id"}
      *             )
      *         )
      *     ),
@@ -223,18 +229,7 @@ class ChatController extends Controller
      *             @OA\Property(
      *                 type="string",
      *                 property="message",
-     *                 example="Chat with this friend already exist."
-     *             )
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response="404",
-     *         description="Not found error",
-     *         @OA\JsonContent(
-     *             @OA\Property(
-     *                 type="string",
-     *                 property="message",
-     *                 example="Friend not found."
+     *                 example="Chat with this friend already exist.|Cannot create chat with this user."
      *             )
      *         )
      *     ),
@@ -247,7 +242,7 @@ class ChatController extends Controller
      */
     public function create(Request $request)
     {
-        $friend = $request->get('friend_id');
+        $friend = $request->get('pet_id');
         $chat = Chat::create($friend);
 
         return response()->json(['room_id' => $chat->getRoom()->id]);

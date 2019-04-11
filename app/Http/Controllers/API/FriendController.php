@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Friend;
+use App\FriendRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\FriendResource;
+use App\Owner;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -170,7 +172,7 @@ class FriendController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @return Response
      */
     public function store(Request $request)
@@ -203,7 +205,7 @@ class FriendController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  \App\Friend  $friend
      * @return Response
      */

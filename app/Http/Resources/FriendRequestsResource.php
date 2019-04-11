@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UpdateResource extends JsonResource
+class FriendRequestsResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,9 +17,7 @@ class UpdateResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'image' => $this->image,
-            'title' => $this->title,
-            'description' => $this->description
+            'owner' => (new OwnerResource($this->requested, true, false, false))
         ];
     }
 }

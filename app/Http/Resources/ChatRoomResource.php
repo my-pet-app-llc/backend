@@ -16,7 +16,7 @@ class ChatRoomResource extends JsonResource
     public function toArray($request)
     {
         $last_message = $this->chatMessages->last();
-        $friend = $this->pets->where('id', '!=', $request->user()->id)->first();
+        $friend = $this->pets->where('id', '!=', $request->user()->pet->id)->first();
         $picture = $friend->profile_picture;
         $name = $friend->name;
         $owner = [
@@ -26,6 +26,7 @@ class ChatRoomResource extends JsonResource
 
         return [
             'id' => $this->id,
+            'pet_id' => $friend->id,
             'picture' => config('filesystems.disks')[env('FILESYSTEM_DRIVER', 'public')]['url'] . $picture,
             'name' => $name,
             'owner' => $owner,

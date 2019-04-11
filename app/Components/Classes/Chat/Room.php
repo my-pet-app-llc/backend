@@ -8,8 +8,9 @@ use App\ChatMessage;
 use App\ChatRoom;
 use App\ChatTextMessage;
 use App\Components\Classes\StoreFile\File;
+use App\Events\DeleteChatEvent;
 use App\Events\NewChatMessage;
-use App\Events\NewEvent;
+use App\Events\ChatMessageEvent;
 use App\Http\Resources\ChatMessageResource;
 use App\Pet;
 use Illuminate\Database\Eloquent\Builder;
@@ -73,7 +74,7 @@ class Room
         $this->room->pets()->updateExistingPivot($this->recipient->id, ['is_read' => false]);
 
         $user = $this->recipient->owner->user;
-        broadcast(new NewEvent($user, 'chat_message', [
+        broadcast(new ChatMessageEvent($user, [
             'room_id' => $this->room->id,
             'message' => new ChatMessageResource($chatMessage)
         ]));
@@ -94,7 +95,7 @@ class Room
         $this->room->delete();
 
         $user = $this->recipient->owner->user;
-        broadcast(new NewEvent($user, 'chat_delete', [
+        broadcast(new DeleteChatEvent($user, [
             'room_id' => $roomId
         ]));
     }
