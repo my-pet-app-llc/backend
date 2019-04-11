@@ -7,7 +7,8 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
     <title>{{ __('admin.title.mypet_admin_panel') }}</title>
-    <link rel="stylesheet" href="{{  mix('/css/admin.css') }}">
+    <link rel="stylesheet" href="{{  mix('/css/index.css') }}">
+    <link rel="stylesheet" href="{{  mix('/css/app.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" /> 
 </head>
 <body class="app">

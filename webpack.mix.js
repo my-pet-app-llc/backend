@@ -14,5 +14,5 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/admin.js', 'public/js')
     // .js('resources/js/test-real-time.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
-    .sass('resources/sass/admin.scss', 'public/css')
+    .sass('resources/sass/admin/index.scss', 'public/css')
     .sourceMaps();

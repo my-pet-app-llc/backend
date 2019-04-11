@@ -20,11 +20,19 @@ Auth::routes();
 Route::get('reset/password/api', 'Auth\ApiResetPassword')->name('api.reset.password');
 
 Route::group(['namespace'=>'Admin', 'middleware'=>['auth']], function () {
-    Route::get('/home',           'AdminController@index')->name('home');
+    Route::get('/home',             'AdminController@index')->name('home');
 
-    Route::resource('updates',    'UpdatesController');
-    Route::get('/data/updates',   'UpdatesController@data')->name('data_updates');
+    Route::resource('updates',      'UpdatesController');
+    Route::get('/data/updates',     'UpdatesController@data')->name('data_updates');
 
-    Route::resource('materials',  'MaterialsController');
-    Route::get('/data/materials', 'MaterialsController@data')->name('data_materials');
+    Route::resource('materials',    'MaterialsController');
+    Route::get('/data/materials',   'MaterialsController@data')->name('data_materials');
+
+    Route::get('/users',            'UsersController@index')->name('users.index');
+    Route::get('/users/{user}',     'UsersController@show')->name('users.show');
+    Route::get('/data/users',       'UsersController@data')->name('data_users');
+    Route::get('/users/ban/{user}', 'UsersController@userBan')->name('users.ban');
+
+    Route::get('/tickets',          'TicketsController@index')->name('tickets.index');
+    Route::get('/data/tickets',     'TicketsController@data')->name('data_tickets');
 });

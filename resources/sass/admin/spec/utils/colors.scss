@@ -9,22 +9,22 @@
 // @Material Color
 // ---------------------------------------------------------
 
-@each $item, $color in $md-colors {
-  .c-#{$item},     .cH-#{$item}:hover      { color: $color !important; }
-  .bgc-#{$item},   .bgcH-#{$item}:hover    { background-color: $color !important; }
-  .bdc-#{$item},   .bdcH-#{$item}:hover    { border-color: $color !important; }
-  .fill-#{$item},  .fillH-#{$item}:hover   { fill: $color !important; }
-  .str-#{$item},   .strH-#{$item}:hover    { stroke: $color !important; }
-}
+// @each $item, $color in $md-colors {
+//   .c-#{$item},     .cH-#{$item}:hover      { color: $color !important; }
+//   .bgc-#{$item},   .bgcH-#{$item}:hover    { background-color: $color !important; }
+//   .bdc-#{$item},   .bdcH-#{$item}:hover    { border-color: $color !important; }
+//   .fill-#{$item},  .fillH-#{$item}:hover   { fill: $color !important; }
+//   .str-#{$item},   .strH-#{$item}:hover    { stroke: $color !important; }
+// }
 
-// ---------------------------------------------------------
-// @Grey Colors
-// ---------------------------------------------------------
+// // ---------------------------------------------------------
+// // @Grey Colors
+// // ---------------------------------------------------------
 
-@each $item, $color in $grey-colors-alt {
-  .c-#{$item},     .cH-#{$item}:hover      { color: $color !important; }
-  .bgc-#{$item},   .bgcH-#{$item}:hover    { background-color: $color !important; }
-  .bdc-#{$item},   .bdcH-#{$item}:hover    { border-color: $color !important; }
-  .fill-#{$item},  .fillH-#{$item}:hover   { fill: $color !important; }
-  .str-#{$item},   .strH-#{$item}:hover    { stroke: $color !important; }
-}
+// @each $item, $color in $grey-colors-alt {
+//   .c-#{$item},     .cH-#{$item}:hover      { color: $color !important; }
+//   .bgc-#{$item},   .bgcH-#{$item}:hover    { background-color: $color !important; }
+//   .bdc-#{$item},   .bdcH-#{$item}:hover    { border-color: $color !important; }
+//   .fill-#{$item},  .fillH-#{$item}:hover   { fill: $color !important; }
+//   .str-#{$item},   .strH-#{$item}:hover    { stroke: $color !important; }
+// }

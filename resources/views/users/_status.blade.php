@@ -1,0 +1,1 @@
+<span class="user_state" data-status="{{ $owner->status }}"></span>
