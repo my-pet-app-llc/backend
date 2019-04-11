@@ -20,16 +20,17 @@ class UsersController extends Controller
         return view('users.index');
     }
 
-    public function data()
+    public function data(Owner $owner)
     {
-        $owners = Owner::with('user');
+        $owners = $owner->ownersData();
 
         $datatables = DataTables::of($owners)
-            ->editColumn('username', function($owner) {
-                return $owner->fullName . view('users._row', compact('owner'))->render();
+            ->filterColumn('fullname', function($query, $keyword) {
+                $sql = "CONCAT(owners.first_name,' ',owners.last_name)  like ?";
+                $query->whereRaw($sql, ["%{$keyword}%"]);
             })
             ->editColumn('created_at', function($owner) {
-                return $owner->created_at->format('m/d/Y');
+                return $owner->created_at->format('m/d/Y') . view('users._row', compact('owner'))->render();;
             })
             ->addColumn('location', function($owner) {
                 return 'example location';
@@ -38,7 +39,7 @@ class UsersController extends Controller
                 return $owner->statusName . view('users._status', compact('owner'))->render();
             });
 
-        $datatables->rawColumns(['username', 'status']);
+        $datatables->rawColumns(['created_at', 'status']);
         return $datatables->make(true);
     }
 
