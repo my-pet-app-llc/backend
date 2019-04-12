@@ -111,6 +111,7 @@ trait OwnerMatches
 
         $matches = $this->getStaticQuery()
             ->whereNotIn('id', $existingIds)
+            ->where('signup_step', 0)
             ->whereDate('location_updated_at', '>', Carbon::now()->subMonth()->format('Y-m-d'))
             ->distance(
                 'location_point',
