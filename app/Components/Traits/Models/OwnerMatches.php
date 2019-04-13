@@ -96,6 +96,19 @@ trait OwnerMatches
     }
 
     /**
+     * @return Collection
+     */
+    public function notClose ()
+    {
+        return $this->getStaticQuery()
+            ->notClosed()
+            ->findAll($this->id)
+            ->withOwnerParse($this->id)
+            ->where('owners.id', $this->id)
+            ->get();
+    }
+
+    /**
      * @return Owner
      */
     public function findToConnect ()
@@ -112,7 +125,7 @@ trait OwnerMatches
         $matches = $this->getStaticQuery()
             ->whereNotIn('id', $existingIds)
             ->where('signup_step', 0)
-            ->whereDate('location_updated_at', '>', Carbon::now()->subMonth()->format('Y-m-d'))
+            ->whereDate('location_updated_at', '>', Carbon::now()->subHours(24)->format('Y-m-d H:i:s'))
             ->distance(
                 'location_point',
                 (new Point($this->location_point->getLat(), $this->location_point->getLng())),
@@ -170,6 +183,24 @@ trait OwnerMatches
     }
 
     /**
+     * @param Owner $owner
+     * @return Connect
+     */
+    public function matchByUser ($owner)
+    {
+        $connect = Connect::query()
+            ->where(function ($query) use ($owner) {
+                return $query->where('requesting_owner_id', $this->id)->where('responding_owner_id', $owner->id);
+            })
+            ->orWhere(function ($query) use ($owner) {
+                return $query->where('responding_owner_id', $this->id)->where('requesting_owner_id', $owner->id);
+            })
+            ->first();
+
+        return $connect;
+    }
+
+    /**
      * @param Builder $query
      * @return Builder
      */
@@ -198,6 +229,17 @@ trait OwnerMatches
 
     /**
      * @param Builder $query
+     * @return Builder
+     */
+    public function scopeNotClosed ($query)
+    {
+        return $query->where('closed', false)->where(function ($q) {
+            return $q->where('matches', Connect::MATCHES['all_matches'])->orWhere('matches', Connect::MATCHES['request_match']);
+        });
+    }
+
+    /**
+     * @param Builder $query
      * @param integer $id
      * @return Builder
      */
@@ -221,7 +263,10 @@ trait OwnerMatches
             })
             ->selectRaw('IF(connects.requesting_owner_id = ?, connects.responding_owner_id, connects.requesting_owner_id) as owner_id', [$id])
             ->selectRaw('IF(connects.requesting_owner_id = ?, 1, 0) as creator', [$id])
-            ->selectRaw('connects.id')->selectRaw( 'connects.created_at')->selectRaw( 'connects.updated_at');
+            ->selectRaw('connects.id')
+            ->selectRaw('connects.created_at')
+            ->selectRaw('connects.updated_at')
+            ->selectRaw('connects.closed');
     }
 
     private function getStaticQuery ()

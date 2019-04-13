@@ -89,11 +89,11 @@ trait PetEvents
         $from = $now->format('Y-m-d H-i-s');
         $fromDay = $now->dayOfWeek - 1;
         $now->addHours(24);
-        $toSocial = $now->format('Y-m-d H-i-s');
-        $toSocialDay = $now->dayOfWeek - 1;
-        $now->addHours(24);
         $toCare = $now->format('Y-m-d H-i-s');
         $toCareDay = $now->dayOfWeek - 1;
+        $now->addHours(24);
+        $toSocial = $now->format('Y-m-d H-i-s');
+        $toSocialDay = $now->dayOfWeek - 1;
 
         $query = function ($query) use ($from, $toSocial, $toCare) {
             return $query->where(function ($q) use ($from, $toSocial) {

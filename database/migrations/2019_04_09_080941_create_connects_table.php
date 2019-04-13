@@ -18,6 +18,7 @@ class CreateConnectsTable extends Migration
             $table->bigInteger('requesting_owner_id')->unsigned();
             $table->bigInteger('responding_owner_id')->unsigned();
             $table->tinyInteger('matches')->default(1);
+            $table->boolean('closed')->default(false);
             $table->timestamps();
 
             $table->foreign('requesting_owner_id')->references('id')->on('owners')->onDelete('cascade');

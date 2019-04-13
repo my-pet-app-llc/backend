@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Components\Classes\Friendship\Friendship;
+use App\Connect;
 use App\FriendRequest;
 use App\Http\Resources\FriendRequestsResource;
 use App\Owner;
@@ -273,7 +275,7 @@ class FriendRequestController extends Controller
      *             @OA\Property(
      *                 type="string",
      *                 property="message",
-     *                 example="User already you friend.|Do you want to fuck yourself?|There is no confirm friend request with this user.|It is not possible to make a friend request to this user."
+     *                 example="Message"
      *             )
      *         )
      *     ),
@@ -296,29 +298,17 @@ class FriendRequestController extends Controller
      *
      * @param Request $request
      * @return Response
+     * @throws \App\Exceptions\FriendshipException
      */
     public function store(Request $request)
     {
-        $ownerToFriend = Owner::with(['pet'])->findOrFail($request->get('owner_id'));
         $owner = $request->user()->owner;
 
-        if($owner->pet->hasFriend($ownerToFriend->pet->id))
-            return response()->json(['message' => 'User already you friend.'], 403);
+        $friendship = new Friendship($owner, (int)$request->get('owner_id'));
+        if($friendship->isStatus(Friendship::MATCH))
+            $friendship->closeMatch();
 
-        if($ownerToFriend->id == $owner->id)
-            return response()->json(['message' => 'Do you want to fuck yourself?'], 403);
-
-        $requests = $owner->getDeclinedOrNotRespondedRequestsWith($ownerToFriend->id);
-        if($requests->count())
-            return response()->json(['message' => 'There is no confirm friend request with this user.'], 403);
-
-        if(!$owner->existMatch($ownerToFriend))
-            return response()->json(['message' => 'It is not possible to make a friend request to this user.'], 403);
-
-        FriendRequest::query()->create([
-            'requesting_owner_id' => $owner->id,
-            'responding_owner_id' => $ownerToFriend->id
-        ]);
+        $friendship->makeFriendRequest();
 
         return response()->json(['message' => 'success']);
     }
@@ -403,7 +393,7 @@ class FriendRequestController extends Controller
      *             @OA\Property(
      *                 type="string",
      *                 property="message",
-     *                 example="The request has already been responded."
+     *                 example="Message"
      *             )
      *         )
      *     ),
@@ -427,23 +417,15 @@ class FriendRequestController extends Controller
      * @param Request $request
      * @param FriendRequest $friendRequest
      * @return Response
+     * @throws \App\Exceptions\FriendshipException
      */
     public function update(Request $request, FriendRequest $friendRequest)
     {
         $owner = $request->user()->owner;
-
-        if($friendRequest->responding_owner_id != $owner->id)
-            return response()->json(['message' => 'Request not found.'], 404);
-
-        if($friendRequest->accept != null)
-            return response()->json(['message' => 'The request has already been responded.'], 403);
-
         $accept = (bool)$request->get('accept');
 
-        $friendRequest->update(compact('accept'));
-
-        if($accept)
-            $owner->pet->makeFriend($friendRequest->requested->pet->id);
+        $friendship = new Friendship($owner, (int)$friendRequest->requesting_owner_id);
+        $friendship->updateFriendRequest($accept);
 
         return response()->json(['message' => 'success']);
     }

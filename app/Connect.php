@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Connect extends Model
 {
     protected $fillable = [
-        'requesting_owner_id', 'responding_owner_id', 'matches'
+        'requesting_owner_id', 'responding_owner_id', 'matches', 'closed'
     ];
 
     const MATCHES = [

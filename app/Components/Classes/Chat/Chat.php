@@ -3,6 +3,9 @@
 namespace App\Components\Classes\Chat;
 
 use App\ChatRoom;
+use App\Components\Classes\Friendship\Friendship;
+use App\Connect;
+use App\Exceptions\FriendshipException;
 use App\Pet;
 
 class Chat
@@ -12,19 +15,23 @@ class Chat
      *
      * @param int $recipientId
      * @return Room
+     * @throws FriendshipException
      */
     public static function create(int $recipientId)
     {
-        $pet = auth()->user()->pet;
+        $pet = auth()->user()->owner->pet;
+        $recipientPet = Pet::with('owner')->findOrFail($recipientId);
 
-        $friend = $pet->findFriend($recipientId);
-        $connects = $pet->owner->matched()->where('owner_id', $recipientId)->first();
-        if(!$friend && !$connects)
+        $friendship = new Friendship($pet->owner, $recipientPet->owner);
+        $friendshipStatus = $friendship->getStatus();
+        $accessStatuses = [Friendship::FRIENDS, Friendship::FRIEND_REQUEST, Friendship::MATCH_CLOSED, Friendship::MATCH];
+
+        if(
+            ($statusKey = array_search($friendshipStatus, $accessStatuses)) === false &&
+            ($accessStatuses[$statusKey] != Friendship::MATCH ||
+                $friendship->getMatch()->matches != Connect::MATCHES['all_matches'])
+        )
             abort(403, 'Cannot create chat with this user.');
-
-        if(!$friend)
-            $friend = Pet::query()->where('owner_id', $connects->owner_id)->first();
-
 
         $friendsIds = $pet->chatRooms->pluck('pets')->collapse()->pluck('id')->toArray();
 
@@ -33,9 +40,14 @@ class Chat
 
         $room = ChatRoom::query()->create();
         $pet->chatRooms()->attach([$room->id], ['is_read' => true]);
-        $friend->chatRooms()->attach([$room->id]);
+        $recipientPet->chatRooms()->attach([$room->id]);
 
-        return new Room($room, $pet, $friend);
+        $newRoom = (new Room($room, $pet, $recipientPet))->setNew();
+
+        if($accessStatuses[$statusKey] == Friendship::MATCH)
+            $newRoom->setFriendship($friendship);
+
+        return $newRoom;
     }
 
     /**
