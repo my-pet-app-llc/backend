@@ -51,17 +51,20 @@ trait PetFriends
 
     /**
      * @param int $friendId
+     * @return array
      */
     public function makeFriend(int $friendId)
     {
-        Friend::query()->create([
+        $primary = Friend::query()->create([
             'pet_id' => $this->id,
             'friend_id' => $friendId
         ]);
 
-        Friend::query()->create([
+        $secondary = Friend::query()->create([
             'pet_id' => $friendId,
             'friend_id' => $this->id
         ]);
+
+        return compact('primary', 'secondary');
     }
 }

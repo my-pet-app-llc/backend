@@ -7,10 +7,12 @@ use App\ChatImageMessage;
 use App\ChatMessage;
 use App\ChatRoom;
 use App\ChatTextMessage;
+use App\Components\Classes\Friendship\Friendship;
 use App\Components\Classes\StoreFile\File;
 use App\Events\DeleteChatEvent;
 use App\Events\NewChatMessage;
 use App\Events\ChatMessageEvent;
+use App\Exceptions\FriendshipException;
 use App\Http\Resources\ChatMessageResource;
 use App\Pet;
 use Illuminate\Database\Eloquent\Builder;
@@ -43,6 +45,16 @@ class Room
     private $recipient;
 
     /**
+     * @var Friendship
+     */
+    private $friendship;
+
+    /**
+     * @var boolean
+     */
+    private $isNew = false;
+
+    /**
      * Room constructor.
      *
      * @param ChatRoom $room
@@ -57,12 +69,50 @@ class Room
     }
 
     /**
+     * Set if room is new
+     *
+     * @return $this
+     */
+    public function setNew()
+    {
+        $this->isNew = true;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isNew()
+    {
+        return $this->isNew;
+    }
+
+    /**
+     * @param Friendship $friendship
+     * @return $this
+     */
+    public function setFriendship(Friendship $friendship)
+    {
+        $this->friendship = $friendship;
+        return $this;
+    }
+
+    /**
+     * @return Friendship
+     */
+    public function getFriendship()
+    {
+        return $this->friendship;
+    }
+
+    /**
      * Make message and broadcast message
      *
      * @param mixed $message
      * @param string $type
      * @param bool $validate
      * @return ChatMessage
+     * @throws FriendshipException
      */
     public function send($message, string $type, bool $validate = true)
     {
@@ -81,23 +131,28 @@ class Room
 
         broadcast(new NewChatMessage($this->room, $chatMessage))->toOthers();
 
+        if($this->isNew && $this->friendship)
+            $this->friendship->closeMatch();
+
         return $chatMessage;
     }
 
     /**
      * Delete room
      *
+     * @param bool $broadcast
      * @throws \Exception
      */
-    public function destroy()
+    public function destroy($broadcast = true)
     {
         $roomId = $this->room->id;
         $this->room->delete();
 
         $user = $this->recipient->owner->user;
-        broadcast(new DeleteChatEvent($user, [
-            'room_id' => $roomId
-        ]));
+        if($broadcast)
+            broadcast(new DeleteChatEvent($user, [
+                'room_id' => $roomId
+            ]));
     }
 
     /**

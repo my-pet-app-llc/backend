@@ -14,7 +14,7 @@ class UpdateController extends Controller
      * @OA\Get(
      *     path="/updates",
      *     tags={"Updates and Reminders"},
-     *     description="Get all updates and events reminders. Social events reminder - 24h. Care events reminder - 72h",
+     *     description="Get all updates and events reminders. Social events reminder - 72h. Care events reminder - 24h",
      *     summary="Get updates and reminders",
      *     operationId="updatesGet",
      *     @OA\Response(
@@ -28,7 +28,7 @@ class UpdateController extends Controller
      *                 @OA\Property(
      *                     type="array",
      *                     property="START_DATE_EVENTS",
-     *                     description="Social events from now to add 24h, care events from now to add 72h",
+     *                     description="Social events from now to add 72h, care events from now to add 24h",
      *                     @OA\Items(
      *                         @OA\Property(
      *                             type="integer",

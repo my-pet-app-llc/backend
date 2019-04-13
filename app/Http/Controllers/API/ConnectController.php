@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\APi;
 
+use App\Components\Classes\Friendship\Friendship;
 use App\Connect;
 use App\Events\MatchEvent;
 use App\Http\Resources\OwnerResource;
@@ -221,7 +222,7 @@ class ConnectController extends Controller
     public function index()
     {
         $owner = auth()->user()->owner;
-        $inRequests = $owner->inRequest()->where('creator', 0);
+        $inRequests = $owner->notClose()->where('creator', 0)->sortByDesc('closed');
         $responseData = [];
 
         if($inRequests->count()){
@@ -308,7 +309,7 @@ class ConnectController extends Controller
      *             @OA\Property(
      *                 type="string",
      *                 property="message",
-     *                 example="This match already been taken."
+     *                 example="Message"
      *             )
      *         )
      *     ),
@@ -331,26 +332,20 @@ class ConnectController extends Controller
      *
      * @param Request $request
      * @return Response
+     * @throws \App\Exceptions\FriendshipException
      */
     public function store(Request $request)
     {
-        $matchedOwner = Owner::query()->findOrFail($request->get('owner_id'));
-        $pet = $request->user()->owner;
-
-        if($pet->existMatch($matchedOwner))
-            return response()->json(['This match already been taken.'], 403);
+        $owner = $request->user()->owner;
 
         $matches = $request->get('match') ? Connect::MATCHES['request_match'] : Connect::MATCHES['blacklist'];
 
-        $connect = Connect::query()->create([
-            'requesting_owner_id' => $pet->id,
-            'responding_owner_id' => $matchedOwner->id,
-            'matches' => $matches
-        ]);
+        $friendship = new Friendship($owner, (int)$request->get('owner_id'));
+        $friendship->makeMatch($matches);
 
         if($matches)
-            broadcast(new MatchEvent($matchedOwner->user, [
-                'connect_id' => $connect->id
+            broadcast(new MatchEvent($friendship->getFriendOwner()->user, [
+                'connect_id' => $friendship->getMatch()->id
             ]));
 
         return response()->json(['message' => 'success']);
@@ -432,6 +427,17 @@ class ConnectController extends Controller
      *         )
      *     ),
      *     @OA\Response(
+     *         response="403",
+     *         description="Forbidden error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Message"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
      *         response="404",
      *         description="Not found error",
      *         @OA\JsonContent(
@@ -449,19 +455,18 @@ class ConnectController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param  Connect $connect
+     * @param Connect $connect
      * @return Response
+     * @throws \App\Exceptions\FriendshipException
      */
     public function update(Request $request, Connect $connect)
     {
         $owner = $request->user()->owner;
 
-        if($connect->responding_owner_id != $owner->id)
-            return response()->json(['message' => 'Not found match'], 404);
-
         $matches = $request->get('match') ? Connect::MATCHES['all_matches'] : Connect::MATCHES['blacklist'];
 
-        $connect->update(['matches' => $matches]);
+        $friendship = new Friendship($owner, (int)$connect->requesting_owner_id);
+        $friendship->confirmMatch($matches);
 
         $not_seen_matches = (bool)$owner->notRespondedMatches->count();
 

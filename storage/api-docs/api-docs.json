@@ -2749,7 +2749,7 @@
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "This match already been taken."
+                                            "example": "Message"
                                         }
                                     },
                                     "type": "object"
@@ -2846,6 +2846,22 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Message"
                                         }
                                     },
                                     "type": "object"
@@ -4336,7 +4352,7 @@
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "User already you friend.|Do you want to fuck yourself?|There is no confirm friend request with this user.|It is not possible to make a friend request to this user."
+                                            "example": "Message"
                                         }
                                     },
                                     "type": "object"
@@ -4444,7 +4460,7 @@
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "The request has already been responded."
+                                            "example": "Message"
                                         }
                                     },
                                     "type": "object"
@@ -6055,7 +6071,7 @@
                     "Updates and Reminders"
                 ],
                 "summary": "Get updates and reminders",
-                "description": "Get all updates and events reminders. Social events reminder - 24h. Care events reminder - 72h",
+                "description": "Get all updates and events reminders. Social events reminder - 72h. Care events reminder - 24h",
                 "operationId": "updatesGet",
                 "responses": {
                     "200": {
@@ -6068,7 +6084,7 @@
                                             "description": "Start date of events as key for events",
                                             "properties": {
                                                 "START_DATE_EVENTS": {
-                                                    "description": "Social events from now to add 24h, care events from now to add 72h",
+                                                    "description": "Social events from now to add 72h, care events from now to add 24h",
                                                     "type": "array",
                                                     "items": {
                                                         "properties": {
