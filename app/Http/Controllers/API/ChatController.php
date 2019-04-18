@@ -5,7 +5,9 @@ namespace App\Http\Controllers\API;
 use App\Components\Classes\Chat\Chat;
 use App\Exceptions\FriendshipException;
 use App\Http\Resources\ChatMessageResource;
+use App\Http\Resources\ChatPetResource;
 use App\Http\Resources\ChatRoomResource;
+use App\Pet;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -1049,5 +1051,97 @@ class ChatController extends Controller
         $chat->likeMessage((int)$message);
 
         return response()->json(['message' => 'success']);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/chats/pet/{pet_id}",
+     *     tags={"Chat"},
+     *     description="Get pet info for chat",
+     *     summary="Get pet info",
+     *     operationId="getPetInfo",
+     *     @OA\Parameter(
+     *         name="pet_id",
+     *         description="Pet ID",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Pet details for chat",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="integer",
+     *                 property="id",
+     *                 description="Sender pet ID",
+     *                 example="2"
+     *             ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="name",
+     *                 description="Name of sender pet",
+     *                 example="Cat"
+     *             ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="profile_picture",
+     *                 description="URL of the sender pet profile picture",
+     *                 example="http://mypets.com/storage/profile_picture/example.jpg"
+     *             ),
+     *             @OA\Property(
+     *                 type="object",
+     *                 property="owner",
+     *                 description="Owner data for sender pet",
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="first_name",
+     *                     description="Sender pet owner first name",
+     *                     example="John"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="last_name",
+     *                     description="Sender pet owner last name",
+     *                     example="Doe"
+     *                 ),
+     *             ),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Unauthenticated error or registration error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Unauthenticated.|Sign-Up steps not done."
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Not found error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="No query result from model."
+     *             )
+     *         )
+     *     ),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
+    /**
+     * @param Pet $pet
+     * @return JsonResponse
+     */
+    public function pet($pet)
+    {
+        $pet = Pet::query()->findOrFail($pet);
+        return response()->json(new ChatPetResource($pet));
     }
 }

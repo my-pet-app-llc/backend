@@ -1538,90 +1538,6 @@
                         "bearerAuth": []
                     }
                 ]
-            },
-            "post": {
-                "tags": [
-                    "Chat"
-                ],
-                "summary": "Create chat",
-                "description": "Create new chat.",
-                "operationId": "chatCreate",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "multipart/from-data": {
-                            "schema": {
-                                "required": [
-                                    "pet_id"
-                                ],
-                                "properties": {
-                                    "pet_id": {
-                                        "description": "Pet with whom you want to create a chat",
-                                        "type": "integer",
-                                        "example": "2"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Created room ID",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "room_id": {
-                                            "description": "Room ID",
-                                            "type": "integer",
-                                            "example": "1"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthenticated error or registration error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Unauthenticated.|Sign-Up steps not done."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Chat with this friend already exist.|Cannot create chat with this user."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
             }
         },
         "/chats/{room_id}": {
@@ -1786,7 +1702,7 @@
                     {
                         "name": "room_id",
                         "in": "path",
-                        "description": "Room ID",
+                        "description": "Room ID. Send 0 if need to create a room",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -1812,6 +1728,11 @@
                                         "description": "Message for send",
                                         "type": "string",
                                         "example": "1"
+                                    },
+                                    "pet_id": {
+                                        "description": "If need create a room, send pet ID",
+                                        "type": "integer",
+                                        "example": "1"
                                     }
                                 },
                                 "type": "object"
@@ -1828,6 +1749,11 @@
                                     "properties": {
                                         "id": {
                                             "description": "Message ID",
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "room_id": {
+                                            "description": "Room ID if room created",
                                             "type": "integer",
                                             "example": "1"
                                         },
@@ -1966,6 +1892,22 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not found error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Message"
                                         }
                                     },
                                     "type": "object"
@@ -2470,6 +2412,109 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Room not found."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/chats/pet/{pet_id}": {
+            "get": {
+                "tags": [
+                    "Chat"
+                ],
+                "summary": "Get pet info",
+                "description": "Get pet info for chat",
+                "operationId": "getPetInfo",
+                "parameters": [
+                    {
+                        "name": "pet_id",
+                        "in": "path",
+                        "description": "Pet ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Pet details for chat",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "Sender pet ID",
+                                            "type": "integer",
+                                            "example": "2"
+                                        },
+                                        "name": {
+                                            "description": "Name of sender pet",
+                                            "type": "string",
+                                            "example": "Cat"
+                                        },
+                                        "profile_picture": {
+                                            "description": "URL of the sender pet profile picture",
+                                            "type": "string",
+                                            "example": "http://mypets.com/storage/profile_picture/example.jpg"
+                                        },
+                                        "owner": {
+                                            "description": "Owner data for sender pet",
+                                            "properties": {
+                                                "first_name": {
+                                                    "description": "Sender pet owner first name",
+                                                    "type": "string",
+                                                    "example": "John"
+                                                },
+                                                "last_name": {
+                                                    "description": "Sender pet owner last name",
+                                                    "type": "string",
+                                                    "example": "Doe"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No query result from model."
                                         }
                                     },
                                     "type": "object"
@@ -4768,6 +4813,408 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/pets/{pet_id}": {
+            "get": {
+                "tags": [
+                    "Other Profile"
+                ],
+                "summary": "Get other profile info",
+                "description": "Other pet and owner profile with friends",
+                "operationId": "getOtherProfile",
+                "parameters": [
+                    {
+                        "name": "pet_id",
+                        "in": "path",
+                        "description": "Pet ID whose profile you want to see",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Owner, pet and her friends data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "Owner ID",
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "first_name": {
+                                            "description": "Owner first name",
+                                            "type": "string",
+                                            "example": "John"
+                                        },
+                                        "last_name": {
+                                            "description": "Owner last name",
+                                            "type": "string",
+                                            "example": "Doe"
+                                        },
+                                        "gender": {
+                                            "description": "Owner gender",
+                                            "type": "string",
+                                            "example": "male"
+                                        },
+                                        "age": {
+                                            "description": "Owner age",
+                                            "type": "integer",
+                                            "example": "11"
+                                        },
+                                        "birthday": {
+                                            "description": "Owner birthday",
+                                            "type": "string",
+                                            "example": "1970-01-01"
+                                        },
+                                        "occupation": {
+                                            "description": "Owner occupation",
+                                            "type": "string",
+                                            "example": "Developer"
+                                        },
+                                        "hobbies": {
+                                            "description": "Owner hobbies",
+                                            "type": "string",
+                                            "example": "Development"
+                                        },
+                                        "pets_owned": {
+                                            "description": "Owner pets owned",
+                                            "type": "string",
+                                            "example": "33 cows"
+                                        },
+                                        "profile_picture": {
+                                            "description": "Owner profile picture URL",
+                                            "type": "string",
+                                            "example": "http://mypets.com/storage/profile_picture/example.png"
+                                        },
+                                        "favorite_park": {
+                                            "description": "Owner favorite pet park",
+                                            "type": "string",
+                                            "example": "Park"
+                                        },
+                                        "pet": {
+                                            "properties": {
+                                                "id": {
+                                                    "description": "Pet ID",
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "name": {
+                                                    "description": "Pet name",
+                                                    "type": "string",
+                                                    "example": "Pet"
+                                                },
+                                                "gender": {
+                                                    "description": "Pet gender",
+                                                    "type": "string",
+                                                    "example": "male"
+                                                },
+                                                "size": {
+                                                    "description": "Pet size",
+                                                    "type": "string",
+                                                    "example": "giant"
+                                                },
+                                                "primary_breed": {
+                                                    "description": "Pet primary breed",
+                                                    "type": "string",
+                                                    "example": "Dog"
+                                                },
+                                                "secondary_breed": {
+                                                    "description": "Pet secondary breed",
+                                                    "type": "string",
+                                                    "example": "Cat"
+                                                },
+                                                "age": {
+                                                    "description": "Pet age",
+                                                    "type": "integer",
+                                                    "example": "11"
+                                                },
+                                                "profile_picture": {
+                                                    "description": "Pet profile picture URL",
+                                                    "type": "string",
+                                                    "example": "http://mypets.com/storage/profile_picture/example.png"
+                                                },
+                                                "friendliness": {
+                                                    "description": "Pet friendliness",
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "activity_level": {
+                                                    "description": "Pet activity level",
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "noise_level": {
+                                                    "description": "Pet noise level",
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "odebience_level": {
+                                                    "description": "Pet odebience level",
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "fetchability": {
+                                                    "description": "Pet fetchability",
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "swimability": {
+                                                    "description": "Pet swimability",
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "city": {
+                                                    "description": "Pet city",
+                                                    "type": "string",
+                                                    "example": "New York"
+                                                },
+                                                "state": {
+                                                    "description": "Pet state",
+                                                    "type": "string",
+                                                    "example": "NY"
+                                                },
+                                                "like": {
+                                                    "description": "Pet likes",
+                                                    "type": "string",
+                                                    "example": "Apples"
+                                                },
+                                                "dislike": {
+                                                    "description": "Pet dislikes",
+                                                    "type": "string",
+                                                    "example": "Bananas"
+                                                },
+                                                "favorite_toys": {
+                                                    "description": "Pet favorite toys",
+                                                    "type": "string",
+                                                    "example": "iPhone"
+                                                },
+                                                "fears": {
+                                                    "description": "Pet fears",
+                                                    "type": "string",
+                                                    "example": "Water"
+                                                },
+                                                "favorite_places": {
+                                                    "description": "Pet favorite places",
+                                                    "type": "string",
+                                                    "example": "Park"
+                                                },
+                                                "spayed": {
+                                                    "description": "Pet spayed. If 0 - not spayed, if 1 - spayed",
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "birthday": {
+                                                    "description": "Pet birthday",
+                                                    "type": "string",
+                                                    "example": "2000-01-24"
+                                                },
+                                                "pictures": {
+                                                    "description": "Pet pictures",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "description": "Picture ID",
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "picture": {
+                                                                "description": "URL of picture",
+                                                                "type": "string",
+                                                                "example": "http://mypets.com/storage/pictures/example.png"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "friends": {
+                                                    "description": "Pet friends only those who are friends with an authenticated user.",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "description": "Pet ID",
+                                                                "type": "integer",
+                                                                "example": "2"
+                                                            },
+                                                            "name": {
+                                                                "description": "Pet name",
+                                                                "type": "string",
+                                                                "example": "Nona"
+                                                            },
+                                                            "gender": {
+                                                                "description": "Pet gender",
+                                                                "type": "string",
+                                                                "example": "male"
+                                                            },
+                                                            "size": {
+                                                                "description": "Pet size",
+                                                                "type": "string",
+                                                                "example": "giant"
+                                                            },
+                                                            "primary_breed": {
+                                                                "description": "Pet primary breed",
+                                                                "type": "string",
+                                                                "example": "Dog"
+                                                            },
+                                                            "secondary_breed": {
+                                                                "description": "Pet secondary breed",
+                                                                "type": "string",
+                                                                "example": "Pit"
+                                                            },
+                                                            "age": {
+                                                                "description": "Pet age",
+                                                                "type": "integer",
+                                                                "example": "11"
+                                                            },
+                                                            "profile_picture": {
+                                                                "description": "Pet profile picture URL",
+                                                                "type": "string",
+                                                                "example": "http://mypets.com/storage/profile_picture/example.png"
+                                                            },
+                                                            "friendliness": {
+                                                                "description": "Pet friendliness",
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "activity_level": {
+                                                                "description": "Pet activity level",
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "noise_level": {
+                                                                "description": "Pet noise level",
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "odebience_level": {
+                                                                "description": "Pet odebience level",
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "fetchability": {
+                                                                "description": "Pet fetchability",
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "swimability": {
+                                                                "description": "Pet swimability",
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "city": {
+                                                                "description": "Pet city",
+                                                                "type": "string",
+                                                                "example": "New York"
+                                                            },
+                                                            "state": {
+                                                                "description": "Pet state",
+                                                                "type": "string",
+                                                                "example": "NY"
+                                                            },
+                                                            "like": {
+                                                                "description": "Pet likes",
+                                                                "type": "string",
+                                                                "example": "Apples"
+                                                            },
+                                                            "dislike": {
+                                                                "description": "Pet dislikes",
+                                                                "type": "string",
+                                                                "example": "Bananas"
+                                                            },
+                                                            "favorite_toys": {
+                                                                "description": "Pet favorite toys",
+                                                                "type": "string",
+                                                                "example": "iPhone"
+                                                            },
+                                                            "fears": {
+                                                                "description": "Pet fears",
+                                                                "type": "string",
+                                                                "example": "Water"
+                                                            },
+                                                            "favorite_places": {
+                                                                "description": "Pet favorite places",
+                                                                "type": "string",
+                                                                "example": "Park"
+                                                            },
+                                                            "spayed": {
+                                                                "description": "Pet spayed. If 0 - not spayed, if 1 - spayed",
+                                                                "type": "string",
+                                                                "example": "1"
+                                                            },
+                                                            "birthday": {
+                                                                "description": "Pet birthday",
+                                                                "type": "date",
+                                                                "example": "2000-01-24"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "is_friends": {
+                                            "description": "Are users friends",
+                                            "type": "boolean"
+                                        },
+                                        "to_friend_request": {
+                                            "description": "Can send a friend request to the user",
+                                            "type": "boolean"
+                                        },
+                                        "to_send_message": {
+                                            "description": "Can send a message to the user",
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No query result from model."
                                         }
                                     },
                                     "type": "object"

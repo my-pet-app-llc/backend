@@ -125,6 +125,7 @@ trait OwnerMatches
         $matches = $this->getStaticQuery()
             ->whereNotIn('id', $existingIds)
             ->where('signup_step', 0)
+            ->where('status', '<>', self::STATUS['banned'])
             ->whereDate('location_updated_at', '>', Carbon::now()->subHours(24)->format('Y-m-d H:i:s'))
             ->distance(
                 'location_point',

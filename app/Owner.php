@@ -49,6 +49,21 @@ class Owner extends Model
         return $this->hasOne(Pet::class);
     }
 
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
+    public function reports()
+    {
+        return $this->hasMany(Ticket::class, 'reported_owner_id', 'id');
+    }
+
+    public function supportChatRooms()
+    {
+        return $this->hasMany(SupportChatRoom::class);
+    }
+
     public function getFullNameAttribute()
     {
         return $this->first_name . ' ' . $this->last_name;
