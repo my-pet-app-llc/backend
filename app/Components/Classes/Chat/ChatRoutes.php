@@ -26,6 +26,7 @@ class ChatRoutes
 
             $router->get('chats', $controller . '@chats');
 //            $router->post('chats', $controller . '@create');
+            $router->get('chats/pet/{pet}', $controller . '@pet');
             $router->get('chats/{room}', $controller . '@roomMessages');
             $router->post('chats/{room}', $controller . '@send');
             $router->delete('chats/{room}', $controller . '@destroy');

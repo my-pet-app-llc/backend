@@ -35,7 +35,7 @@ Route::namespace('API')->group(function () {
 
     });
 
-    Route::middleware('auth:api')->group(function () {
+    Route::middleware(['auth:api', 'owner.banned'])->group(function () {
 
         Route::middleware('signup.step')->match(['get', 'put'], 'sign-up/stepper', 'SignUpStepController');
 
@@ -60,6 +60,28 @@ Route::namespace('API')->group(function () {
             Route::resource('connect', 'ConnectController')->only(['index', 'store', 'update']);
 
             Route::resource('friend-requests', 'FriendRequestController')->only(['index', 'store', 'update']);
+
+            Route::resource('pets', 'PetController')->only(['show']);
+
+            Route::prefix('support-chats')->group(function () {
+
+                Route::get('/', 'SupportChatController@getRooms');
+
+                Route::get('/{room}', 'SupportChatController@getRoomMessages');
+
+                Route::get('/messages/default', 'SupportChatController@getDefaultMessage');
+
+                Route::post('/{ticket}', 'SupportChatController@send');
+
+                Route::post('/to/read', 'SupportChatController@read');
+
+                Route::get('/is/read', 'SupportChatController@isRead');
+
+                Route::post('/to/like/{ticket}/{message}', 'SupportChatController@like');
+
+            });
+
+            Route::post('report', 'ReportController');
 
         });
 

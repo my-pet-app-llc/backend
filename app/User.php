@@ -58,6 +58,9 @@ class User extends Authenticatable
         if(!$this->isPetOwner())
             throw new NotOwnerException();
 
+        if($this->isBannedOwner())
+            throw new NotOwnerException('You were banned.');
+
         $this->tokens()->update(['revoked' => true]);
 
         $personalAccessClient = env('APP_PERSONAL_ACCESS_CLIENT', 'application');
@@ -72,6 +75,14 @@ class User extends Authenticatable
     public function isPetOwner()
     {
         return (bool)$this->owner;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBannedOwner()
+    {
+        return ($this->owner->status == Owner::STATUS['banned']);
     }
 
     /**

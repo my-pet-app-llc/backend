@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\CheckSignUpDone;
+use App\Http\Middleware\CheckStatus;
 use App\Http\Middleware\FbUser;
 use App\Http\Middleware\SignUpStepMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -66,6 +67,7 @@ class Kernel extends HttpKernel
         'signup.step' => SignUpStepMiddleware::class,
         'signup.done' => CheckSignUpDone::class,
         'fb.user' => FbUser::class,
+        'owner.banned' => CheckStatus::class
     ];
 
     /**

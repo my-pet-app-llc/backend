@@ -8,15 +8,18 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 class NotOwnerException extends Exception implements HttpExceptionInterface
 {
-    public function __construct()
+    private $statusCode;
+
+    public function __construct($message = 'You are not pet owner.', $statusCode = 401)
     {
-        $message = 'You are not pet owner.';
-        parent::__construct($message, 401);
+        $this->statusCode = $statusCode;
+
+        parent::__construct($message, $statusCode);
     }
 
     public function getStatusCode()
     {
-        return 401;
+        return $this->statusCode;
     }
 
     public function getHeaders()
