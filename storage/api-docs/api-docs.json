@@ -120,7 +120,7 @@
                 ]
             }
         },
-        "auth/password/forgot": {
+        "/auth/password/forgot": {
             "post": {
                 "tags": [
                     "Auth"

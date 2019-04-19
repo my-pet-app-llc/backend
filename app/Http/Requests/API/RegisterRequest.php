@@ -23,7 +23,7 @@ class RegisterRequest extends MainFormRequest
     {
         return [
             'email' => 'required|email|max:128|unique:users,email',
-            'password' => 'required|string|min:8|max:128|confirmed',
+            'password' => 'required|string|min:10|max:32|confirmed|regex:~^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{10,32}$~',
             'password_confirmation' => 'required'
         ];
     }
