@@ -18,6 +18,77 @@ use Illuminate\Http\Response;
 class ReportController extends Controller
 {
     /**
+     * @OA\Post(
+     *     path="/report",
+     *     tags={"Report"},
+     *     description="Report for user. Create ticket and create two chats",
+     *     summary="Report for user",
+     *     operationId="reportForUser",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     type="integer",
+     *                     property="pet_id",
+     *                     description="Reported pet ID",
+     *                     example="2"
+     *                 ),
+     *                 @OA\Property(
+     *                     type="string",
+     *                     property="reason",
+     *                     description="Report reason",
+     *                     example="He is stuppid"
+     *                 ),
+     *                 required={"pet_id", "reason"}
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="New ticket data",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="integer",
+     *                 property="ticket_id",
+     *                 description="New ticket ID",
+     *                 example="1"
+     *             ),
+     *             @OA\Property(
+     *                 type="integer",
+     *                 property="room_id",
+     *                 description="New room id for ticket",
+     *                 example="1"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Unauthenticated error or registration error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Unauthenticated.|Sign-Up steps not done."
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="422",
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="array",
+     *                 property="field",
+     *                 @OA\Items(type="string", example="Invalid data")
+     *             )
+     *         )
+     *     ),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
+    /**
      * Handle the incoming request.
      *
      * @param StoreReportRequest $request
@@ -53,7 +124,10 @@ class ReportController extends Controller
         if($reportedOwner->status != $reportedOwnerStatus)
             $reportedOwner->update(['status' => $reportedOwnerStatus]);
 
-        return response()->json(['message' => 'success']);
+        return response()->json([
+            'ticket_id' => $ticket->id,
+            'room_id' => $ticket->supportChats->where('owner_id', $owner->id)->first()->id
+        ]);
     }
 
     private function sendHandler(Ticket $ticket, Owner $authOwner, Owner $reportOwner)

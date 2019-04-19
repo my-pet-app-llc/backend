@@ -20,6 +20,7 @@ class SupportChatRoomResource extends JsonResource
             'id' => $this->id,
             'ticket_no' => $this->ticket_id,
             'writable' => ($this->ticket->status != Ticket::STATUSES['resolved']),
+            'is_read' => $this->is_read,
             'last_message' => (new SupportChatMessageResource($this->supportChatMessages->last()))
         ];
     }

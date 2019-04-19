@@ -83,6 +83,8 @@ Route::namespace('API')->group(function () {
 
             Route::post('report', 'ReportController');
 
+            Route::get('index', 'IndexController');
+
         });
 
     });
