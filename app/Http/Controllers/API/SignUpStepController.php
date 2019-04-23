@@ -208,7 +208,7 @@ class SignUpStepController extends Controller
      *                         ),
      *                         @OA\Property(
      *                             property="spayed",
-     *                             type="string"
+     *                             type="integer"
      *                         ),
      *                         @OA\Property(
      *                             property="birthday",
@@ -623,7 +623,7 @@ class SignUpStepController extends Controller
         $ownerData = $this->request->get('owner', []);
         $petData = $this->request->get('pet', []);
 
-        $step = $this->request->get('step');
+        $step = (int)$this->request->get('step');
         $pictureStepName = array_search($step, SignUpStepRequest::PICTURE_STEPS);
 
         if($pictureStepName !== false){

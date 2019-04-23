@@ -34,5 +34,6 @@ Route::group(['namespace'=>'Admin', 'middleware'=>['auth']], function () {
     Route::get('/users/ban/{user}', 'UsersController@userBan')->name('users.ban');
 
     Route::get('/tickets',          'TicketsController@index')->name('tickets.index');
+    Route::get('/tickets/{ticket}', 'TicketsController@show')->name('tickets.show');
     Route::get('/data/tickets',     'TicketsController@data')->name('data_tickets');
 });

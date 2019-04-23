@@ -13,7 +13,7 @@
     ],
     "paths": {
         "api/documentation": {},
-        "invited-events/accept": {
+        "/invited-events/accept": {
             "post": {
                 "tags": [
                     "Chat"
@@ -5285,7 +5285,7 @@
                 ]
             }
         },
-        "profile": {
+        "/profile": {
             "get": {
                 "tags": [
                     "Profile"
@@ -6279,7 +6279,7 @@
                                                                     "type": "string"
                                                                 },
                                                                 "spayed": {
-                                                                    "type": "string"
+                                                                    "type": "integer"
                                                                 },
                                                                 "birthday": {
                                                                     "type": "date"

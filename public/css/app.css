@@ -191,3 +191,7 @@ ul li:hover a span {
   color: #fff;
 }
 
+.t_messages {
+  min-height: 300px;
+}
+

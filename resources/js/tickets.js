@@ -19,6 +19,9 @@ $(function() {
             "autoWidth": true,
             ajax: url,
             columns: columns,
+            createdRow: function (row, data) {
+                $(row).attr('data-ticket', data.id);
+            }
         });
     }
 
