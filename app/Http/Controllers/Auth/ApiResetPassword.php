@@ -20,7 +20,7 @@ class ApiResetPassword extends Controller
     public function __invoke(Request $request)
     {
         $agent = new Agent();
-        if(!$agent->is('AndroidOs') || !$agent->is('IOs'))
+        if(!$agent->is('AndroidOs') && !$agent->is('IOs'))
             abort(403, 'Only for mobile device.');
 
         $user = User::query()->where('email', $request->input('email'))->first();
