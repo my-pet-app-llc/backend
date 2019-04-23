@@ -51,7 +51,7 @@ class ProfileController extends Controller
 
     /**
      * @OA\Get(
-     *     path="profile",
+     *     path="/profile",
      *     tags={"Profile"},
      *     description="Get profile data.",
      *     summary="Profile data",
@@ -375,7 +375,7 @@ class ProfileController extends Controller
 
     /**
      * @OA\Put(
-     *     path="profile",
+     *     path="/profile",
      *     tags={"Profile"},
      *     description="Update owner and pet profiles.",
      *     summary="Update profile",

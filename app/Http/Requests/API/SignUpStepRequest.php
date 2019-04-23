@@ -51,15 +51,17 @@ class SignUpStepRequest extends MainFormRequest
     public function rules()
     {
         if($this->isMethod('put')){
-            $step = $this->get('step');
+            $step = (int)$this->get('step');
 
-            if (array_key_exists($step, $this->rules) === false && $step != 0)
+            if (!array_key_exists($step, $this->rules) && $step !== 0)
             {
                 throw new NotFoundHttpException('Step not found.');
             }
 
             $rules = isset($this->rules[$step]) ? $this->rules[$step] : [];
             $rules['step'] = [
+                'required',
+                'integer',
                 (new SignUpMaxStep($this))
             ];
         }else{
