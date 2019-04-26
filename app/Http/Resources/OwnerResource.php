@@ -40,7 +40,7 @@ class OwnerResource extends JsonResource
             'occupation' => $this->occupation,
             'hobbies' => $this->hobbies,
             'pets_owned' => $this->pets_owned,
-            'profile_picture' => config('filesystems.disks')[env('FILESYSTEM_DRIVER', 'public')]['url'] . $this->profile_picture,
+            'profile_picture' => $this->profile_picture ? config('filesystems.disks')[env('FILESYSTEM_DRIVER', 'public')]['url'] . $this->profile_picture : null,
             'favorite_park' => $this->favorite_park
         ];
 

@@ -51,7 +51,13 @@ return [
         'time'     => 'Time',
         'ticket'   => 'Ticket #',
         'status'   => 'Ticket Status',
-        'messages' => 'Message Thread'
+        'messages' => 'Message Thread',
+        'statuses' => [
+            'new' => 'New',
+            'reported_user' => 'REPORTED USER',
+            'in_progress' => 'In Progress',
+            'resolved' => 'Resolved',
+        ]
     ],
 
     'updates' => [

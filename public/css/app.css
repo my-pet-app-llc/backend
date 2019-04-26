@@ -192,6 +192,212 @@ ul li:hover a span {
 }
 
 .t_messages {
-  min-height: 300px;
+  height: 400px;
+  overflow-y: scroll;
+}
+
+.t_messages .t_not-select {
+  text-align: center;
+  font-weight: 700;
+  padding-top: 100px;
+}
+
+.t_messages .t_flex-message-container {
+  display: flex;
+  flex-direction: column-reverse;
+  padding: 5px;
+}
+
+.t_messages .t_flex-message-container .t_messages-date {
+  text-align: center;
+  position: relative;
+}
+
+.t_messages .t_flex-message-container .t_messages-date span {
+  font-size: 12px;
+  font-weight: 800;
+  display: inline-block;
+  padding: 2px 15px;
+  background: gray;
+  color: #fff;
+  border-radius: 40px;
+  margin: 0 2px;
+  position: relative;
+  z-index: 10;
+}
+
+.t_messages .t_flex-message-container .t_messages-date:after {
+  content: "";
+  width: 100%;
+  height: 1px;
+  background: gray;
+  position: absolute;
+  top: 50%;
+  z-index: 0;
+  right: 0;
+}
+
+.t_messages .t_flex-message-container .t_message-container {
+  width: 80%;
+  margin-top: 7px;
+}
+
+.t_messages .t_flex-message-container .t_message-container.other-message.speaker .t_message:before,
+.t_messages .t_flex-message-container .t_message-container.self-message.speaker .t_message:before {
+  content: " ";
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 100%;
+  border: 9px solid;
+}
+
+.t_messages .t_flex-message-container .t_message-container.other-message.speaker .t_message:after,
+.t_messages .t_flex-message-container .t_message-container.self-message.speaker .t_message:after {
+  content: " ";
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 100%;
+  border: 6px solid;
+}
+
+.t_messages .t_flex-message-container .t_message-container.self-message {
+  align-self: flex-end;
+}
+
+.t_messages .t_flex-message-container .t_message-container.self-message .t_message-sender {
+  text-align: end;
+}
+
+.t_messages .t_flex-message-container .t_message-container.self-message .t_message {
+  box-shadow: -2px 2px 4px #888;
+}
+
+.t_messages .t_flex-message-container .t_message-container.self-message.speaker .t_message:before {
+  right: 15px;
+  border-color: #666 #666 transparent transparent;
+}
+
+.t_messages .t_flex-message-container .t_message-container.self-message.speaker .t_message:after {
+  right: 17px;
+  border-color: #fff #fff transparent transparent;
+}
+
+.t_messages .t_flex-message-container .t_message-container.other-message {
+  align-self: flex-start;
+}
+
+.t_messages .t_flex-message-container .t_message-container.other-message .t_message-sender {
+  text-align: start;
+}
+
+.t_messages .t_flex-message-container .t_message-container.other-message .t_message {
+  box-shadow: 2px 2px 4px #888;
+}
+
+.t_messages .t_flex-message-container .t_message-container.other-message.speaker .t_message:before {
+  left: 15px;
+  border-color: #666 transparent transparent #666;
+}
+
+.t_messages .t_flex-message-container .t_message-container.other-message.speaker .t_message:after {
+  left: 17px;
+  border-color: #fff transparent transparent #fff;
+}
+
+.t_messages .t_flex-message-container .t_message-container .t_message {
+  position: relative;
+  width: 100%;
+  line-height: 100px;
+  background-color: #fff;
+  border: 3px solid #666;
+  border-radius: 18px;
+  margin-bottom: 13px;
+  padding: 5px;
+}
+
+.t_messages .t_flex-message-container .t_message-container .t_message .message-box {
+  font-size: 12px;
+  margin: 1px;
+  color: #000;
+  cursor: default;
+}
+
+.t_messages .t_flex-message-container .t_message-container .t_message .message-box img {
+  width: 100%;
+  cursor: pointer;
+}
+
+.t_messages .t_flex-message-container .t_message-container .t_message .message-time {
+  font-size: 10px;
+  margin: 0;
+  text-align: end;
+  cursor: default;
+}
+
+.t_messages .t_flex-message-container .t_message-container .t_message-sender {
+  font-size: 12px;
+  font-weight: 700;
+  cursor: default;
+}
+
+.t_toolbar {
+  display: none;
+}
+
+.t_toolbar .text-container {
+  position: relative;
+  height: 60px;
+}
+
+.t_toolbar .text-container textarea {
+  resize: none;
+  width: 100%;
+  border: 1px solid #000;
+  padding: 7px 40px 7px 7px;
+  font-size: 11px;
+  height: 100%;
+}
+
+.t_toolbar .text-container .send-button {
+  top: 0;
+  right: 0;
+  height: 60px;
+  position: absolute;
+  cursor: pointer;
+}
+
+.t_toolbar .text-container .send-button div {
+  width: 30px;
+  height: 30px;
+  background: green;
+  border-radius: 50%;
+  margin-top: 15px;
+  margin-right: 5px;
+  position: relative;
+}
+
+.t_toolbar .text-container .send-button div i {
+  font-size: 20px;
+  left: 20%;
+  top: 14%;
+  position: absolute;
+  color: #fff;
+}
+
+.t_toolbar .text-container .send-button:hover div {
+  background: #275a27;
+}
+
+.t_toolbar .t_tools .tool_col {
+  width: 49.3%;
+  display: inline-block;
+  height: 26px;
+}
+
+.t_toolbar .t_tools .tool_col select {
+  width: 100%;
+  height: 100%;
 }
 

@@ -646,6 +646,17 @@ class SignUpStepController extends Controller
         }
 
         $nextStep = ($step <= 0) ? 0 : (($step == $this->owner->signup_step) ? $step + 1 : $this->owner->signup_step);
+        if($nextStep > 0){
+            $stepRules = $this->request->rules[$nextStep];
+            if(!$stepRules && $nextStep != count($this->request->rules)){
+                for ($i = $nextStep + 1; $i < count($this->request->rules); $i++){
+                    if($this->request->rules[$i]){
+                        $nextStep = $i;
+                        break;
+                    }
+                }
+            }
+        }
         $updateOwnerData['signup_step'] = $nextStep;
 
         $this->owner->update($updateOwnerData);
