@@ -9,6 +9,8 @@
 
         loadProcess: false,
 
+        typingProcess: false,
+
         container: $('.t_flex-message-container'),
 
         aligns: {
@@ -16,9 +18,11 @@
             other: 'other-message'
         },
 
-        paginate: 5,
+        paginate: 25,
 
         room: {},
+
+        rooms: [],
 
         axiosInstance: axios.create({
             headers: {
@@ -42,7 +46,7 @@
             '</div>' +
             '</div>',
 
-        imageTemplate: '<img src="#{message}" alt="">',
+        imageTemplate: '<img src="#{message}" class="messageImage" alt="">',
 
         dateTemplate: '<div class="t_messages-date"><span>#{date}</span></div>',
 
@@ -73,18 +77,19 @@
          */
         initTicket(ticketId) {
             let self = this
+            self.rooms = []
 
             this.axiosInstance.get(this.links.ticketInfo + ticketId)
                 .then((response) => {
-                    self.clearChat()
+                    self.rooms.push(response.data.rooms.creator_room.id)
+                    if(response.data.rooms.reported_room){
+                        self.rooms.push(response.data.rooms.reported_room.id)
+                    }
 
+                    self.clearChat()
                     self.initRoomObject()
-                    self.room.ticketId = ticketId
-                    self.room.roomId = response.data.rooms.creator_room.id
                     self.initToolBar(response.data.status, response.data.rooms)
-                    self.getMessages(response.data.rooms.creator_room.id)
-                    self.openChatChannel()
-                    self.listenNewMessage()
+                    self.initChat(ticketId, response.data.rooms.creator_room.id)
                 })
                 .catch((error) => {
                     console.log(error)
@@ -92,11 +97,29 @@
         },
 
         /**
-         * Clear all data for chat
+         * Init chat properties and load messages
+         *
+         * @param ticketId
+         * @param roomId
          */
-        clearChat() {
+        initChat(ticketId, roomId) {
+            this.room.ticketId = ticketId
+            this.room.roomId = roomId
+            this.getMessages(roomId)
+            this.openChatChannel()
+            this.listenNewMessage().listenTyping()
+        },
+
+        /**
+         * Clear all data for chat
+         *
+         * @param toolBarHidden
+         */
+        clearChat(toolBarHidden = true) {
             $('.t_not-select').detach()
-            $('.t_toolbar').hide()
+            if(toolBarHidden){
+                $('.t_toolbar').hide()
+            }
             $('.t_flex-message-container').empty()
 
             if(this.room.channel)
@@ -265,6 +288,11 @@
             this.room.lastDate = dateTimeMoment.format('YYYY-MM-DD')
         },
 
+        /**
+         * Add new message element to chat
+         *
+         * @param message
+         */
         newMessageHandler(message) {
             let id = message.id,
                 senderId = (message.sender) ? message.sender.id : 0,
@@ -293,6 +321,11 @@
             })
 
             this.container.prepend(messageTemplate)
+
+            let scrollHeight = $('.t_messages')[0].scrollHeight,
+                scrollTop = $('.t_messages')[0].scrollTop
+            if((scrollHeight - scrollTop) <= 800)
+                $('.t_messages').scrollTop(scrollHeight)
 
             this.room.firstMessage = id
             this.room.firstSender = senderId
@@ -390,6 +423,11 @@
             return this
         },
 
+        /**
+         * Listen new messages in channel
+         *
+         * @returns {Window.ticketChat}
+         */
         listenNewMessage() {
             let self = this
 
@@ -402,16 +440,37 @@
             return this
         },
 
+        /**
+         * Listen typing in channel
+         *
+         * @returns {Window.ticketChat}
+         */
         listenTyping() {
+            let self = this
+
             this.room.channel.listenForWhisper('typing', function (data) {
 
-                console.log(data)
+                if(!self.typingProcess){
+                    $('#typingName').html(data.name)
+                    self.typingProcess = true
+                    $('.t_typing').show()
+                    setTimeout(() => {
+                        $('#typingName').html('')
+                        self.typingProcess = false
+                        $('.t_typing').hide()
+                    }, 2000)
+                }
 
             })
 
             return this
         },
 
+        /**
+         * Make typing event
+         *
+         * @returns {Window.ticketChat}
+         */
         makeTypingEvent() {
             this.room.channel.whisper('typing', {
                 name: 'MyPet Admin'
@@ -420,6 +479,11 @@
             return this
         },
 
+        /**
+         * Send message
+         *
+         * @returns {boolean}
+         */
         sendMessage() {
 
             let messageText = $('#message').val(),
@@ -447,13 +511,33 @@
                     console.log(error)
                 })
 
+        },
+
+        /**
+         * Change room in ticket
+         *
+         * @param roomId
+         */
+        changeRoom(roomId) {
+            if(this.rooms.indexOf(roomId) === -1)
+                console.log('Room not found')
+
+            let resolved = this.room.resolved,
+                ticketId = this.room.ticketId
+
+            this.clearChat(false)
+            this.initRoomObject()
+            this.initChat(ticketId, roomId)
+            this.room.resolved = resolved
         }
 
     }
 
+
     /**
-     * Load ticket chats
+     * DOM EVENT LISTENERS
      */
+
     $(document).on('click', 'tr[data-ticket]', function () {
 
         let ticketId = $(this).attr('data-ticket');
@@ -473,11 +557,29 @@
         if(e.keyCode === 13 && !e.shiftKey) {
             $('.send-button').click()
             return false
+        }else{
+            window.ticketChat.makeTypingEvent()
         }
     })
 
     $('.send-button').on('click', function () {
         ticketChat.sendMessage()
+    })
+
+    $(document).on('change', '#rooms', function () {
+        let roomId = $(this).val();
+
+        window.ticketChat.changeRoom(roomId)
+    })
+
+    $(document).on('click', '.messageImage', function () {
+        $('#viewImage').attr('src', $(this).attr('src'))
+        $('.photo_preview').show()
+    })
+
+    $('#closeViewImage').click(function () {
+        $('#viewImage').attr('src', '')
+        $('.photo_preview').hide()
     })
 
 })()

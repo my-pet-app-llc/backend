@@ -4,6 +4,7 @@
         <div class="t_not-select">Select Ticket</div>
         <div class="t_flex-message-container"></div>
     </div>
+    <div class="t_typing"><span id="typingName"></span> is typing ...</div>
     <div class="t_toolbar">
         <div class="text-container">
             <textarea name="message" id="message"></textarea>

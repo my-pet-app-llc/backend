@@ -36,6 +36,15 @@ class TicketsController extends Controller
                 'time'     => '15:40:25',
                 'ticket'   => 'Ticket First',
                 'status'   => 'New'
+            ],
+            [
+                'id' => 6,
+                'username' => 'Peter Dark',
+                'email'    => 'peter@gmail.com',
+                'date'     => '02/03/2019',
+                'time'     => '15:40:25',
+                'ticket'   => 'Ticket First',
+                'status'   => 'New'
             ]
         ];
 
@@ -84,7 +93,7 @@ class TicketsController extends Controller
             ->when($request->get('last_message'), function ($query) use ($request) {
                 return $query->where('id', '<', $request->get('last_message'));
             })
-            ->take(5)
+            ->take($request->get('paginate', 25))
             ->get();
 
         return response(SupportChatMessageResource::collection($messages));
@@ -93,6 +102,9 @@ class TicketsController extends Controller
     public function sendMessage(Request $request, SupportChatRoom $room)
     {
         $this->validate($request, ['message' => 'required|string|min:1']);
+
+        if($room->ticket->status == Ticket::STATUSES['resolved'])
+            return response()->json(['message' => 'Ticket already resolved']);
 
         $messageTypeModel = SupportChatTextMessage::query()->create([
             'text' => $request->get('message')
