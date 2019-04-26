@@ -22,3 +22,16 @@ Broadcast::channel('events.{id}', function ($user, $id) {
 Broadcast::channel('chat.{id}', function ($user, $id) {
     return $user->owner->pet->chatRooms->pluck('id')->contains($id);
 });
+
+Broadcast::channel('ticket.chat.{id}', function ($user, $id) {
+    $access = false;
+    if($user->owner){
+        if($user->owner->supportChatRooms()->where('id', $id)->first()){
+            $access = true;
+        }
+    }else{
+        $access = true;
+    }
+
+    return $access;
+});
