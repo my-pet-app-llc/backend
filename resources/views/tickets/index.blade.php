@@ -18,4 +18,12 @@
         </div>
         @include('tickets.chat.chat')
     </div>
+
+    <div class="photo_preview">
+        <div class="fs_fade"></div>
+        <div>
+            <img src="" alt="" id="viewImage">
+            <button id="closeViewImage"><i class="ti-close"></i></button>
+        </div>
+    </div>
 @endsection
