@@ -37,5 +37,6 @@ Route::group(['namespace'=>'Admin', 'middleware'=>['auth']], function () {
     Route::get('/tickets/{ticket}', 'TicketsController@show')->name('tickets.show');
     Route::post('/tickets/messages/{room}', 'TicketsController@messages');
     Route::post('/tickets/messages/send/{room}', 'TicketsController@sendMessage');
+    Route::put('/tickets/status/{ticket}', 'TicketsController@changeStatus');
     Route::get('/data/tickets',     'TicketsController@data')->name('data_tickets');
 });

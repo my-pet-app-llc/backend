@@ -15,14 +15,14 @@
             </div>
         </div>
         <div class="t_tools">
-            <div class="tool_col">
+            <div class="tool_col status_col">
                 <select id="status">
                     @foreach(\App\Ticket::STATUSES as $key => $status)
                         <option value="{{ $status }}" data-key="{{ $key }}">{{ __('admin.tickets.statuses.' . $key) }}</option>
                     @endforeach
                 </select>
             </div>
-            <div class="tool_col">
+            <div class="tool_col rooms_col">
                 <select id="rooms"></select>
             </div>
         </div>

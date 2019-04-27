@@ -187,11 +187,10 @@
 }
 
 .t_toolbar{
-  display: none;
-  
   .text-container {
     position: relative;
     height: 60px;
+    display: none;
 
     textarea {
       resize: none;
@@ -245,6 +244,10 @@
         width: 100%;
         height: 100%;
       }
+    }
+    
+    .rooms_col, .status_col {
+      display: none;
     }
   }
 }
