@@ -353,13 +353,10 @@ ul li:hover a span {
   color: #000;
 }
 
-.t_toolbar {
-  display: none;
-}
-
 .t_toolbar .text-container {
   position: relative;
   height: 60px;
+  display: none;
 }
 
 .t_toolbar .text-container textarea {
@@ -410,6 +407,11 @@ ul li:hover a span {
 .t_toolbar .t_tools .tool_col select {
   width: 100%;
   height: 100%;
+}
+
+.t_toolbar .t_tools .rooms_col,
+.t_toolbar .t_tools .status_col {
+  display: none;
 }
 
 .photo_preview {

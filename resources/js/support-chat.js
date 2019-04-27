@@ -33,7 +33,8 @@
         links: {
             ticketInfo: '/tickets/',
             roomMessages: '/tickets/messages/',
-            sendMessage: '/tickets/messages/send/'
+            sendMessage: '/tickets/messages/send/',
+            changeStatus: '/tickets/status/'
         },
 
         template: '<div class="t_message-container #{speaker} #{alignClass}" data-message="#{messageId}">' +
@@ -66,7 +67,8 @@
                 firstDate: null,
                 end: false,
                 toScroll: true,
-                channel: null
+                channel: null,
+                ticketStatus: null
             }
         },
 
@@ -118,7 +120,7 @@
         clearChat(toolBarHidden = true) {
             $('.t_not-select').detach()
             if(toolBarHidden){
-                $('.t_toolbar').hide()
+                this.hideToolBar()
             }
             $('.t_flex-message-container').empty()
 
@@ -141,11 +143,20 @@
             if(!statusOption.length)
                 throw new Error('Status not found')
 
+            this.room.ticketStatus = status
+
             let statusKey = statusOption.attr('data-key')
+
+            let roomsSelect = $('#rooms')
+            roomsSelect.empty()
+            if(rooms['reported_room']){
+                roomsSelect.append(`<option value="${rooms['creator_room']['id']}">${rooms['creator_room']['full_name']}</option>`)
+                roomsSelect.append(`<option value="${rooms['reported_room']['id']}">${rooms['reported_room']['full_name']}</option>`)
+            }
 
             if(statusKey === 'resolved'){
                 this.room.resolved = true
-                $('.t_toolbar').hide()
+                this.hideToolBar()
                 return true
             }
 
@@ -174,17 +185,35 @@
                 }
             })
 
-            let roomsSelect = $('#rooms')
-            roomsSelect.empty()
-            if(rooms['reported_room']){
-                roomsSelect.append(`<option value="${rooms['creator_room']['id']}">${rooms['creator_room']['full_name']}</option>`)
-                roomsSelect.append(`<option value="${rooms['reported_room']['id']}">${rooms['reported_room']['full_name']}</option>`)
-                roomsSelect.show();
-            }else{
-                roomsSelect.hide();
-            }
+            this.showToolBar()
+        },
 
-            $('.t_toolbar').show()
+        hideToolBar() {
+            $('.text-container').hide()
+            $('.status_col').css({
+                display: 'none'
+            })
+
+            if(this.rooms.length <= 1)
+                $('.rooms_col').css({
+                    display: 'none'
+                })
+            else
+                $('.rooms_col').css({
+                    display: 'inline-block'
+                })
+        },
+
+        showToolBar() {
+            $('.text-container').show()
+            $('.status_col').css({
+                display: 'inline-block'
+            })
+
+            if(this.rooms.length > 1)
+                $('.rooms_col').css({
+                    display: 'inline-block'
+                })
         },
 
         /**
@@ -529,6 +558,24 @@
             this.initRoomObject()
             this.initChat(ticketId, roomId)
             this.room.resolved = resolved
+        },
+
+        changeStatus(statusElement) {
+
+            let status = $(statusElement).val()
+                self = this
+
+            this.axiosInstance.put(this.links.changeStatus + this.room.ticketId, {
+                    status: status
+                })
+                .then((response) => {
+                    self.room.ticketStatus = status
+                    self.hideToolBar()
+                })
+                .catch((error) => {
+                    $(statusElement).find(`option[value="${self.room.ticketStatus}"]`).prop('selected', true)
+                });
+
         }
 
     }
@@ -580,6 +627,10 @@
     $('#closeViewImage').click(function () {
         $('#viewImage').attr('src', '')
         $('.photo_preview').hide()
+    })
+
+    $('#status').on('change', function () {
+        window.ticketChat.changeStatus(this)
     })
 
 })()

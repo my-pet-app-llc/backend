@@ -127,4 +127,23 @@ class TicketsController extends Controller
 
         return response()->json($messageResource);
     }
+
+    public function changeStatus(Request $request, Ticket $ticket)
+    {
+        $currentStatus = $ticket->status;
+        $newStatus = $request->get('status');
+        $resolvedStatus = Ticket::STATUSES['resolved'];
+
+        if($currentStatus == $resolvedStatus)
+            return response()->json(['message' => 'Ticket already resolved.'], 403);
+
+        if($newStatus != $resolvedStatus)
+            return response()->json(['message' => 'Status wrong.'], 403);
+
+        $ticket->update([
+            'status' => $newStatus
+        ]);
+
+        return response()->json(['message' => 'success']);
+    }
 }
