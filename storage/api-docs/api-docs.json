@@ -5604,12 +5604,12 @@
                                 ],
                                 "properties": {
                                     "owner[first_name]": {
-                                        "description": "Owner first name. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\\s?)+$",
+                                        "description": "Owner first name. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+ ?)+$",
                                         "type": "string",
                                         "example": "Bob"
                                     },
                                     "owner[last_name]": {
-                                        "description": "Owner last name.  Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\\s?)+$",
+                                        "description": "Owner last name.  Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+ ?)+$",
                                         "type": "string",
                                         "example": "Marley"
                                     },
@@ -5679,7 +5679,7 @@
                                         "example": "5"
                                     },
                                     "pet[name]": {
-                                        "description": "Pet name. Rules: required, min - 1, max - 12, RegExp - ^([[:alpha:]-]+\\s?)+$",
+                                        "description": "Pet name. Rules: required, min - 1, max - 12, RegExp - ^([[:alpha:]-]+ ?)+$",
                                         "type": "string",
                                         "example": "Dolly"
                                     },
@@ -5709,7 +5709,7 @@
                                         "example": "1996-06-28"
                                     },
                                     "pet[city]": {
-                                        "description": "Pet hometown. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\\s?)+$",
+                                        "description": "Pet hometown. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+ ?)+$",
                                         "type": "string",
                                         "example": "New-York"
                                     },
@@ -6357,19 +6357,19 @@
                                         "type": "integer"
                                     },
                                     "owner[first_name]": {
-                                        "description": "Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\\s?)+$",
+                                        "description": "Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+ ?)+$",
                                         "type": "string"
                                     },
                                     "owner[last_name]": {
-                                        "description": "Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\\s?)+$",
+                                        "description": "Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+ ?)+$",
                                         "type": "string"
                                     },
                                     "pet[name]": {
-                                        "description": "Step 1. Rules: required, min - 1, max - 12, RegExp - ^([[:alpha:]-]+\\s?)+$",
+                                        "description": "Step 1. Rules: required, min - 1, max - 12, RegExp - ^([[:alpha:]-]+ ?)+$",
                                         "type": "string"
                                     },
                                     "pet[city]": {
-                                        "description": "Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\\s?)+$",
+                                        "description": "Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+ ?)+$",
                                         "type": "string"
                                     },
                                     "pet[state]": {
