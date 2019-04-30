@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\API;
 
+use App\Rules\PetPicturesRule;
 use App\Rules\RequiredIfHasProfilePicture;
 use App\Rules\SignUpMaxStep;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -94,7 +95,9 @@ class SignUpStepRequest extends MainFormRequest
                 'pet.profile_picture' => [(new RequiredIfHasProfilePicture($this, 'pet'))]
             ],
             5 => [
-                'pet.pictures' => 'nullable|array',
+                'pet.pictures' => [(new PetPicturesRule())],
+                'pet.pictures.create' => 'array',
+                'pet.pictures.delete' => 'array',
                 'pet.pictures.create.*' => ['required', 'string', 'regex:~^(data:image\/(jpeg|png|jpg);base64,\S+)$~'],
                 'pet.pictures.delete.*' => 'required|integer|exists:pictures,id'
             ],
