@@ -75,10 +75,10 @@ class SignUpStepRequest extends MainFormRequest
     {
         $this->rules = [
             1 => [
-                'owner.first_name' => 'required|string|min:1|max:15|regex:~^([[:alpha:]-]+\s?)+$~',
-                'owner.last_name' => 'required|string|min:1|max:15|regex:~^([[:alpha:]-]+\s?)+$~',
-                'pet.name' => 'required|string|min:1|max:12|regex:~^([[:alpha:]-]+\s?)+$~',
-                'pet.city' => 'required|string|min:1|max:15|regex:~^([[:alpha:]-]+\s?)+$~',
+                'owner.first_name' => 'required|string|min:1|max:15|regex:~^([[:alpha:]-]+ ?)+$~',
+                'owner.last_name' => 'required|string|min:1|max:15|regex:~^([[:alpha:]-]+ ?)+$~',
+                'pet.name' => 'required|string|min:1|max:12|regex:~^([[:alpha:]-]+ ?)+$~',
+                'pet.city' => 'required|string|min:1|max:15|regex:~^([[:alpha:]-]+ ?)+$~',
                 'pet.state' => 'required|string|min:2|max:3|regex:~^[A-Z]{2,3}$~'
             ],
             2 => [

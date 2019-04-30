@@ -275,22 +275,22 @@ class SignUpStepController extends Controller
      *                 @OA\Property(
      *                     property="owner[first_name]",
      *                     type="string",
-     *                     description="Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\s?)+$"
+     *                     description="Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+ ?)+$"
      *                 ),
      *                 @OA\Property(
      *                     property="owner[last_name]",
      *                     type="string",
-     *                     description="Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\s?)+$"
+     *                     description="Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+ ?)+$"
      *                 ),
      *                 @OA\Property(
      *                     property="pet[name]",
      *                     type="string",
-     *                     description="Step 1. Rules: required, min - 1, max - 12, RegExp - ^([[:alpha:]-]+\s?)+$"
+     *                     description="Step 1. Rules: required, min - 1, max - 12, RegExp - ^([[:alpha:]-]+ ?)+$"
      *                 ),
      *                 @OA\Property(
      *                     property="pet[city]",
      *                     type="string",
-     *                     description="Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\s?)+$"
+     *                     description="Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+ ?)+$"
      *                 ),
      *                 @OA\Property(
      *                     property="pet[state]",

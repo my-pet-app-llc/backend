@@ -388,13 +388,13 @@ class ProfileController extends Controller
      *                 @OA\Property(
      *                     property="owner[first_name]",
      *                     type="string",
-     *                     description="Owner first name. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\s?)+$",
+     *                     description="Owner first name. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+ ?)+$",
      *                     example="Bob"
      *                 ),
      *                 @OA\Property(
      *                     property="owner[last_name]",
      *                     type="string",
-     *                     description="Owner last name.  Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\s?)+$",
+     *                     description="Owner last name.  Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+ ?)+$",
      *                     example="Marley"
      *                 ),
      *                 @OA\Property(
@@ -478,7 +478,7 @@ class ProfileController extends Controller
      *                 @OA\Property(
      *                     property="pet[name]",
      *                     type="string",
-     *                     description="Pet name. Rules: required, min - 1, max - 12, RegExp - ^([[:alpha:]-]+\s?)+$",
+     *                     description="Pet name. Rules: required, min - 1, max - 12, RegExp - ^([[:alpha:]-]+ ?)+$",
      *                     example="Dolly"
      *                 ),
      *                 @OA\Property(
@@ -514,7 +514,7 @@ class ProfileController extends Controller
      *                 @OA\Property(
      *                     property="pet[city]",
      *                     type="string",
-     *                     description="Pet hometown. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\s?)+$",
+     *                     description="Pet hometown. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+ ?)+$",
      *                     example="New-York"
      *                 ),
      *                 @OA\Property(
