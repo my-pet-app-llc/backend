@@ -35,7 +35,7 @@ class RequiredIfHasProfilePicture implements Rule
         if($this->model == 'owner'){
             $profilePicture = $this->user->owner->profile_picture;
         }elseif($this->model == 'pet'){
-            $profilePicture = $this->user->owner->profile_picture;
+            $profilePicture = $this->user->owner->pet->profile_picture;
         }else{
             return true;
         }

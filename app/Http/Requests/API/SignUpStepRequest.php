@@ -91,7 +91,7 @@ class SignUpStepRequest extends MainFormRequest
                 'pet.age' => 'required|integer|min:0|max:99'
             ],
             4 => [
-                'pet.profile_picture' => ['nullable', (new RequiredIfHasProfilePicture($this, 'pet')), 'string', 'regex:~^(data:image\/(jpeg|png|jpg);base64,\S+)$~']
+                'pet.profile_picture' => [(new RequiredIfHasProfilePicture($this, 'pet'))]
             ],
             5 => [
                 'pet.pictures' => 'nullable|array',
