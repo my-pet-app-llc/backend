@@ -275,22 +275,22 @@ class SignUpStepController extends Controller
      *                 @OA\Property(
      *                     property="owner[first_name]",
      *                     type="string",
-     *                     description="Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\s?)+$"
+     *                     description="Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+ ?)+$"
      *                 ),
      *                 @OA\Property(
      *                     property="owner[last_name]",
      *                     type="string",
-     *                     description="Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\s?)+$"
+     *                     description="Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+ ?)+$"
      *                 ),
      *                 @OA\Property(
      *                     property="pet[name]",
      *                     type="string",
-     *                     description="Step 1. Rules: required, min - 1, max - 12, RegExp - ^([[:alpha:]-]+\s?)+$"
+     *                     description="Step 1. Rules: required, min - 1, max - 12, RegExp - ^([[:alpha:]-]+ ?)+$"
      *                 ),
      *                 @OA\Property(
      *                     property="pet[city]",
      *                     type="string",
-     *                     description="Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\s?)+$"
+     *                     description="Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+ ?)+$"
      *                 ),
      *                 @OA\Property(
      *                     property="pet[state]",
@@ -637,9 +637,9 @@ class SignUpStepController extends Controller
             $fields = $this->request->rules[$step];
             foreach ($fields as $field => $rule) {
                 $fieldElements = explode('.', $field);
-                if($fieldElements[0] == 'owner' && count($fieldElements) == 2){
+                if($fieldElements[0] == 'owner' && count($fieldElements) == 2 && isset($ownerData[$fieldElements[1]])){
                     $updateOwnerData[$fieldElements[1]] = $ownerData[$fieldElements[1]];
-                }elseif($fieldElements[0] == 'pet' && count($fieldElements) == 2){
+                }elseif($fieldElements[0] == 'pet' && count($fieldElements) == 2 && isset($petData[$fieldElements[1]])){
                     $updatePetData[$fieldElements[1]] = $petData[$fieldElements[1]];
                 }
             }
@@ -683,8 +683,12 @@ class SignUpStepController extends Controller
 
     protected function updateProfilePicture(&$modelData, $stepNameElements)
     {
-        $property = $stepNameElements[1];
-        $modelData[$property] = $this->saveFile($modelData['profile_picture'], $property);
+        if($modelData['profile_picture']){
+            $property = $stepNameElements[1];
+            $modelData[$property] = $this->saveFile($modelData['profile_picture'], $property);
+        }else{
+            unset($modelData['profile_picture']);
+        }
 
         return null;
     }
@@ -712,7 +716,7 @@ class SignUpStepController extends Controller
 
     private function saveFile($str_file, $path)
     {
-        $file = new File($str_file);
+        $file = new File((string)$str_file);
         $file->validation(['jpg', 'png', 'jpeg']);
         return $file->store($path);
     }
