@@ -315,7 +315,7 @@ class SignUpStepController extends Controller
      *                 @OA\Property(
      *                     property="pet[secondary_breed]",
      *                     type="string",
-     *                     description="Step 3. Rules: required, min - 1, max - 50"
+     *                     description="Step 3. Rules: min - 1, max - 50"
      *                 ),
      *                 @OA\Property(
      *                     property="pet[age]",
