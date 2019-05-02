@@ -88,7 +88,7 @@ class SignUpStepRequest extends MainFormRequest
             ],
             3 => [
                 'pet.primary_breed' => 'required|string|min:1|max:50',
-                'pet.secondary_breed' => 'required|string|min:1|max:50',
+                'pet.secondary_breed' => 'nullable|string|min:1|max:50',
                 'pet.age' => 'required|integer|min:0|max:99'
             ],
             4 => [

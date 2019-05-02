@@ -41,7 +41,7 @@ class PetPicturesRule implements Rule
         if($this->validate && ($picturesCount + count($createPictures) - count($deletePictures)) > self::MAX_PICTURES)
             $this->validationFail("The total number of uploaded pictures should not be more than " . self::MAX_PICTURES);
 
-        if($this->validate && ((!$picturesCount && !count($createPictures)) || $picturesCount <= count($deletePictures)))
+        if($this->validate && ((!$picturesCount && !count($createPictures)) || ($picturesCount > 0 && $picturesCount <= count($deletePictures))))
             $this->validationFail('There must be at least one picture');
 
         return $this->validate;
