@@ -948,10 +948,10 @@ class ProfileController extends Controller
      */
     private function petPicturesHandler(Pet $pet, $pictures)
     {
-        if(isset($pictures['create']))
+        if(isset($pictures['create']) && count($pictures['create']))
             $this->savePetPictures($pet, $pictures['create']);
 
-        if(isset($pictures['delete']))
+        if(isset($pictures['delete']) && count($pictures['delete']))
             $this->destroyPetPictures($pet, $pictures['delete']);
     }
 
@@ -965,6 +965,9 @@ class ProfileController extends Controller
         $pictureModels = [];
 
         foreach ($pictures as $picture) {
+            if(!isset($picture))
+                continue;
+
             $file = $this->makeFile($picture, 'pictures');
             if($file)
                 $pictureModels[] = new Picture(['picture' => $file]);

@@ -6389,7 +6389,7 @@
                                         "type": "string"
                                     },
                                     "pet[secondary_breed]": {
-                                        "description": "Step 3. Rules: required, min - 1, max - 50",
+                                        "description": "Step 3. Rules: min - 1, max - 50",
                                         "type": "string"
                                     },
                                     "pet[age]": {
