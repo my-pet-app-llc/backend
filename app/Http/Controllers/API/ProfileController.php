@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Components\Classes\StoreFile\File;
+use App\Http\Requests\API\ProfileUpdateRequest;
 use App\Http\Resources\UserResource;
 use App\Pet;
 use App\Picture;
@@ -33,10 +34,10 @@ class ProfileController extends Controller
     /**
      * Handle the incoming request.
      *
-     * @param Request $request
+     * @param ProfileUpdateRequest $request
      * @return Response
      */
-    public function __invoke(Request $request)
+    public function __invoke(ProfileUpdateRequest $request)
     {
         $this->request = $request;
         $this->user = $request->user();
