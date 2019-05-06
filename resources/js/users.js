@@ -91,4 +91,14 @@ $(function() {
             $(this).closest('li').addClass('active_item');
         }
     }); 
+
+    $(document).on('click', '.img_pets', function (e) {
+        $('#imgPets').find('.wrapp_img').children().remove();
+        const img = $(e.target).clone().css({
+            'height': '100%',
+            'border-radius': '19px'
+        });
+        $('#imgPets').modal();
+        $('#imgPets').find('.wrapp_img').append(img);
+    });
 });

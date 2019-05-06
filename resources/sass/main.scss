@@ -172,3 +172,29 @@ ul li:hover {
         color: #fff;
     }
 }
+
+div.info_img {
+    padding-top: 8px;
+    .img_box {
+        padding-right: 0;
+        img {
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    } 
+}
+
+div.img_modal {
+    border-radius: 20px;
+}
+
+div.wrapp_img {
+    height: 300px;
+}
+
+.close_img {
+    font-size: 50px;
+    color: #fff;
+}
+

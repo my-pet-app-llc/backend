@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use \Yajra\DataTables\Facades\DataTables;
 use App\Owner;
 use App\User;
+use App\Picture;
 
 class UsersController extends Controller
 {
@@ -33,7 +34,7 @@ class UsersController extends Controller
                 return $owner->created_at->format('m/d/Y') . view('users._row', compact('owner'))->render();;
             })
             ->addColumn('location', function($owner) {
-                return 'example location';
+                return $owner->pet->city. ' ' .$owner->pet->state;
             })
             ->addColumn('status', function($owner) {
                 return $owner->statusName . view('users._status', compact('owner'))->render();
