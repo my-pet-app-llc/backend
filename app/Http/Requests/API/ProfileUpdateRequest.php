@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\API;
 
+use App\Rules\PetPicturesRule;
 use App\Rules\RequiredIfHasProfilePicture;
 use Carbon\Carbon;
 
@@ -63,9 +64,11 @@ class ProfileUpdateRequest extends MainFormRequest
                 'pet.fears' => 'required|string|min:1|max:128',
                 'pet.favorite_places' => 'required|string|min:1|max:128',
                 'pet.profile_picture' => ['nullable', (new RequiredIfHasProfilePicture($this, 'pet')), 'string', 'regex:~^(data:image\/(jpeg|png|jpg);base64,\S+)$~'],
-                'pet.pictures' => 'nullable|array',
+                'pet.pictures' => [(new PetPicturesRule())],
+                'pet.pictures.create' => 'array',
+                'pet.pictures.delete' => 'array',
                 'pet.pictures.create.*' => ['required', 'string', 'regex:~^(data:image\/(jpeg|png|jpg);base64,\S+)$~'],
-                'pet.pictures.delete.*' => 'required|integer|exists:pictures,id',
+                'pet.pictures.delete.*' => 'required|integer|exists:pictures,id'
             ];
         }
 
