@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Components\Classes\StoreFile\File;
+use App\Http\Requests\API\ProfileUpdateRequest;
 use App\Http\Resources\UserResource;
 use App\Pet;
 use App\Picture;
@@ -33,10 +34,10 @@ class ProfileController extends Controller
     /**
      * Handle the incoming request.
      *
-     * @param Request $request
+     * @param ProfileUpdateRequest $request
      * @return Response
      */
-    public function __invoke(Request $request)
+    public function __invoke(ProfileUpdateRequest $request)
     {
         $this->request = $request;
         $this->user = $request->user();
@@ -51,7 +52,7 @@ class ProfileController extends Controller
 
     /**
      * @OA\Get(
-     *     path="profile",
+     *     path="/profile",
      *     tags={"Profile"},
      *     description="Get profile data.",
      *     summary="Profile data",
@@ -79,6 +80,10 @@ class ProfileController extends Controller
      *                 @OA\Property(
      *                     type="object",
      *                     property="owner",
+     *                     @OA\Property(
+     *                         property="id",
+     *                         type="integer"
+     *                     ),
      *                     @OA\Property(
      *                         property="first_name",
      *                         type="string"
@@ -371,7 +376,7 @@ class ProfileController extends Controller
 
     /**
      * @OA\Put(
-     *     path="profile",
+     *     path="/profile",
      *     tags={"Profile"},
      *     description="Update owner and pet profiles.",
      *     summary="Update profile",
@@ -384,13 +389,13 @@ class ProfileController extends Controller
      *                 @OA\Property(
      *                     property="owner[first_name]",
      *                     type="string",
-     *                     description="Owner first name. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\s?)+$",
+     *                     description="Owner first name. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+ ?)+$",
      *                     example="Bob"
      *                 ),
      *                 @OA\Property(
      *                     property="owner[last_name]",
      *                     type="string",
-     *                     description="Owner last name.  Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\s?)+$",
+     *                     description="Owner last name.  Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+ ?)+$",
      *                     example="Marley"
      *                 ),
      *                 @OA\Property(
@@ -474,7 +479,7 @@ class ProfileController extends Controller
      *                 @OA\Property(
      *                     property="pet[name]",
      *                     type="string",
-     *                     description="Pet name. Rules: required, min - 1, max - 12, RegExp - ^([[:alpha:]-]+\s?)+$",
+     *                     description="Pet name. Rules: required, min - 1, max - 12, RegExp - ^([[:alpha:]-]+ ?)+$",
      *                     example="Dolly"
      *                 ),
      *                 @OA\Property(
@@ -510,7 +515,7 @@ class ProfileController extends Controller
      *                 @OA\Property(
      *                     property="pet[city]",
      *                     type="string",
-     *                     description="Pet hometown. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\s?)+$",
+     *                     description="Pet hometown. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+ ?)+$",
      *                     example="New-York"
      *                 ),
      *                 @OA\Property(
@@ -596,6 +601,10 @@ class ProfileController extends Controller
      *                 @OA\Property(
      *                     type="object",
      *                     property="owner",
+     *                     @OA\Property(
+     *                         property="id",
+     *                         type="integer"
+     *                     ),
      *                     @OA\Property(
      *                         property="first_name",
      *                         type="string"
@@ -940,10 +949,10 @@ class ProfileController extends Controller
      */
     private function petPicturesHandler(Pet $pet, $pictures)
     {
-        if(isset($pictures['create']))
+        if(isset($pictures['create']) && count($pictures['create']))
             $this->savePetPictures($pet, $pictures['create']);
 
-        if(isset($pictures['delete']))
+        if(isset($pictures['delete']) && count($pictures['delete']))
             $this->destroyPetPictures($pet, $pictures['delete']);
     }
 
@@ -957,6 +966,9 @@ class ProfileController extends Controller
         $pictureModels = [];
 
         foreach ($pictures as $picture) {
+            if(!isset($picture))
+                continue;
+
             $file = $this->makeFile($picture, 'pictures');
             if($file)
                 $pictureModels[] = new Picture(['picture' => $file]);

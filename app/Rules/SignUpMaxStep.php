@@ -67,7 +67,9 @@ class SignUpMaxStep implements Rule
      */
     private function getUserStep (int $step) : int
     {
-        if($this->rules[$step] == [])
+        if($step >= SignUpStepRequest::MAX_STEP){
+            return SignUpStepRequest::MAX_STEP;
+        }elseif($this->rules[$step] == [])
             return $this->getUserStep($step + 1);
         else
             return $step;

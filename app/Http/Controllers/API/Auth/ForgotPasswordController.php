@@ -19,7 +19,7 @@ class ForgotPasswordController extends Controller
 
     /**
      * @OA\POST(
-     *      path="auth/password/forgot",
+     *      path="/auth/password/forgot",
      *      tags={"Auth"},
      *      description="Send link for recovery password.",
      *      summary="Send recovery password link",

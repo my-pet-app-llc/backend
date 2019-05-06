@@ -15,10 +15,23 @@
 //    return (int) $user->id === (int) $id;
 //});
 
-Broadcast::channel('new_event.{id}', function ($user, $id) {
+Broadcast::channel('events.{id}', function ($user, $id) {
     return $user->id == $id;
 });
 
 Broadcast::channel('chat.{id}', function ($user, $id) {
-    return $user->owner->pet->chatRooms->contains($id);
+    return $user->owner->pet->chatRooms->pluck('id')->contains($id);
+});
+
+Broadcast::channel('ticket.chat.{id}', function ($user, $id) {
+    $access = false;
+    if($user->owner){
+        if($user->owner->supportChatRooms()->where('id', $id)->first()){
+            $access = true;
+        }
+    }else{
+        $access = true;
+    }
+
+    return $access;
 });

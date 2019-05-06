@@ -10,7 +10,7 @@ class AcceptInviteEventController extends Controller
 {
     /**
      * @OA\Post(
-     *     path="invited-events/accept",
+     *     path="/invited-events/accept",
      *     tags={"Chat"},
      *     description="Accept or decline invitation to event.",
      *     summary="Accept or decline invite",

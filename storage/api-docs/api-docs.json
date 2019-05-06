@@ -13,7 +13,7 @@
     ],
     "paths": {
         "api/documentation": {},
-        "invited-events/accept": {
+        "/invited-events/accept": {
             "post": {
                 "tags": [
                     "Chat"
@@ -120,7 +120,7 @@
                 ]
             }
         },
-        "auth/password/forgot": {
+        "/auth/password/forgot": {
             "post": {
                 "tags": [
                     "Auth"
@@ -259,6 +259,9 @@
                                                 },
                                                 "owner": {
                                                     "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
                                                         "first_name": {
                                                             "type": "string"
                                                         },
@@ -529,6 +532,9 @@
                                                 },
                                                 "owner": {
                                                     "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
                                                         "first_name": {
                                                             "type": "string"
                                                         },
@@ -754,6 +760,9 @@
                                                 },
                                                 "owner": {
                                                     "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
                                                         "first_name": {
                                                             "type": "string"
                                                         },
@@ -953,6 +962,9 @@
                                                 },
                                                 "owner": {
                                                     "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
                                                         "first_name": {
                                                             "type": "string"
                                                         },
@@ -1180,6 +1192,9 @@
                                                 },
                                                 "owner": {
                                                     "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
                                                         "first_name": {
                                                             "type": "string"
                                                         },
@@ -1385,6 +1400,11 @@
                                                 "type": "integer",
                                                 "example": "1"
                                             },
+                                            "pet_id": {
+                                                "description": "Pet(friend) ID",
+                                                "type": "integer",
+                                                "example": "1"
+                                            },
                                             "picture": {
                                                 "description": "URl of profile picture collocutor pet",
                                                 "type": "string",
@@ -1505,106 +1525,6 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Unauthenticated.|Sign-Up steps not done."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "post": {
-                "tags": [
-                    "Chat"
-                ],
-                "summary": "Create chat",
-                "description": "Create new chat.",
-                "operationId": "chatCreate",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "multipart/from-data": {
-                            "schema": {
-                                "required": [
-                                    "friend_id"
-                                ],
-                                "properties": {
-                                    "friend_id": {
-                                        "description": "Friend with whom you want to create a chat",
-                                        "type": "integer",
-                                        "example": "2"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Created room ID",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "room_id": {
-                                            "description": "Room ID",
-                                            "type": "integer",
-                                            "example": "1"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthenticated error or registration error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Unauthenticated.|Sign-Up steps not done."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Chat with this friend already exist."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not found error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Friend not found."
                                         }
                                     },
                                     "type": "object"
@@ -1782,7 +1702,7 @@
                     {
                         "name": "room_id",
                         "in": "path",
-                        "description": "Room ID",
+                        "description": "Room ID. Send 0 if need to create a room",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -1808,6 +1728,11 @@
                                         "description": "Message for send",
                                         "type": "string",
                                         "example": "1"
+                                    },
+                                    "pet_id": {
+                                        "description": "If need create a room, send pet ID",
+                                        "type": "integer",
+                                        "example": "1"
                                     }
                                 },
                                 "type": "object"
@@ -1824,6 +1749,11 @@
                                     "properties": {
                                         "id": {
                                             "description": "Message ID",
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "room_id": {
+                                            "description": "Room ID if room created",
                                             "type": "integer",
                                             "example": "1"
                                         },
@@ -1962,6 +1892,22 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not found error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Message"
                                         }
                                     },
                                     "type": "object"
@@ -2466,6 +2412,517 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Room not found."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/chats/pet/{pet_id}": {
+            "get": {
+                "tags": [
+                    "Chat"
+                ],
+                "summary": "Get pet info",
+                "description": "Get pet info for chat",
+                "operationId": "getPetInfo",
+                "parameters": [
+                    {
+                        "name": "pet_id",
+                        "in": "path",
+                        "description": "Pet ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Pet details for chat",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "Sender pet ID",
+                                            "type": "integer",
+                                            "example": "2"
+                                        },
+                                        "name": {
+                                            "description": "Name of sender pet",
+                                            "type": "string",
+                                            "example": "Cat"
+                                        },
+                                        "profile_picture": {
+                                            "description": "URL of the sender pet profile picture",
+                                            "type": "string",
+                                            "example": "http://mypets.com/storage/profile_picture/example.jpg"
+                                        },
+                                        "owner": {
+                                            "description": "Owner data for sender pet",
+                                            "properties": {
+                                                "first_name": {
+                                                    "description": "Sender pet owner first name",
+                                                    "type": "string",
+                                                    "example": "John"
+                                                },
+                                                "last_name": {
+                                                    "description": "Sender pet owner last name",
+                                                    "type": "string",
+                                                    "example": "Doe"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No query result from model."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/connect": {
+            "get": {
+                "tags": [
+                    "Connect"
+                ],
+                "summary": "Get user for connect",
+                "description": "Get user for connect",
+                "operationId": "connect",
+                "responses": {
+                    "200": {
+                        "description": "First find matches for user. If user not have matches - find users who are within a radius of 20 miles",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "match": {
+                                            "description": "If match exist - connect_id, else 0",
+                                            "type": "boolean"
+                                        },
+                                        "owner": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "first_name": {
+                                                    "type": "string"
+                                                },
+                                                "last_name": {
+                                                    "type": "string"
+                                                },
+                                                "gender": {
+                                                    "type": "string"
+                                                },
+                                                "age": {
+                                                    "type": "integer"
+                                                },
+                                                "birthday": {
+                                                    "type": "date"
+                                                },
+                                                "occupation": {
+                                                    "type": "string"
+                                                },
+                                                "hobbies": {
+                                                    "type": "string"
+                                                },
+                                                "pets_owned": {
+                                                    "type": "string"
+                                                },
+                                                "profile_picture": {
+                                                    "type": "string"
+                                                },
+                                                "favorite_park": {
+                                                    "type": "string"
+                                                },
+                                                "pet": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "name": {
+                                                            "type": "string"
+                                                        },
+                                                        "gender": {
+                                                            "type": "string"
+                                                        },
+                                                        "size": {
+                                                            "type": "string"
+                                                        },
+                                                        "primary_breed": {
+                                                            "type": "string"
+                                                        },
+                                                        "secondary_breed": {
+                                                            "type": "string"
+                                                        },
+                                                        "age": {
+                                                            "type": "integer"
+                                                        },
+                                                        "profile_picture": {
+                                                            "type": "string"
+                                                        },
+                                                        "friendliness": {
+                                                            "type": "integer"
+                                                        },
+                                                        "activity_level": {
+                                                            "type": "integer"
+                                                        },
+                                                        "noise_level": {
+                                                            "type": "integer"
+                                                        },
+                                                        "odebience_level": {
+                                                            "type": "integer"
+                                                        },
+                                                        "fetchability": {
+                                                            "type": "integer"
+                                                        },
+                                                        "swimability": {
+                                                            "type": "integer"
+                                                        },
+                                                        "city": {
+                                                            "type": "string"
+                                                        },
+                                                        "state": {
+                                                            "type": "string"
+                                                        },
+                                                        "like": {
+                                                            "type": "string"
+                                                        },
+                                                        "dislike": {
+                                                            "type": "string"
+                                                        },
+                                                        "favorite_toys": {
+                                                            "type": "string"
+                                                        },
+                                                        "fears": {
+                                                            "type": "string"
+                                                        },
+                                                        "favorite_places": {
+                                                            "type": "string"
+                                                        },
+                                                        "spayed": {
+                                                            "type": "string"
+                                                        },
+                                                        "birthday": {
+                                                            "type": "date"
+                                                        },
+                                                        "pictures": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "picture": {
+                                                                        "type": "string"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No users found nearby."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Connect"
+                ],
+                "summary": "Match accept or decline",
+                "description": "Match accept or decline. Match dont exist",
+                "operationId": "connectSave",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/from-data": {
+                            "schema": {
+                                "required": [
+                                    "owner_id",
+                                    "match"
+                                ],
+                                "properties": {
+                                    "owner_id": {
+                                        "description": "Owner ID for connect",
+                                        "type": "integer",
+                                        "example": "2"
+                                    },
+                                    "match": {
+                                        "description": "1 - match accept, 0 - match decline",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success message. Match decline or Accept. If match accept - broadcast fot connected owner.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Message"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No query result from model."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/connect/{connect_id}": {
+            "put": {
+                "tags": [
+                    "Connect"
+                ],
+                "summary": "Match accept or decline",
+                "description": "Match accept or decline. For exist match",
+                "operationId": "connectUpdate",
+                "parameters": [
+                    {
+                        "name": "connect_id",
+                        "in": "path",
+                        "description": "Connect ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/from-data": {
+                            "schema": {
+                                "required": [
+                                    "match"
+                                ],
+                                "properties": {
+                                    "match": {
+                                        "description": "1 - match accept, 0 - match decline",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success message. Match decline or Accept.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Message"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No query result from model.|Not found match"
                                         }
                                     },
                                     "type": "object"
@@ -3566,7 +4023,7 @@
                 ]
             }
         },
-        "friends": {
+        "/friends": {
             "get": {
                 "tags": [
                     "Friends"
@@ -3681,6 +4138,533 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/friend-requests": {
+            "get": {
+                "tags": [
+                    "Friend Requests"
+                ],
+                "summary": "Get friend requests",
+                "description": "Get all friend requests",
+                "operationId": "friendRequestsGet",
+                "responses": {
+                    "200": {
+                        "description": "First find matches for user. If user not have matches - find users who are within a radius of 20 miles",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "Friiend Request ID",
+                                            "type": "integer"
+                                        },
+                                        "owner": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "first_name": {
+                                                    "type": "string"
+                                                },
+                                                "last_name": {
+                                                    "type": "string"
+                                                },
+                                                "gender": {
+                                                    "type": "string"
+                                                },
+                                                "age": {
+                                                    "type": "integer"
+                                                },
+                                                "birthday": {
+                                                    "type": "date"
+                                                },
+                                                "occupation": {
+                                                    "type": "string"
+                                                },
+                                                "hobbies": {
+                                                    "type": "string"
+                                                },
+                                                "pets_owned": {
+                                                    "type": "string"
+                                                },
+                                                "profile_picture": {
+                                                    "type": "string"
+                                                },
+                                                "favorite_park": {
+                                                    "type": "string"
+                                                },
+                                                "pet": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "name": {
+                                                            "type": "string"
+                                                        },
+                                                        "gender": {
+                                                            "type": "string"
+                                                        },
+                                                        "size": {
+                                                            "type": "string"
+                                                        },
+                                                        "primary_breed": {
+                                                            "type": "string"
+                                                        },
+                                                        "secondary_breed": {
+                                                            "type": "string"
+                                                        },
+                                                        "age": {
+                                                            "type": "integer"
+                                                        },
+                                                        "profile_picture": {
+                                                            "type": "string"
+                                                        },
+                                                        "friendliness": {
+                                                            "type": "integer"
+                                                        },
+                                                        "activity_level": {
+                                                            "type": "integer"
+                                                        },
+                                                        "noise_level": {
+                                                            "type": "integer"
+                                                        },
+                                                        "odebience_level": {
+                                                            "type": "integer"
+                                                        },
+                                                        "fetchability": {
+                                                            "type": "integer"
+                                                        },
+                                                        "swimability": {
+                                                            "type": "integer"
+                                                        },
+                                                        "city": {
+                                                            "type": "string"
+                                                        },
+                                                        "state": {
+                                                            "type": "string"
+                                                        },
+                                                        "like": {
+                                                            "type": "string"
+                                                        },
+                                                        "dislike": {
+                                                            "type": "string"
+                                                        },
+                                                        "favorite_toys": {
+                                                            "type": "string"
+                                                        },
+                                                        "fears": {
+                                                            "type": "string"
+                                                        },
+                                                        "favorite_places": {
+                                                            "type": "string"
+                                                        },
+                                                        "spayed": {
+                                                            "type": "string"
+                                                        },
+                                                        "birthday": {
+                                                            "type": "date"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No users found nearby."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Friend Requests"
+                ],
+                "summary": "Make friend request",
+                "description": "Make friend request",
+                "operationId": "friendRequestSave",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/from-data": {
+                            "schema": {
+                                "required": [
+                                    "match"
+                                ],
+                                "properties": {
+                                    "owner_id": {
+                                        "description": "Owner id for friend request",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Friend request stored.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Message"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No query result from model."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/friend-requests/{friend_reques_id}": {
+            "put": {
+                "tags": [
+                    "Friend Requests"
+                ],
+                "summary": "Accept or decline request",
+                "description": "Accept or decline friend request",
+                "parameters": [
+                    {
+                        "name": "friend_reques_id",
+                        "in": "path",
+                        "description": "Friend Request ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/from-data": {
+                            "schema": {
+                                "properties": {
+                                    "accept": {
+                                        "description": "If 1 - accepte friend request, if 0 - decline",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Friend request updated.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Message"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No query result from model.|Request not found."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/index": {
+            "get": {
+                "tags": [
+                    "Main"
+                ],
+                "summary": "Main API call",
+                "description": "Main API call",
+                "operationId": "mainCall",
+                "responses": {
+                    "200": {
+                        "description": "Main info",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "friend_requests_count": {
+                                            "description": "Friend requests count",
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "new_matches_count": {
+                                            "description": "New matches count",
+                                            "type": "integer",
+                                            "example": "1"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/location": {
+            "get": {
+                "tags": [
+                    "Connect"
+                ],
+                "summary": "Update location",
+                "description": "Update user location",
+                "operationId": "loctionUpdate",
+                "parameters": [
+                    {
+                        "name": "lat",
+                        "in": "query",
+                        "description": "Latitude",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "lng",
+                        "in": "query",
+                        "description": "Longitude",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Updated location successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "field": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Invalid data"
+                                            }
                                         }
                                     },
                                     "type": "object"
@@ -3899,7 +4883,409 @@
                 ]
             }
         },
-        "profile": {
+        "/pets/{pet_id}": {
+            "get": {
+                "tags": [
+                    "Other Profile"
+                ],
+                "summary": "Get other profile info",
+                "description": "Other pet and owner profile with friends",
+                "operationId": "getOtherProfile",
+                "parameters": [
+                    {
+                        "name": "pet_id",
+                        "in": "path",
+                        "description": "Pet ID whose profile you want to see",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Owner, pet and her friends data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "Owner ID",
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "first_name": {
+                                            "description": "Owner first name",
+                                            "type": "string",
+                                            "example": "John"
+                                        },
+                                        "last_name": {
+                                            "description": "Owner last name",
+                                            "type": "string",
+                                            "example": "Doe"
+                                        },
+                                        "gender": {
+                                            "description": "Owner gender",
+                                            "type": "string",
+                                            "example": "male"
+                                        },
+                                        "age": {
+                                            "description": "Owner age",
+                                            "type": "integer",
+                                            "example": "11"
+                                        },
+                                        "birthday": {
+                                            "description": "Owner birthday",
+                                            "type": "string",
+                                            "example": "1970-01-01"
+                                        },
+                                        "occupation": {
+                                            "description": "Owner occupation",
+                                            "type": "string",
+                                            "example": "Developer"
+                                        },
+                                        "hobbies": {
+                                            "description": "Owner hobbies",
+                                            "type": "string",
+                                            "example": "Development"
+                                        },
+                                        "pets_owned": {
+                                            "description": "Owner pets owned",
+                                            "type": "string",
+                                            "example": "33 cows"
+                                        },
+                                        "profile_picture": {
+                                            "description": "Owner profile picture URL",
+                                            "type": "string",
+                                            "example": "http://mypets.com/storage/profile_picture/example.png"
+                                        },
+                                        "favorite_park": {
+                                            "description": "Owner favorite pet park",
+                                            "type": "string",
+                                            "example": "Park"
+                                        },
+                                        "pet": {
+                                            "properties": {
+                                                "id": {
+                                                    "description": "Pet ID",
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "name": {
+                                                    "description": "Pet name",
+                                                    "type": "string",
+                                                    "example": "Pet"
+                                                },
+                                                "gender": {
+                                                    "description": "Pet gender",
+                                                    "type": "string",
+                                                    "example": "male"
+                                                },
+                                                "size": {
+                                                    "description": "Pet size",
+                                                    "type": "string",
+                                                    "example": "giant"
+                                                },
+                                                "primary_breed": {
+                                                    "description": "Pet primary breed",
+                                                    "type": "string",
+                                                    "example": "Dog"
+                                                },
+                                                "secondary_breed": {
+                                                    "description": "Pet secondary breed",
+                                                    "type": "string",
+                                                    "example": "Cat"
+                                                },
+                                                "age": {
+                                                    "description": "Pet age",
+                                                    "type": "integer",
+                                                    "example": "11"
+                                                },
+                                                "profile_picture": {
+                                                    "description": "Pet profile picture URL",
+                                                    "type": "string",
+                                                    "example": "http://mypets.com/storage/profile_picture/example.png"
+                                                },
+                                                "friendliness": {
+                                                    "description": "Pet friendliness",
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "activity_level": {
+                                                    "description": "Pet activity level",
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "noise_level": {
+                                                    "description": "Pet noise level",
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "odebience_level": {
+                                                    "description": "Pet odebience level",
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "fetchability": {
+                                                    "description": "Pet fetchability",
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "swimability": {
+                                                    "description": "Pet swimability",
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "city": {
+                                                    "description": "Pet city",
+                                                    "type": "string",
+                                                    "example": "New York"
+                                                },
+                                                "state": {
+                                                    "description": "Pet state",
+                                                    "type": "string",
+                                                    "example": "NY"
+                                                },
+                                                "like": {
+                                                    "description": "Pet likes",
+                                                    "type": "string",
+                                                    "example": "Apples"
+                                                },
+                                                "dislike": {
+                                                    "description": "Pet dislikes",
+                                                    "type": "string",
+                                                    "example": "Bananas"
+                                                },
+                                                "favorite_toys": {
+                                                    "description": "Pet favorite toys",
+                                                    "type": "string",
+                                                    "example": "iPhone"
+                                                },
+                                                "fears": {
+                                                    "description": "Pet fears",
+                                                    "type": "string",
+                                                    "example": "Water"
+                                                },
+                                                "favorite_places": {
+                                                    "description": "Pet favorite places",
+                                                    "type": "string",
+                                                    "example": "Park"
+                                                },
+                                                "spayed": {
+                                                    "description": "Pet spayed. If 0 - not spayed, if 1 - spayed",
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "birthday": {
+                                                    "description": "Pet birthday",
+                                                    "type": "string",
+                                                    "example": "2000-01-24"
+                                                },
+                                                "pictures": {
+                                                    "description": "Pet pictures",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "description": "Picture ID",
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "picture": {
+                                                                "description": "URL of picture",
+                                                                "type": "string",
+                                                                "example": "http://mypets.com/storage/pictures/example.png"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "friends": {
+                                                    "description": "Pet friends only those who are friends with an authenticated user.",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "description": "Pet ID",
+                                                                "type": "integer",
+                                                                "example": "2"
+                                                            },
+                                                            "name": {
+                                                                "description": "Pet name",
+                                                                "type": "string",
+                                                                "example": "Nona"
+                                                            },
+                                                            "gender": {
+                                                                "description": "Pet gender",
+                                                                "type": "string",
+                                                                "example": "male"
+                                                            },
+                                                            "size": {
+                                                                "description": "Pet size",
+                                                                "type": "string",
+                                                                "example": "giant"
+                                                            },
+                                                            "primary_breed": {
+                                                                "description": "Pet primary breed",
+                                                                "type": "string",
+                                                                "example": "Dog"
+                                                            },
+                                                            "secondary_breed": {
+                                                                "description": "Pet secondary breed",
+                                                                "type": "string",
+                                                                "example": "Pit"
+                                                            },
+                                                            "age": {
+                                                                "description": "Pet age",
+                                                                "type": "integer",
+                                                                "example": "11"
+                                                            },
+                                                            "profile_picture": {
+                                                                "description": "Pet profile picture URL",
+                                                                "type": "string",
+                                                                "example": "http://mypets.com/storage/profile_picture/example.png"
+                                                            },
+                                                            "friendliness": {
+                                                                "description": "Pet friendliness",
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "activity_level": {
+                                                                "description": "Pet activity level",
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "noise_level": {
+                                                                "description": "Pet noise level",
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "odebience_level": {
+                                                                "description": "Pet odebience level",
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "fetchability": {
+                                                                "description": "Pet fetchability",
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "swimability": {
+                                                                "description": "Pet swimability",
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "city": {
+                                                                "description": "Pet city",
+                                                                "type": "string",
+                                                                "example": "New York"
+                                                            },
+                                                            "state": {
+                                                                "description": "Pet state",
+                                                                "type": "string",
+                                                                "example": "NY"
+                                                            },
+                                                            "like": {
+                                                                "description": "Pet likes",
+                                                                "type": "string",
+                                                                "example": "Apples"
+                                                            },
+                                                            "dislike": {
+                                                                "description": "Pet dislikes",
+                                                                "type": "string",
+                                                                "example": "Bananas"
+                                                            },
+                                                            "favorite_toys": {
+                                                                "description": "Pet favorite toys",
+                                                                "type": "string",
+                                                                "example": "iPhone"
+                                                            },
+                                                            "fears": {
+                                                                "description": "Pet fears",
+                                                                "type": "string",
+                                                                "example": "Water"
+                                                            },
+                                                            "favorite_places": {
+                                                                "description": "Pet favorite places",
+                                                                "type": "string",
+                                                                "example": "Park"
+                                                            },
+                                                            "spayed": {
+                                                                "description": "Pet spayed. If 0 - not spayed, if 1 - spayed",
+                                                                "type": "string",
+                                                                "example": "1"
+                                                            },
+                                                            "birthday": {
+                                                                "description": "Pet birthday",
+                                                                "type": "date",
+                                                                "example": "2000-01-24"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "is_friends": {
+                                            "description": "Are users friends",
+                                            "type": "boolean"
+                                        },
+                                        "to_friend_request": {
+                                            "description": "Can send a friend request to the user",
+                                            "type": "boolean"
+                                        },
+                                        "to_send_message": {
+                                            "description": "Can send a message to the user",
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No query result from model."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/profile": {
             "get": {
                 "tags": [
                     "Profile"
@@ -3928,6 +5314,9 @@
                                                 },
                                                 "owner": {
                                                     "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
                                                         "first_name": {
                                                             "type": "string"
                                                         },
@@ -4215,12 +5604,12 @@
                                 ],
                                 "properties": {
                                     "owner[first_name]": {
-                                        "description": "Owner first name. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\\s?)+$",
+                                        "description": "Owner first name. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+ ?)+$",
                                         "type": "string",
                                         "example": "Bob"
                                     },
                                     "owner[last_name]": {
-                                        "description": "Owner last name.  Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\\s?)+$",
+                                        "description": "Owner last name.  Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+ ?)+$",
                                         "type": "string",
                                         "example": "Marley"
                                     },
@@ -4290,7 +5679,7 @@
                                         "example": "5"
                                     },
                                     "pet[name]": {
-                                        "description": "Pet name. Rules: required, min - 1, max - 12, RegExp - ^([[:alpha:]-]+\\s?)+$",
+                                        "description": "Pet name. Rules: required, min - 1, max - 12, RegExp - ^([[:alpha:]-]+ ?)+$",
                                         "type": "string",
                                         "example": "Dolly"
                                     },
@@ -4320,7 +5709,7 @@
                                         "example": "1996-06-28"
                                     },
                                     "pet[city]": {
-                                        "description": "Pet hometown. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\\s?)+$",
+                                        "description": "Pet hometown. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+ ?)+$",
                                         "type": "string",
                                         "example": "New-York"
                                     },
@@ -4396,6 +5785,9 @@
                                                 },
                                                 "owner": {
                                                     "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
                                                         "first_name": {
                                                             "type": "string"
                                                         },
@@ -4660,6 +6052,106 @@
                 ]
             }
         },
+        "/report": {
+            "post": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "Report for user",
+                "description": "Report for user. Create ticket and create two chats",
+                "operationId": "reportForUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "pet_id",
+                                    "reason"
+                                ],
+                                "properties": {
+                                    "pet_id": {
+                                        "description": "Reported pet ID",
+                                        "type": "integer",
+                                        "example": "2"
+                                    },
+                                    "reason": {
+                                        "description": "Report reason",
+                                        "type": "string",
+                                        "example": "He is stuppid"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "New ticket data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "ticket_id": {
+                                            "description": "New ticket ID",
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "room_id": {
+                                            "description": "New room id for ticket",
+                                            "type": "integer",
+                                            "example": "1"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "field": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Invalid data"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/sign-up/stepper": {
             "get": {
                 "tags": [
@@ -4688,6 +6180,9 @@
                                                 },
                                                 "owner": {
                                                     "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
                                                         "first_name": {
                                                             "type": "string"
                                                         },
@@ -4784,7 +6279,7 @@
                                                                     "type": "string"
                                                                 },
                                                                 "spayed": {
-                                                                    "type": "string"
+                                                                    "type": "integer"
                                                                 },
                                                                 "birthday": {
                                                                     "type": "date"
@@ -4862,19 +6357,19 @@
                                         "type": "integer"
                                     },
                                     "owner[first_name]": {
-                                        "description": "Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\\s?)+$",
+                                        "description": "Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+ ?)+$",
                                         "type": "string"
                                     },
                                     "owner[last_name]": {
-                                        "description": "Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\\s?)+$",
+                                        "description": "Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+ ?)+$",
                                         "type": "string"
                                     },
                                     "pet[name]": {
-                                        "description": "Step 1. Rules: required, min - 1, max - 12, RegExp - ^([[:alpha:]-]+\\s?)+$",
+                                        "description": "Step 1. Rules: required, min - 1, max - 12, RegExp - ^([[:alpha:]-]+ ?)+$",
                                         "type": "string"
                                     },
                                     "pet[city]": {
-                                        "description": "Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+\\s?)+$",
+                                        "description": "Step 1. Rules: required, min - 1, max - 15, RegExp - ^([[:alpha:]-]+ ?)+$",
                                         "type": "string"
                                     },
                                     "pet[state]": {
@@ -4894,7 +6389,7 @@
                                         "type": "string"
                                     },
                                     "pet[secondary_breed]": {
-                                        "description": "Step 3. Rules: required, min - 1, max - 50",
+                                        "description": "Step 3. Rules: min - 1, max - 50",
                                         "type": "string"
                                     },
                                     "pet[age]": {
@@ -4996,6 +6491,9 @@
                                                 },
                                                 "owner": {
                                                     "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
                                                         "first_name": {
                                                             "type": "string"
                                                         },
@@ -5154,6 +6652,1423 @@
                                                 "type": "string",
                                                 "example": "Invalid data"
                                             }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/support-chats": {
+            "get": {
+                "tags": [
+                    "Support"
+                ],
+                "summary": "Get chats",
+                "description": "Get all chats for support",
+                "operationId": "getSupportChats",
+                "responses": {
+                    "200": {
+                        "description": "All chats",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "Chat room ID",
+                                                "type": "integer",
+                                                "example": "1"
+                                            },
+                                            "ticket_no": {
+                                                "description": "Ticket ID as chat name",
+                                                "type": "string",
+                                                "example": "2"
+                                            },
+                                            "writable": {
+                                                "description": "The ability to write in chat",
+                                                "type": "boolean",
+                                                "example": true
+                                            },
+                                            "is_read": {
+                                                "description": "Are there any unread messages in the chat",
+                                                "type": "integer",
+                                                "example": "0"
+                                            },
+                                            "last_message": {
+                                                "description": "Last message in chat",
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Message ID",
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "type": {
+                                                        "description": "Message type. Can be system, text and image",
+                                                        "type": "string",
+                                                        "example": "text"
+                                                    },
+                                                    "message": {
+                                                        "description": "Message object. For all message types has one property. For system and text type just text. For image type - path to image",
+                                                        "properties": {
+                                                            "message": {
+                                                                "description": "Message text or path to image",
+                                                                "type": "string",
+                                                                "example": "Hello World!"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "date_time_created": {
+                                                        "description": "Date and time message created",
+                                                        "type": "string",
+                                                        "example": "2019-04-18 10:00:00"
+                                                    },
+                                                    "is_like": {
+                                                        "description": "Like message",
+                                                        "type": "integer",
+                                                        "example": "0"
+                                                    },
+                                                    "sender": {
+                                                        "description": "Owner object or null if message sended admin",
+                                                        "properties": {
+                                                            "id": {
+                                                                "description": "Owner ID",
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "first_name": {
+                                                                "description": "Owner first name",
+                                                                "type": "string",
+                                                                "example": "John"
+                                                            },
+                                                            "last_name": {
+                                                                "description": "Owner last name",
+                                                                "type": "string",
+                                                                "example": "Doe"
+                                                            },
+                                                            "gender": {
+                                                                "description": "Owner gender",
+                                                                "type": "string",
+                                                                "example": "male"
+                                                            },
+                                                            "age": {
+                                                                "description": "Owner age",
+                                                                "type": "integer",
+                                                                "example": "12"
+                                                            },
+                                                            "birthday": {
+                                                                "description": "Owner birthday",
+                                                                "type": "string",
+                                                                "example": "1298-04-12"
+                                                            },
+                                                            "occupation": {
+                                                                "description": "Owner occupation",
+                                                                "type": "string",
+                                                                "example": "Developer"
+                                                            },
+                                                            "hobbies": {
+                                                                "description": "Owner hobbies",
+                                                                "type": "string",
+                                                                "example": "Bikes"
+                                                            },
+                                                            "pets_owned": {
+                                                                "description": "Owner pets owned",
+                                                                "type": "string",
+                                                                "example": "33 cows"
+                                                            },
+                                                            "profile_picture": {
+                                                                "description": "Owner profile picture URL",
+                                                                "type": "string",
+                                                                "example": "http://mypets.com/storage/profile_picture/example.png"
+                                                            },
+                                                            "favorite_park": {
+                                                                "description": "Owner favorite park",
+                                                                "type": "string",
+                                                                "example": "Park"
+                                                            },
+                                                            "pet": {
+                                                                "description": "Owner pet",
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "description": "Pet ID",
+                                                                        "type": "integer",
+                                                                        "example": "1"
+                                                                    },
+                                                                    "name": {
+                                                                        "description": "Pet name",
+                                                                        "type": "string",
+                                                                        "example": "Dog"
+                                                                    },
+                                                                    "gender": {
+                                                                        "description": "Pet gender",
+                                                                        "type": "string",
+                                                                        "example": "male"
+                                                                    },
+                                                                    "size": {
+                                                                        "description": "Pet size",
+                                                                        "type": "string",
+                                                                        "example": "giant"
+                                                                    },
+                                                                    "primary_breed": {
+                                                                        "description": "Pet primary breed",
+                                                                        "type": "string",
+                                                                        "example": "Dog"
+                                                                    },
+                                                                    "secondary_breed": {
+                                                                        "description": "Pet secondary breed",
+                                                                        "type": "string",
+                                                                        "example": "Cat"
+                                                                    },
+                                                                    "age": {
+                                                                        "description": "Pet age",
+                                                                        "type": "integer",
+                                                                        "example": "12"
+                                                                    },
+                                                                    "profile_picture": {
+                                                                        "description": "Pet profile picture URL",
+                                                                        "type": "string",
+                                                                        "example": "http://mypets.com/storage/profile_picture/example.png"
+                                                                    },
+                                                                    "friendliness": {
+                                                                        "description": "Pet friendliness",
+                                                                        "type": "integer",
+                                                                        "example": "1"
+                                                                    },
+                                                                    "activity_level": {
+                                                                        "description": "Pet activity level",
+                                                                        "type": "integer",
+                                                                        "example": "1"
+                                                                    },
+                                                                    "noise_level": {
+                                                                        "description": "Pet noise level",
+                                                                        "type": "integer",
+                                                                        "example": "1"
+                                                                    },
+                                                                    "odebience_level": {
+                                                                        "description": "Pet odebience level",
+                                                                        "type": "integer",
+                                                                        "example": "1"
+                                                                    },
+                                                                    "fetchability": {
+                                                                        "description": "Pet fetchbility",
+                                                                        "type": "integer",
+                                                                        "example": "1"
+                                                                    },
+                                                                    "swimability": {
+                                                                        "description": "Pet swimability",
+                                                                        "type": "integer",
+                                                                        "example": "1"
+                                                                    },
+                                                                    "city": {
+                                                                        "description": "Pet city",
+                                                                        "type": "string",
+                                                                        "example": "New York"
+                                                                    },
+                                                                    "state": {
+                                                                        "description": "Pet state",
+                                                                        "type": "string",
+                                                                        "example": "NY"
+                                                                    },
+                                                                    "like": {
+                                                                        "description": "Pet likes",
+                                                                        "type": "string",
+                                                                        "example": "Apples"
+                                                                    },
+                                                                    "dislike": {
+                                                                        "description": "Pet dislikes",
+                                                                        "type": "string",
+                                                                        "example": "Bananas"
+                                                                    },
+                                                                    "favorite_toys": {
+                                                                        "description": "Pet favorite toys",
+                                                                        "type": "string",
+                                                                        "example": "Foot"
+                                                                    },
+                                                                    "fears": {
+                                                                        "description": "Pet fears",
+                                                                        "type": "string",
+                                                                        "example": "Chicken"
+                                                                    },
+                                                                    "favorite_places": {
+                                                                        "description": "Pet favorite places",
+                                                                        "type": "string",
+                                                                        "example": "Park"
+                                                                    },
+                                                                    "spayed": {
+                                                                        "description": "Pet spayed. 1 or 0",
+                                                                        "type": "string",
+                                                                        "example": "1"
+                                                                    },
+                                                                    "birthday": {
+                                                                        "description": "Pet birthday",
+                                                                        "type": "string",
+                                                                        "example": "1939-09-01"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/support-chats/{room_id}": {
+            "get": {
+                "tags": [
+                    "Support"
+                ],
+                "summary": "Get messages in chat",
+                "description": "Get messages in chat with pagination",
+                "operationId": "getMessagesSupportChat",
+                "parameters": [
+                    {
+                        "name": "room_id",
+                        "in": "path",
+                        "description": "Room ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Messages list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "Message ID",
+                                                "type": "integer",
+                                                "example": "1"
+                                            },
+                                            "type": {
+                                                "description": "Message type. Can be system, text or image",
+                                                "type": "string",
+                                                "example": "image"
+                                            },
+                                            "message": {
+                                                "description": "Message object. For all message types has one property. For system and text type just text. For image type - path to image",
+                                                "properties": {
+                                                    "message": {
+                                                        "description": "Message text or path to image",
+                                                        "type": "string",
+                                                        "example": "http://mypets.com/storage/support-chat/example.jpeg"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "date_time_created": {
+                                                "description": "Date and time message created",
+                                                "type": "string",
+                                                "example": "2019-04-17 10:00:00"
+                                            },
+                                            "is_like": {
+                                                "description": "Like message. 1 or 0",
+                                                "type": "integer",
+                                                "example": "1"
+                                            },
+                                            "sender": {
+                                                "description": "Owner object or null if message sended admin",
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Owner ID",
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "first_name": {
+                                                        "description": "Owner first name",
+                                                        "type": "string",
+                                                        "example": "John"
+                                                    },
+                                                    "last_name": {
+                                                        "description": "Owner last name",
+                                                        "type": "string",
+                                                        "example": "Doe"
+                                                    },
+                                                    "gender": {
+                                                        "description": "Owner gender",
+                                                        "type": "string",
+                                                        "example": "male"
+                                                    },
+                                                    "age": {
+                                                        "description": "Owner age",
+                                                        "type": "integer",
+                                                        "example": "12"
+                                                    },
+                                                    "birthday": {
+                                                        "description": "Owner birthday",
+                                                        "type": "string",
+                                                        "example": "1298-04-12"
+                                                    },
+                                                    "occupation": {
+                                                        "description": "Owner occupation",
+                                                        "type": "string",
+                                                        "example": "Developer"
+                                                    },
+                                                    "hobbies": {
+                                                        "description": "Owner hobbies",
+                                                        "type": "string",
+                                                        "example": "Bikes"
+                                                    },
+                                                    "pets_owned": {
+                                                        "description": "Owner pets owned",
+                                                        "type": "string",
+                                                        "example": "33 cows"
+                                                    },
+                                                    "profile_picture": {
+                                                        "description": "Owner profile picture URL",
+                                                        "type": "string",
+                                                        "example": "http://mypets.com/storage/profile_picture/example.png"
+                                                    },
+                                                    "favorite_park": {
+                                                        "description": "Owner favorite park",
+                                                        "type": "string",
+                                                        "example": "Park"
+                                                    },
+                                                    "pet": {
+                                                        "description": "Owner pet",
+                                                        "properties": {
+                                                            "id": {
+                                                                "description": "Pet ID",
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "name": {
+                                                                "description": "Pet name",
+                                                                "type": "string",
+                                                                "example": "Dog"
+                                                            },
+                                                            "gender": {
+                                                                "description": "Pet gender",
+                                                                "type": "string",
+                                                                "example": "male"
+                                                            },
+                                                            "size": {
+                                                                "description": "Pet size",
+                                                                "type": "string",
+                                                                "example": "giant"
+                                                            },
+                                                            "primary_breed": {
+                                                                "description": "Pet primary breed",
+                                                                "type": "string",
+                                                                "example": "Dog"
+                                                            },
+                                                            "secondary_breed": {
+                                                                "description": "Pet secondary breed",
+                                                                "type": "string",
+                                                                "example": "Cat"
+                                                            },
+                                                            "age": {
+                                                                "description": "Pet age",
+                                                                "type": "integer",
+                                                                "example": "12"
+                                                            },
+                                                            "profile_picture": {
+                                                                "description": "Pet profile picture URL",
+                                                                "type": "string",
+                                                                "example": "http://mypets.com/storage/profile_picture/example.png"
+                                                            },
+                                                            "friendliness": {
+                                                                "description": "Pet friendliness",
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "activity_level": {
+                                                                "description": "Pet activity level",
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "noise_level": {
+                                                                "description": "Pet noise level",
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "odebience_level": {
+                                                                "description": "Pet odebience level",
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "fetchability": {
+                                                                "description": "Pet fetchbility",
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "swimability": {
+                                                                "description": "Pet swimability",
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "city": {
+                                                                "description": "Pet city",
+                                                                "type": "string",
+                                                                "example": "New York"
+                                                            },
+                                                            "state": {
+                                                                "description": "Pet state",
+                                                                "type": "string",
+                                                                "example": "NY"
+                                                            },
+                                                            "like": {
+                                                                "description": "Pet likes",
+                                                                "type": "string",
+                                                                "example": "Apples"
+                                                            },
+                                                            "dislike": {
+                                                                "description": "Pet dislikes",
+                                                                "type": "string",
+                                                                "example": "Bananas"
+                                                            },
+                                                            "favorite_toys": {
+                                                                "description": "Pet favorite toys",
+                                                                "type": "string",
+                                                                "example": "Foot"
+                                                            },
+                                                            "fears": {
+                                                                "description": "Pet fears",
+                                                                "type": "string",
+                                                                "example": "Chicken"
+                                                            },
+                                                            "favorite_places": {
+                                                                "description": "Pet favorite places",
+                                                                "type": "string",
+                                                                "example": "Park"
+                                                            },
+                                                            "spayed": {
+                                                                "description": "Pet spayed. 1 or 0",
+                                                                "type": "string",
+                                                                "example": "1"
+                                                            },
+                                                            "birthday": {
+                                                                "description": "Pet birthday",
+                                                                "type": "string",
+                                                                "example": "1939-09-01"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Room not found.|Np query results for model"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/support-chats/messages/default": {
+            "get": {
+                "tags": [
+                    "Support"
+                ],
+                "summary": "Get default message",
+                "description": "Get default message for new chat",
+                "operationId": "getSupportChatDefaultMessage",
+                "responses": {
+                    "200": {
+                        "description": "Default message for new chat",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Default system message",
+                                            "type": "string",
+                                            "example": "Hi, Thank you for using MyPet! How can we help you today?"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/support-chats/{ticket_id}": {
+            "post": {
+                "tags": [
+                    "Support"
+                ],
+                "summary": "Send message",
+                "description": "Send message for chat",
+                "operationId": "sendMessageSupportChat",
+                "parameters": [
+                    {
+                        "name": "ticket_id",
+                        "in": "path",
+                        "description": "Ticket ID. Send '0' if need create ticket",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "type",
+                                    "message"
+                                ],
+                                "properties": {
+                                    "type": {
+                                        "description": "Type of message. Can be text or image",
+                                        "type": "string",
+                                        "example": "text"
+                                    },
+                                    "message": {
+                                        "description": "Message. If type text - just text, if image - correct base64 string",
+                                        "type": "string",
+                                        "example": "Hello World!"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Message",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "Message ID",
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "type": {
+                                            "description": "Message type. Can be system, text or image",
+                                            "type": "string",
+                                            "example": "text"
+                                        },
+                                        "message": {
+                                            "description": "Message object. For all message types has one property. For system and text type just text. For image type - path to image",
+                                            "properties": {
+                                                "message": {
+                                                    "description": "Message text or path to image",
+                                                    "type": "string",
+                                                    "example": "Hello World!"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "date_time_created": {
+                                            "description": "Date and time message created",
+                                            "type": "string",
+                                            "example": "2019-04-19 20:00:00"
+                                        },
+                                        "is_like": {
+                                            "description": "Like message. 1 or 0",
+                                            "type": "integer",
+                                            "example": "0"
+                                        },
+                                        "sender": {
+                                            "description": "Sender object or null if message sended admin",
+                                            "properties": {
+                                                "id": {
+                                                    "description": "Owner ID",
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "first_name": {
+                                                    "description": "Owner first name",
+                                                    "type": "string",
+                                                    "example": "John"
+                                                },
+                                                "last_name": {
+                                                    "description": "Owner last name",
+                                                    "type": "string",
+                                                    "example": "Doe"
+                                                },
+                                                "gender": {
+                                                    "description": "Owner gender",
+                                                    "type": "string",
+                                                    "example": "male"
+                                                },
+                                                "age": {
+                                                    "description": "Owner age",
+                                                    "type": "integer",
+                                                    "example": "11"
+                                                },
+                                                "birthday": {
+                                                    "description": "Owner birthday",
+                                                    "type": "string",
+                                                    "example": "1970-01-01"
+                                                },
+                                                "occupation": {
+                                                    "description": "Owner occupation",
+                                                    "type": "string",
+                                                    "example": "Developer"
+                                                },
+                                                "hobbies": {
+                                                    "description": "Owner hobbies",
+                                                    "type": "string",
+                                                    "example": "Kill"
+                                                },
+                                                "pets_owned": {
+                                                    "description": "Owner pets owned",
+                                                    "type": "string",
+                                                    "example": "33 cows"
+                                                },
+                                                "profile_picture": {
+                                                    "description": "Owner profile picture URL",
+                                                    "type": "string",
+                                                    "example": "http://mypets.com/storage/profile_picture/example.png"
+                                                },
+                                                "favorite_park": {
+                                                    "description": "Owne favorite park",
+                                                    "type": "string",
+                                                    "example": "Park"
+                                                },
+                                                "pet": {
+                                                    "description": "Pet object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "description": "Pet ID",
+                                                            "type": "integer",
+                                                            "example": "1"
+                                                        },
+                                                        "name": {
+                                                            "description": "Pet name",
+                                                            "type": "string",
+                                                            "example": "Muhtar"
+                                                        },
+                                                        "gender": {
+                                                            "description": "Pet gender",
+                                                            "type": "string",
+                                                            "example": "male"
+                                                        },
+                                                        "size": {
+                                                            "description": "Pet size",
+                                                            "type": "string",
+                                                            "example": "giant"
+                                                        },
+                                                        "primary_breed": {
+                                                            "description": "Pet primary breed",
+                                                            "type": "string",
+                                                            "example": "Dog"
+                                                        },
+                                                        "secondary_breed": {
+                                                            "description": "Pet secodary breed",
+                                                            "type": "string",
+                                                            "example": "Cat"
+                                                        },
+                                                        "age": {
+                                                            "description": "Pet age",
+                                                            "type": "integer",
+                                                            "example": "13"
+                                                        },
+                                                        "profile_picture": {
+                                                            "description": "Pet profile picture URL",
+                                                            "type": "string",
+                                                            "example": "http://mypets.com/storage/profile_picture/example.com"
+                                                        },
+                                                        "friendliness": {
+                                                            "description": "Pet friendliness",
+                                                            "type": "integer",
+                                                            "example": "1"
+                                                        },
+                                                        "activity_level": {
+                                                            "description": "Pet activity level",
+                                                            "type": "integer",
+                                                            "example": "1"
+                                                        },
+                                                        "noise_level": {
+                                                            "description": "Pet noise level",
+                                                            "type": "integer",
+                                                            "example": "1"
+                                                        },
+                                                        "odebience_level": {
+                                                            "description": "Pet odebience level",
+                                                            "type": "integer",
+                                                            "example": "1"
+                                                        },
+                                                        "fetchability": {
+                                                            "description": "Pet fetchability",
+                                                            "type": "integer",
+                                                            "example": "1"
+                                                        },
+                                                        "swimability": {
+                                                            "description": "Pet swimability",
+                                                            "type": "integer",
+                                                            "example": "1"
+                                                        },
+                                                        "city": {
+                                                            "description": "Pet city",
+                                                            "type": "string",
+                                                            "example": "New York"
+                                                        },
+                                                        "state": {
+                                                            "description": "Pet state",
+                                                            "type": "string",
+                                                            "example": "NY"
+                                                        },
+                                                        "like": {
+                                                            "description": "Pet likes",
+                                                            "type": "string",
+                                                            "example": "Apples"
+                                                        },
+                                                        "dislike": {
+                                                            "description": "Pet dislikes",
+                                                            "type": "string",
+                                                            "example": "Bananas"
+                                                        },
+                                                        "favorite_toys": {
+                                                            "description": "Pet favorite toys",
+                                                            "type": "string",
+                                                            "example": "God"
+                                                        },
+                                                        "fears": {
+                                                            "description": "Pet fears",
+                                                            "type": "string",
+                                                            "example": "Foot"
+                                                        },
+                                                        "favorite_places": {
+                                                            "description": "Pet favorite places",
+                                                            "type": "string",
+                                                            "example": "Land"
+                                                        },
+                                                        "spayed": {
+                                                            "description": "Pet spayed. 1 or 0",
+                                                            "type": "integer",
+                                                            "example": "1"
+                                                        },
+                                                        "birthday": {
+                                                            "description": "Pet birthday",
+                                                            "type": "string",
+                                                            "example": "1939-09-01"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Ticket already resolved."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Message type not found.|Support chat not found.|No query results for model"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "field": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Invalid data"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/support-chats/to/read": {
+            "post": {
+                "tags": [
+                    "Support"
+                ],
+                "summary": "Read messages in chat room",
+                "description": "Read messages in chat room",
+                "operationId": "readMessagesSupportRoom",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "ticket_id"
+                                ],
+                                "properties": {
+                                    "ticket_id": {
+                                        "description": "Ticket ID",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success message",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Chat room not found.|No query results for model"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/support-chats/is/read": {
+            "get": {
+                "tags": [
+                    "Support"
+                ],
+                "summary": "Check unread chats",
+                "description": "Are there chats not read",
+                "operationId": "isReadSupportChats",
+                "responses": {
+                    "200": {
+                        "description": "Have all chats been read",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "is_read": {
+                                            "description": "Have all chats been read",
+                                            "type": "boolean",
+                                            "example": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/support-chats/to/like/{ticket_id}/{message_id}": {
+            "post": {
+                "tags": [
+                    "Support"
+                ],
+                "summary": "Like message",
+                "description": "Like message",
+                "operationId": "likeSupportChatMessage",
+                "parameters": [
+                    {
+                        "name": "ticket_id",
+                        "in": "path",
+                        "description": "Ticket ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "message_id",
+                        "in": "path",
+                        "description": "Message ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success message",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Chat room not found.|No query results for model"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/updates": {
+            "get": {
+                "tags": [
+                    "Updates and Reminders"
+                ],
+                "summary": "Get updates and reminders",
+                "description": "Get all updates and events reminders. Social events reminder - 72h. Care events reminder - 24h",
+                "operationId": "updatesGet",
+                "responses": {
+                    "200": {
+                        "description": "Updates and Reminders",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "events": {
+                                            "description": "Start date of events as key for events",
+                                            "properties": {
+                                                "START_DATE_EVENTS": {
+                                                    "description": "Social events from now to add 72h, care events from now to add 24h",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "description": "Event ID",
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "type": {
+                                                                "description": "Type of event",
+                                                                "type": "string",
+                                                                "example": "Care"
+                                                            },
+                                                            "name": {
+                                                                "description": "Name of event",
+                                                                "type": "string",
+                                                                "example": "Event name"
+                                                            },
+                                                            "from_date": {
+                                                                "description": "Start date of event",
+                                                                "type": "string",
+                                                                "example": "2019-04-12"
+                                                            },
+                                                            "from_time": {
+                                                                "description": "Start time of event",
+                                                                "type": "string",
+                                                                "example": "12:00"
+                                                            },
+                                                            "to_time": {
+                                                                "description": "End time of event",
+                                                                "type": "string",
+                                                                "example": "13:00"
+                                                            },
+                                                            "repeat": {
+                                                                "description": "Repeat numbers of week",
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "type": "integer"
+                                                                }
+                                                            },
+                                                            "where": {
+                                                                "description": "Where to be event",
+                                                                "type": "string",
+                                                                "example": "Park"
+                                                            },
+                                                            "notes": {
+                                                                "description": "Notes of event",
+                                                                "type": "string",
+                                                                "example": "Note"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "updates": {
+                                            "description": "Updates list",
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Update ID",
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "image": {
+                                                        "description": "Image of update",
+                                                        "type": "string",
+                                                        "example": "http://mypets.com/storage/updates/example.com"
+                                                    },
+                                                    "title": {
+                                                        "description": "Title of update",
+                                                        "type": "string",
+                                                        "example": "Title"
+                                                    },
+                                                    "description": {
+                                                        "description": "Description of update",
+                                                        "type": "string",
+                                                        "example": "Description"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/updates/{update_id}": {
+            "get": {
+                "tags": [
+                    "Updates and Reminders"
+                ],
+                "summary": "Get update details",
+                "description": "Get update details",
+                "operationId": "updateGet",
+                "parameters": [
+                    {
+                        "name": "update_id",
+                        "in": "path",
+                        "description": "Update ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "Update ID",
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "image": {
+                                            "description": "Image of update",
+                                            "type": "string",
+                                            "example": "http://mypets.com/storage/updates/example.com"
+                                        },
+                                        "title": {
+                                            "description": "Title of update",
+                                            "type": "string",
+                                            "example": "Title"
+                                        },
+                                        "description": {
+                                            "description": "Description of update",
+                                            "type": "string",
+                                            "example": "Description"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated error or registration error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No query result from model."
                                         }
                                     },
                                     "type": "object"

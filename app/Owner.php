@@ -2,17 +2,35 @@
 
 namespace App;
 
+use App\Components\Traits\Models\OwnerMatches;
+use App\Components\Traits\Models\OwnerRequests;
+use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class Owner extends Model
 {
+    use OwnerMatches, OwnerRequests, SpatialTrait;
+
+    protected $spatialFields = [
+        'location_point'
+    ];
+
     protected $fillable = [
         'user_id', 'first_name', 'last_name',
         'gender', 'age', 'birthday',
         'occupation', 'hobbies', 'pets_owned',
-        'profile_picture', 'favorite_park', 'signup_step'
+        'profile_picture', 'favorite_park', 'signup_step',
+        'location_point', 'location_updated_at'
     ];
+
+    protected $dates = ['location_updated_at'];
+
+    const RADIUS = 20;
+
+    const PRE_RADIUS = 30;
+
+    const DISTANCE_IN_MILE = 69.0585729;
 
     const STATUS = [
         'in_progres' => 1,
@@ -30,6 +48,21 @@ class Owner extends Model
     public function pet()
     {
         return $this->hasOne(Pet::class);
+    }
+
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
+    public function reports()
+    {
+        return $this->hasMany(Ticket::class, 'reported_owner_id', 'id');
+    }
+
+    public function supportChatRooms()
+    {
+        return $this->hasMany(SupportChatRoom::class);
     }
 
     public function getFullNameAttribute()

@@ -31,6 +31,7 @@ class OwnerResource extends JsonResource
     public function toArray($request)
     {
         $resourceArr = [
+            'id' => $this->id,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'gender' => $this->gender,
@@ -39,7 +40,7 @@ class OwnerResource extends JsonResource
             'occupation' => $this->occupation,
             'hobbies' => $this->hobbies,
             'pets_owned' => $this->pets_owned,
-            'profile_picture' => config('filesystems.disks')[env('FILESYSTEM_DRIVER', 'public')]['url'] . $this->profile_picture,
+            'profile_picture' => $this->profile_picture ? config('filesystems.disks')[env('FILESYSTEM_DRIVER', 'public')]['url'] . $this->profile_picture : null,
             'favorite_park' => $this->favorite_park
         ];
 

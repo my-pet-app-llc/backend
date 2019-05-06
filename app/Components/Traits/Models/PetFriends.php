@@ -48,4 +48,23 @@ trait PetFriends
     {
         return (bool)$this->friends()->where('friend_id', $friendId)->first();
     }
+
+    /**
+     * @param int $friendId
+     * @return array
+     */
+    public function makeFriend(int $friendId)
+    {
+        $primary = Friend::query()->create([
+            'pet_id' => $this->id,
+            'friend_id' => $friendId
+        ]);
+
+        $secondary = Friend::query()->create([
+            'pet_id' => $friendId,
+            'friend_id' => $this->id
+        ]);
+
+        return compact('primary', 'secondary');
+    }
 }

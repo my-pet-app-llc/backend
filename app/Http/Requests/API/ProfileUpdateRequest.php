@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\API;
 
+use App\Rules\PetPicturesRule;
 use App\Rules\RequiredIfHasProfilePicture;
 use Carbon\Carbon;
 
@@ -34,8 +35,8 @@ class ProfileUpdateRequest extends MainFormRequest
         if($this->isMethod('put')){
             $birthdayMax = Carbon::now()->subDay()->format('Y-m-d');
             $this->rules = [
-                'owner.first_name' => 'required|string|min:1|max:15|regex:~^([[:alpha:]-]+\s?)+$~',
-                'owner.last_name' => 'required|string|min:1|max:15|regex:~^([[:alpha:]-]+\s?)+$~',
+                'owner.first_name' => 'required|string|min:1|max:15|regex:~^([[:alpha:]-]+ ?)+$~',
+                'owner.last_name' => 'required|string|min:1|max:15|regex:~^([[:alpha:]-]+ ?)+$~',
                 'owner.gender' => ['required', 'string', 'min:1', 'max:20', 'regex:~^(male|female|[[:alpha:]]+)$~'],
                 'owner.birthday' => 'required|date_format:"Y-m-d"|before:' . $birthdayMax,
                 'owner.occupation' => 'required|string|min:1|max:128',
@@ -49,13 +50,13 @@ class ProfileUpdateRequest extends MainFormRequest
                 'pet.odebience_level' => 'required|integer|min:1|max:5',
                 'pet.fetchability' => 'required|integer|min:1|max:5',
                 'pet.swimability' => 'required|integer|min:1|max:5',
-                'pet.name' => 'required|string|min:1|max:12|regex:~^([[:alpha:]-]+\s?)+$~',
+                'pet.name' => 'required|string|min:1|max:12|regex:~^([[:alpha:]-]+ ?)+$~',
                 'pet.gender' => 'required|string|in:male,female',
                 'pet.spayed' => 'required|in:1,0',
                 'pet.size' => 'required|string|in:small,medium,large,giant',
                 'pet.age' => 'required|integer|min:0|max:99',
                 'pet.birthday' => 'required|date_format:"Y-m-d"|before:' . $birthdayMax,
-                'pet.city' => 'required|string|min:1|max:15|regex:~^([[:alpha:]-]+\s?)+$~',
+                'pet.city' => 'required|string|min:1|max:15|regex:~^([[:alpha:]-]+ ?)+$~',
                 'pet.state' => 'required|string|min:2|max:3|regex:~^[A-Z]{2,3}$~',
                 'pet.like' => 'required|string|min:1|max:128',
                 'pet.dislike' => 'required|string|min:1|max:128',
@@ -63,9 +64,11 @@ class ProfileUpdateRequest extends MainFormRequest
                 'pet.fears' => 'required|string|min:1|max:128',
                 'pet.favorite_places' => 'required|string|min:1|max:128',
                 'pet.profile_picture' => ['nullable', (new RequiredIfHasProfilePicture($this, 'pet')), 'string', 'regex:~^(data:image\/(jpeg|png|jpg);base64,\S+)$~'],
-                'pet.pictures' => 'nullable|array',
+                'pet.pictures' => [(new PetPicturesRule())],
+                'pet.pictures.create' => 'array',
+                'pet.pictures.delete' => 'array',
                 'pet.pictures.create.*' => ['required', 'string', 'regex:~^(data:image\/(jpeg|png|jpg);base64,\S+)$~'],
-                'pet.pictures.delete.*' => 'required|integer|exists:pictures,id',
+                'pet.pictures.delete.*' => 'required|integer|exists:pictures,id'
             ];
         }
 

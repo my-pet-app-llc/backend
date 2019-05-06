@@ -16,7 +16,10 @@ class UpdateResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id
+            'id' => $this->id,
+            'image' => $this->image,
+            'title' => $this->title,
+            'description' => $this->description
         ];
     }
 }

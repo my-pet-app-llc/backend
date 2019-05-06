@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\User;
 use Hash;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
 class LoginController extends Controller
@@ -67,6 +68,10 @@ class LoginController extends Controller
      *                 @OA\Property(
      *                     type="object",
      *                     property="owner",
+     *                     @OA\Property(
+     *                         property="id",
+     *                         type="integer"
+     *                     ),
      *                     @OA\Property(
      *                         property="first_name",
      *                         type="string"
@@ -307,7 +312,7 @@ class LoginController extends Controller
      * )
      */
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function logout()
     {

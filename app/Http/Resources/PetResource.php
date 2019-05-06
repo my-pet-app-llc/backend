@@ -35,7 +35,7 @@ class PetResource extends JsonResource
             'primary_breed' => $this->primary_breed,
             'secondary_breed' => $this->secondary_breed,
             'age' => $this->age,
-            'profile_picture' => config('filesystems.disks')[env('FILESYSTEM_DRIVER', 'public')]['url'] . $this->profile_picture,
+            'profile_picture' => $this->profile_picture ? config('filesystems.disks')[env('FILESYSTEM_DRIVER', 'public')]['url'] . $this->profile_picture : null,
             'friendliness' => $this->friendliness,
             'activity_level' => $this->activity_level,
             'noise_level' => $this->noise_level,
