@@ -12,3 +12,15 @@
         <button class="btn btn-danger btn_ban" data-ban-url="{{ route('users.ban', $user) }}">{{ __('admin.buttons.ban') }}</button>
     </div>
 </div>
+@php
+    $pictures = $user->owner->pet->pictures;
+@endphp
+@if ($pictures->isNotEmpty())
+<div class="row info_img user_info">
+    @foreach ($pictures as $picture)
+        <div class="col-sm-2 mb-2 img_box">
+            <img class="img_pets" src="{{ $picture->getImgUrl() }}" alt="not picture">
+        </div>
+    @endforeach
+</div>
+@endIf

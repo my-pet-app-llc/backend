@@ -21,4 +21,5 @@
 
 @section('modals')
     @include('users.modal._delete_modal')
+    @include('users.modal._img_modal')
 @endsection

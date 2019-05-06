@@ -191,6 +191,48 @@ ul li:hover a span {
   color: #fff;
 }
 
+div.info_img {
+  padding-top: 8px;
+}
+
+div.info_img .img_box {
+  padding-right: 0;
+}
+
+div.info_img .img_box img {
+  width: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+div.img_modal {
+  border-radius: 20px;
+}
+
+div.wrapp_img {
+  height: 300px;
+}
+
+.close_img {
+  font-size: 50px;
+  color: #fff;
+}
+
+.tickets_chat {
+  padding: 0;
+  margin-top: 43px;
+  border: solid #efefef 1px;
+}
+
+.t_header {
+  background-color: #45763c;
+  padding: 11px 0 14px 15px;
+}
+
+.t_header strong {
+  color: #fff;
+}
+
 .t_messages {
   height: 400px;
   overflow-y: scroll;

@@ -3,8 +3,8 @@ import {showMessage} from './helper.js'
 $(function() {
 
     const columns = [
-        { data: 'username',    searchable: false, orderable: false },
-        { data: 'user.email',  name: 'user.email' },
+        { data: 'fullname',    name: 'fullname' },
+        { data: 'user.email',       name: 'user.email' },
         { data: 'created_at',  name: 'created_at' },
         { data: 'age',         name: 'age' },
         { data: 'location',    name: 'location' },
@@ -12,7 +12,6 @@ $(function() {
     ];
     const table = $('#users-table');
     const url = table.data('url');
-    let rows = {};
 
     datatable();
 
@@ -92,4 +91,14 @@ $(function() {
             $(this).closest('li').addClass('active_item');
         }
     }); 
+
+    $(document).on('click', '.img_pets', function (e) {
+        $('#imgPets').find('.wrapp_img').children().remove();
+        const img = $(e.target).clone().css({
+            'height': '100%',
+            'border-radius': '19px'
+        });
+        $('#imgPets').modal();
+        $('#imgPets').find('.wrapp_img').append(img);
+    });
 });
