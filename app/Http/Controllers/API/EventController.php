@@ -446,7 +446,7 @@ class EventController extends Controller
     {
         $request->merge([
             'type' => Event::TYPES[$request->get('type')],
-            'repeat' => array_unique($request->get('repeat', []))
+            'repeat' => array_unique((array)$request->get('repeat', []))
         ]);
 
         $event = new Event($request->except(['invite']));

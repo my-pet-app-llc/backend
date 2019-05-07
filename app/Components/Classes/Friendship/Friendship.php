@@ -23,9 +23,9 @@ class Friendship
 
     const FRIEND_REQUEST = 'friend_request';
 
-    const MATCH = 'match';
-
     const MATCH_CLOSED = 'match_closed';
+
+    const MATCH = 'match';
 
     const NOTHING = 'nothing';
 
