@@ -37,6 +37,7 @@ return [
         'age'         => 'Age',
         'location'    => 'Location',
         'status'      => 'Status',
+        'uploaded_images' => 'Uploaded Images',
         'state' => [
             'in_progress' => 'Support Ticket in Progress',
             'reported'    => 'REPORTED/Support Ticket',

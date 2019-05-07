@@ -3,8 +3,5 @@
         <span class="pull-right mr-2" aria-hidden="true">&times;</span>
     </button>
     <div class="modal-dialog" role="document">
-        <div class="modal-content img_modal">
-            <div class="wrapp_img"></div>
-        </div>
     </div>
 </div>

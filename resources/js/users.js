@@ -4,7 +4,7 @@ $(function() {
 
     const columns = [
         { data: 'fullname',    name: 'fullname' },
-        { data: 'user.email',       name: 'user.email' },
+        { data: 'user.email',  name: 'user.email' },
         { data: 'created_at',  name: 'created_at' },
         { data: 'age',         name: 'age' },
         { data: 'location',    name: 'location' },
@@ -92,13 +92,12 @@ $(function() {
         }
     }); 
 
-    $(document).on('click', '.img_pets', function (e) {
-        $('#imgPets').find('.wrapp_img').children().remove();
-        const img = $(e.target).clone().css({
-            'height': '100%',
-            'border-radius': '19px'
-        });
+    $(document).on('click', '.img_box', function (e) {
+        $('#imgPets').find('.modal-dialog').children().remove();
+        const url = $(e.target).attr('data-patch');
+        const img = `<img class="img_modal" src="${url}">`;
+
         $('#imgPets').modal();
-        $('#imgPets').find('.wrapp_img').append(img);
+        $('#imgPets').find('.modal-dialog').append(img);
     });
 });
