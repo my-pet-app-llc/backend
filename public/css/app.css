@@ -197,20 +197,21 @@ div.info_img {
 
 div.info_img .img_box {
   padding-right: 0;
-}
-
-div.info_img .img_box img {
-  width: 100%;
-  border-radius: 5px;
+  width: 100px;
+  height: 100px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 10px;
   cursor: pointer;
 }
 
-div.img_modal {
+.img_modal {
   border-radius: 20px;
-}
-
-div.wrapp_img {
-  height: 300px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 100%;
+  max-height: 900px;
 }
 
 .close_img {

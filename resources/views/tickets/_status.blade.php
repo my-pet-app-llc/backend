@@ -1,0 +1,1 @@
+<span class="ticket_state" data-status="{{ $ticket->status }}"></span>
