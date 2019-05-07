@@ -158,3 +158,43 @@ ul li:hover {
         color: #fff;
     }
 }
+
+.tickets_chat {
+    padding: 0;
+    margin-top: 43px;
+    border: solid #efefef 1px;
+}
+
+.t_header {
+    background-color: #45763c;
+    padding: 11px 0 14px 15px;
+    strong {
+        color: #fff;
+    }
+}
+
+div.info_img {
+    padding-top: 8px;
+    .img_box {
+        padding-right: 0;
+        width: 100px;
+        height: 100px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin: 10px;
+        cursor: pointer;
+    } 
+}
+
+.img_modal {
+    border-radius: 20px;
+    object-fit: cover;
+    width: 100%;
+    max-height: 900px,
+}
+
+.close_img {
+    font-size: 50px;
+    color: #fff;
+}

@@ -27,31 +27,23 @@ class TicketsController extends Controller
 
     public function data()
     {
-        $tickets = [
-            [
-                'id' => 1,
-                'username' => 'Peter Dark',
-                'email'    => 'peter@gmail.com',
-                'date'     => '02/03/2019',
-                'time'     => '15:40:25',
-                'ticket'   => 'Ticket First',
-                'status'   => 'New'
-            ],
-            [
-                'id' => 6,
-                'username' => 'Peter Dark',
-                'email'    => 'peter@gmail.com',
-                'date'     => '02/03/2019',
-                'time'     => '15:40:25',
-                'ticket'   => 'Ticket First',
-                'status'   => 'New'
-            ]
-        ];
+        $tickets = Ticket::with('owner.user')->get()->map(function ($ticket) {
+            $ticket->owner['full_name'] = $ticket->owner->first_name. ' ' .$ticket->owner->last_name;
+            return $ticket;
+        });
 
-        $tickets = collect($tickets);
+        $datatables = DataTables::collection($tickets)
+        ->editColumn('date', function($ticket) {
+            return $ticket->created_at->format('m/d/Y');
+        })
+        ->editColumn('time', function($ticket) {
+            return $ticket->created_at->format('h:i') . ' EST';
+        })
+        ->addColumn('status', function($ticket) {
+            return $ticket->statusName . view('tickets._status', compact('ticket'))->render();
+        });
 
-        $datatables = DataTables::collection($tickets);
-        
+        $datatables->rawColumns(['status']);
 
         return $datatables->make(true);
     }

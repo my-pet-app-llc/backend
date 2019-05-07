@@ -31,4 +31,19 @@ class Ticket extends Model
     {
         return $this->hasMany(SupportChatRoom::class);
     }
+
+    public function getStatusNameAttribute($statusName)
+    {
+        return self::getStatusList()[$this->status];
+    }
+
+    public static function getStatusList()
+    {
+        return [
+            self::STATUSES['in_progress'] => __('admin.tickets.statuses.in_progress'),
+            self::STATUSES['reported_user']   => __('admin.tickets.statuses.reported_user'),
+            self::STATUSES['resolved']  => __('admin.tickets.statuses.resolved'),
+            self::STATUSES['new']     => __('admin.tickets.statuses.new'),
+        ];
+    }
 }

@@ -3,7 +3,7 @@ import {showMessage} from './helper.js'
 $(function() {
 
     const columns = [
-        { data: 'username',    searchable: false, orderable: false },
+        { data: 'fullname',    name: 'fullname' },
         { data: 'user.email',  name: 'user.email' },
         { data: 'created_at',  name: 'created_at' },
         { data: 'age',         name: 'age' },
@@ -12,7 +12,6 @@ $(function() {
     ];
     const table = $('#users-table');
     const url = table.data('url');
-    let rows = {};
 
     datatable();
 
@@ -92,4 +91,13 @@ $(function() {
             $(this).closest('li').addClass('active_item');
         }
     }); 
+
+    $(document).on('click', '.img_box', function (e) {
+        $('#imgPets').find('.modal-dialog').children().remove();
+        const url = $(e.target).attr('data-patch');
+        const img = `<img class="img_modal" src="${url}">`;
+
+        $('#imgPets').modal();
+        $('#imgPets').find('.modal-dialog').append(img);
+    });
 });

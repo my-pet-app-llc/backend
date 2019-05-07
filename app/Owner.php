@@ -6,6 +6,7 @@ use App\Components\Traits\Models\OwnerMatches;
 use App\Components\Traits\Models\OwnerRequests;
 use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Owner extends Model
 {
@@ -83,5 +84,17 @@ class Owner extends Model
             self::STATUS['banned']     => __('admin.users.state.banned'),
             self::STATUS['normal']     => __('admin.users.state.normal'),
         ];
+    }
+
+    public function scopeOwnersData($query)
+    {
+        return $query->select([
+            'owners.id',
+            'owners.user_id',
+            DB::raw("CONCAT(owners.first_name,' ', owners.last_name) as fullname"),
+            'owners.age',
+            'owners.status',
+            'owners.created_at',
+        ])->with('user');
     }
 }

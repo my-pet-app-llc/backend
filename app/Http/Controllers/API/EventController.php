@@ -452,7 +452,7 @@ class EventController extends Controller
         $event = new Event($request->except(['invite']));
         $request->user()->pet->events()->save($event);
 
-        $inviting = array_unique($request->get('invite', []));
+        $inviting = array_unique((array)$request->get('invite', []));
         if($inviting){
             $invitesModels = [];
             foreach ($inviting as $item) {
@@ -967,12 +967,12 @@ class EventController extends Controller
 
         $request->merge([
             'type' => Event::TYPES[$request->get('type')],
-            'repeat' => array_unique($request->get('repeat', []))
+            'repeat' => array_unique((array)$request->get('repeat', []))
         ]);
 
         $event->update($request->except('invite'));
 
-        $invitingIds = array_unique($request->get('invite', []));
+        $invitingIds = array_unique((array)$request->get('invite', []));
         if($invitingIds){
             $invitedIds = [];
             foreach ($invitingIds as $invitingId) {
