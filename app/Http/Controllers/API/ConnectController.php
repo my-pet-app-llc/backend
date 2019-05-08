@@ -328,6 +328,17 @@ class ConnectController extends Controller
      *             )
      *         )
      *     ),
+     *     @OA\Response(
+     *         response="422",
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="array",
+     *                 property="field",
+     *                 @OA\Items(type="string", example="Invalid data")
+     *             )
+     *         )
+     *     ),
      *     security={{"bearerAuth":{}}}
      * )
      */
@@ -455,6 +466,17 @@ class ConnectController extends Controller
      *                 type="string",
      *                 property="message",
      *                 example="No query result from model.|Not found match"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="422",
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="array",
+     *                 property="field",
+     *                 @OA\Items(type="string", example="Invalid data")
      *             )
      *         )
      *     ),
