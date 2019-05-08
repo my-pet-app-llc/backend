@@ -14,6 +14,7 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class EventController extends Controller
 {
@@ -656,6 +657,17 @@ class EventController extends Controller
      *             )
      *         )
      *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Not found error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Event not found."
+     *             )
+     *         )
+     *     ),
      *     security={{"bearerAuth":{}}}
      * )
      */
@@ -667,6 +679,11 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
+        $pet = auth()->user()->owner->pet;
+
+        if(!$pet->events()->find($event->id) || !$pet->eventInvites()->find($event->id))
+            throw new NotFoundHttpException('Event not found.');
+
         return response()->json(new EventResource($event));
     }
 
