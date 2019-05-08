@@ -121,9 +121,11 @@ trait OwnerMatches
             ->pluck('owner_id');
 
         $existingIds = array_unique(array_merge($friends->toArray(), $connects->toArray()));
+        $thisOwnerId = $this->id;
 
         $matches = $this->getStaticQuery()
             ->whereNotIn('id', $existingIds)
+            ->where('id', '<>', $thisOwnerId)
             ->where('signup_step', 0)
             ->where('status', '<>', self::STATUS['banned'])
             ->whereDate('location_updated_at', '>', Carbon::now()->subHours(24)->format('Y-m-d H:i:s'))
@@ -131,7 +133,7 @@ trait OwnerMatches
                 'location_point',
                 (new Point($this->location_point->getLat(), $this->location_point->getLng())),
                 self::PRE_RADIUS/self::DISTANCE_IN_MILE,
-                true
+                false
             )
             ->with('pet.pictures')
             ->get();
