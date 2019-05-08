@@ -5,6 +5,9 @@ namespace App\Http\Controllers\APi;
 use App\Components\Classes\Friendship\Friendship;
 use App\Connect;
 use App\Events\MatchEvent;
+use App\Exceptions\FriendshipException;
+use App\Http\Requests\API\ConnectStoreRequest;
+use App\Http\Requests\API\ConnectUpdateRequest;
 use App\Http\Resources\OwnerResource;
 use App\Owner;
 use Illuminate\Http\Request;
@@ -331,11 +334,11 @@ class ConnectController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param ConnectStoreRequest $request
      * @return Response
-     * @throws \App\Exceptions\FriendshipException
+     * @throws FriendshipException
      */
-    public function store(Request $request)
+    public function store(ConnectStoreRequest $request)
     {
         $owner = $request->user()->owner;
 
@@ -461,12 +464,12 @@ class ConnectController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param ConnectUpdateRequest $request
      * @param Connect $connect
      * @return Response
-     * @throws \App\Exceptions\FriendshipException
+     * @throws FriendshipException
      */
-    public function update(Request $request, Connect $connect)
+    public function update(ConnectUpdateRequest $request, Connect $connect)
     {
         $owner = $request->user()->owner;
 
