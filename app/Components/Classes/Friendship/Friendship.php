@@ -53,7 +53,7 @@ class Friendship
     private function loadStatus()
     {
         if($this->authOwner->id == $this->friendOwner->id)
-            throw new FriendshipException('Do you want to fuck yourself?');
+            throw new FriendshipException('You cannot perform actions with yourself.');
 
         if($this->friendOwner->signup_step)
             throw new FriendshipException('Owner not found.', 404);
