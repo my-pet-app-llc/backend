@@ -2876,6 +2876,11 @@
                                         "message": {
                                             "type": "string",
                                             "example": "success"
+                                        },
+                                        "not_seen_matches": {
+                                            "description": "User has not seen matches",
+                                            "type": "boolean",
+                                            "example": false
                                         }
                                     },
                                     "type": "object"

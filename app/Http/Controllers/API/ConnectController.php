@@ -413,6 +413,12 @@ class ConnectController extends Controller
      *                 type="string",
      *                 property="message",
      *                 example="success"
+     *             ),
+     *             @OA\Property(
+     *                 type="boolean",
+     *                 property="not_seen_matches",
+     *                 example=false,
+     *                 description="User has not seen matches"
      *             )
      *         )
      *     ),
