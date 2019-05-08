@@ -2547,7 +2547,8 @@
                                     "properties": {
                                         "match": {
                                             "description": "If match exist - connect_id, else 0",
-                                            "type": "boolean"
+                                            "type": "integer",
+                                            "example": 0
                                         },
                                         "owner": {
                                             "properties": {

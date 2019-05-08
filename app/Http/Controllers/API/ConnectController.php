@@ -25,9 +25,10 @@ class ConnectController extends Controller
      *         description="First find matches for user. If user not have matches - find users who are within a radius of 20 miles",
      *         @OA\JsonContent(
      *             @OA\Property(
-     *                 type="boolean",
+     *                 type="integer",
      *                 property="match",
-     *                 description="If match exist - connect_id, else 0"
+     *                 description="If match exist - connect_id, else 0",
+     *                 example=0
      *             ),
      *             @OA\Property(
      *                 type="object",
