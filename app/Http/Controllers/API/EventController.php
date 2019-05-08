@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Components\Classes\Chat\Chat;
 use App\Event;
 use App\EventInvite;
+use App\Http\Requests\API\EventIndexRequest;
 use App\Http\Requests\API\EventStoreRequest;
 use App\Http\Resources\EventResource;
 use App\Http\Resources\FriendResource;
@@ -122,10 +123,10 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param Request $request
+     * @param EventIndexRequest $request
      * @return Response
      */
-    public function index(Request $request)
+    public function index(EventIndexRequest $request)
     {
         $fromDate = $request->get('from_date');
         $toDate = $request->get('to_date');
