@@ -25,9 +25,10 @@ class ConnectController extends Controller
      *         description="First find matches for user. If user not have matches - find users who are within a radius of 20 miles",
      *         @OA\JsonContent(
      *             @OA\Property(
-     *                 type="boolean",
+     *                 type="integer",
      *                 property="match",
-     *                 description="If match exist - connect_id, else 0"
+     *                 description="If match exist - connect_id, else 0",
+     *                 example=0
      *             ),
      *             @OA\Property(
      *                 type="object",
@@ -392,7 +393,7 @@ class ConnectController extends Controller
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\MediaType(
-     *             mediaType="multipart/from-data",
+     *             mediaType="application/x-www-form-urlencoded",
      *             @OA\Schema(
      *                 @OA\Property(
      *                     type="integer",
@@ -412,6 +413,12 @@ class ConnectController extends Controller
      *                 type="string",
      *                 property="message",
      *                 example="success"
+     *             ),
+     *             @OA\Property(
+     *                 type="boolean",
+     *                 property="not_seen_matches",
+     *                 example=false,
+     *                 description="User has not seen matches"
      *             )
      *         )
      *     ),

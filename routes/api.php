@@ -11,6 +11,12 @@
 |
 */
 
+Route::fallback(function () {
+    return response()->json([
+        'message' => 'Route not found.'
+    ]);
+});
+
 Route::namespace('API')->group(function () {
 
     Route::namespace('Auth')->prefix('auth')->group(function () {

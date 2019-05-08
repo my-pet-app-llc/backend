@@ -55,6 +55,9 @@ class Friendship
         if($this->authOwner->id == $this->friendOwner->id)
             throw new FriendshipException('Do you want to fuck yourself?');
 
+        if($this->friendOwner->signup_step)
+            throw new FriendshipException('Owner not found.', 404);
+
         $isFriend = $this->authOwner->pet->findFriend($this->friendOwner->pet->id);
         if($isFriend){
             $this->status = self::FRIENDS;
