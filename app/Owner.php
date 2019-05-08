@@ -26,9 +26,7 @@ class Owner extends Model
 
     protected $dates = ['location_updated_at'];
 
-    const RADIUS = 20;
-
-    const PRE_RADIUS = 30;
+    const RADIUS = 29;
 
     const DISTANCE_IN_MILE = 69.0585729;
 
