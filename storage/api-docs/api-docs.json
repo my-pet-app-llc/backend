@@ -2849,7 +2849,7 @@
                 "requestBody": {
                     "required": true,
                     "content": {
-                        "multipart/from-data": {
+                        "application/x-www-form-urlencoded": {
                             "schema": {
                                 "required": [
                                     "match"
@@ -4456,7 +4456,7 @@
                 "requestBody": {
                     "required": true,
                     "content": {
-                        "multipart/from-data": {
+                        "application/x-www-form-urlencoded": {
                             "schema": {
                                 "properties": {
                                     "accept": {

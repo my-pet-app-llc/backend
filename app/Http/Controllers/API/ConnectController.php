@@ -393,7 +393,7 @@ class ConnectController extends Controller
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\MediaType(
-     *             mediaType="multipart/from-data",
+     *             mediaType="application/x-www-form-urlencoded",
      *             @OA\Schema(
      *                 @OA\Property(
      *                     type="integer",

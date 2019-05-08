@@ -34,9 +34,10 @@ class EventStoreRequest extends MainFormRequest
             'from_time' => 'required|regex:~^[0-9][0-9]:[0-9][0-9]$~',
             'to_time' => ['required', 'regex:~^[0-9][0-9]:[0-9][0-9]$~', (new CheckTimeRule($this, 'from_date', 'from_time'))],
             'repeat' => 'nullable|array|max:7',
-            'repeat.*' => 'required|min:1|max:7',
+            'repeat.*' => 'required|integer|min:1|max:7',
             'where' => 'required|string|min:1|max:40',
             'notes' => 'nullable|string|min:1|max:128',
+            'invite.*' => 'required|integer',
             'invite' => [(new EventInviteRule($this))],
         ];
 
