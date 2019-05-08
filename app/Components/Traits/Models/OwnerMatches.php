@@ -132,7 +132,7 @@ trait OwnerMatches
             ->distance(
                 'location_point',
                 (new Point($this->location_point->getLat(), $this->location_point->getLng())),
-                self::PRE_RADIUS/self::DISTANCE_IN_MILE,
+                self::RADIUS/self::DISTANCE_IN_MILE,
                 false
             )
             ->with('pet.pictures')
