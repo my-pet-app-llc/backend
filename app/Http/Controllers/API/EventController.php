@@ -682,7 +682,7 @@ class EventController extends Controller
     {
         $pet = auth()->user()->owner->pet;
 
-        if(!$pet->events()->find($event->id) || !$pet->eventInvites()->find($event->id))
+        if(!$pet->events()->where('id', $event->id)->first() || !$pet->eventInvites()->where('id', $event->id)->first())
             throw new NotFoundHttpException('Event not found.');
 
         return response()->json(new EventResource($event));
