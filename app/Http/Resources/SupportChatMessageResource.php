@@ -26,11 +26,21 @@ class SupportChatMessageResource extends JsonResource
         $resource = self::RESOURCES[$type];
         $message = new $resource($this->messagable);
 
+        $user = auth()->user();
+        $createdDate = $this->created_at;
+        if($user->isPetOwner()){
+            $utc = $user->owner->utc;
+            if($utc > 0)
+                $createdDate = $createdDate->addHours($utc);
+            elseif($utc < 0)
+                $createdDate = $createdDate->subHours($utc);
+        }
+
         return [
             'id' => $this->id,
             'type' => $type,
             'message' => $message,
-            'date_time_created' => $this->created_at->toDateTimeString(),
+            'date_time_created' => $createdDate->toDateTimeString(),
             'is_like' => $this->is_like,
             'sender' => ($this->sender_id ? new OwnerResource($this->sender, true, false, false) : null)
         ];

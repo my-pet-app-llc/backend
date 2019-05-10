@@ -6,6 +6,7 @@ use App\Http\Requests\API\LoginFbRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\User;
+use Illuminate\Http\Response;
 
 class LoginFbController extends Controller
 {
@@ -26,7 +27,12 @@ class LoginFbController extends Controller
      *                     type="string",
      *                     description="Facebook User Auth Token"
      *                 ),
-     *                 required={"fb_token"}
+     *                 @OA\Property(
+     *                     property="utc",
+     *                     type="integer",
+     *                     description="User time zone in UTC format"
+     *                 ),
+     *                 required={"fb_token","utc"}
      *             )
      *         )
      *     ),
@@ -246,12 +252,14 @@ class LoginFbController extends Controller
      * Handle the incoming request.
      *
      * @param  LoginFbRequest $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function __invoke(LoginFbRequest $request)
     {
         $user = User::query()->where('facebook_id', $request->get('facebook_id'))->first();
         $token = $user->apiLogin();
+
+        $user->owner->update(['utc' => $request->get('utc', 0)]);
 
         $responseData = [
             'token' => $token,

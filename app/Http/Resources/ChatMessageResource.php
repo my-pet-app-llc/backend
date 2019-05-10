@@ -26,11 +26,18 @@ class ChatMessageResource extends JsonResource
         $resource = self::RESOURCES[$type];
         $message = new $resource($this->messagable);
 
+        $utc = auth()->user()->owner->utc;
+        $createdDate = $this->created_at;
+        if($utc > 0)
+            $createdDate = $createdDate->addHours($utc);
+        elseif($utc < 0)
+            $createdDate = $createdDate->subHours($utc);
+
         return [
             'id' => $this->id,
             'type' => $type,
             'message' => $message,
-            'date_time_created' => $this->created_at->toDateTimeString(),
+            'date_time_created' => $createdDate->toDateTimeString(),
             'like' => $this->is_like,
             'sender' => (new ChatPetResource($this->sender)),
         ];

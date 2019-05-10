@@ -12,6 +12,10 @@ class ChatMessage extends Model
         'event' => 3
     ];
 
+    const DIRECT_TYPES = [
+        'text', 'image'
+    ];
+
     protected $fillable = [
         'chat_room_id', 'sender_id', 'type', 'is_like'
     ];

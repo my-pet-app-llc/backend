@@ -216,7 +216,8 @@
                             "schema": {
                                 "required": [
                                     "email",
-                                    "password"
+                                    "password",
+                                    "utc"
                                 ],
                                 "properties": {
                                     "email": {
@@ -226,6 +227,10 @@
                                     "password": {
                                         "description": "User password",
                                         "type": "string"
+                                    },
+                                    "utc": {
+                                        "description": "User time zone in UTC format",
+                                        "type": "integer"
                                     }
                                 },
                                 "type": "object"
@@ -493,12 +498,17 @@
                         "multipart/form-data": {
                             "schema": {
                                 "required": [
-                                    "fb_token"
+                                    "fb_token",
+                                    "utc"
                                 ],
                                 "properties": {
                                     "fb_token": {
                                         "description": "Facebook User Auth Token",
                                         "type": "string"
+                                    },
+                                    "utc": {
+                                        "description": "User time zone in UTC format",
+                                        "type": "integer"
                                     }
                                 },
                                 "type": "object"
@@ -719,7 +729,8 @@
                                 "required": [
                                     "email",
                                     "password",
-                                    "password_confirmation"
+                                    "password_confirmation",
+                                    "utc"
                                 ],
                                 "properties": {
                                     "email": {
@@ -733,6 +744,10 @@
                                     "password_confirmation": {
                                         "description": "User password confirm",
                                         "type": "string"
+                                    },
+                                    "utc": {
+                                        "description": "User time zone in UTC format",
+                                        "type": "integer"
                                     }
                                 },
                                 "type": "object"
@@ -929,12 +944,17 @@
                         "multipart/form-data": {
                             "schema": {
                                 "required": [
-                                    "fb_token"
+                                    "fb_token",
+                                    "utc"
                                 ],
                                 "properties": {
                                     "fb_token": {
                                         "description": "Facebook user auth token",
                                         "type": "string"
+                                    },
+                                    "utc": {
+                                        "description": "User time zone in UTC format",
+                                        "type": "integer"
                                     }
                                 },
                                 "type": "object"
@@ -4696,6 +4716,15 @@
                         "required": true,
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    {
+                        "name": "utc",
+                        "in": "query",
+                        "description": "User time zone in UTC format",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
                         }
                     }
                 ],

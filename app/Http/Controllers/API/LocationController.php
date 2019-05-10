@@ -35,6 +35,15 @@ class LocationController extends Controller
      *             type="string"
      *         )
      *     ),
+     *     @OA\Parameter(
+     *         name="utc",
+     *         description="User time zone in UTC format",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
      *     @OA\Response(
      *         response="200",
      *         description="Updated location successfully",

@@ -39,7 +39,12 @@ class RegisterController extends Controller
      *                     type="string",
      *                     description="User password confirm"
      *                 ),
-     *                 required={"email","password","password_confirmation"}
+     *                 @OA\Property(
+     *                     property="utc",
+     *                     type="integer",
+     *                     description="User time zone in UTC format"
+     *                 ),
+     *                 required={"email","password","password_confirmation","utc"}
      *             )
      *         )
      *     ),
@@ -247,7 +252,7 @@ class RegisterController extends Controller
         $request->merge(['password' => bcrypt($request->get('password'))]);
 
         $user = User::query()->create($request->all());
-        $owner = Owner::query()->create(['user_id' => $user->id]);
+        $owner = Owner::query()->create(['user_id' => $user->id, 'utc' => $request->get('utc', 0)]);
         Pet::query()->create(['owner_id' => $owner->id]);
 
         $accessToken = $user->apiLogin();
