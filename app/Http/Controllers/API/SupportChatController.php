@@ -362,6 +362,16 @@ class SupportChatController extends Controller
      *             type="integer"
      *         )
      *     ),
+     *     @OA\Parameter(
+     *         name="page",
+     *         description="Page pagination. Count messages in page - 25",
+     *         in="query",
+     *         required=true,
+     *         example="1",
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
      *     @OA\Response(
      *         response="200",
      *         description="Messages list",

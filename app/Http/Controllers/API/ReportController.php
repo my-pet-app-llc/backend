@@ -94,6 +94,7 @@ class ReportController extends Controller
      *
      * @param StoreReportRequest $request
      * @return Response
+     * @throws FriendshipException
      */
     public function __invoke(StoreReportRequest $request)
     {
