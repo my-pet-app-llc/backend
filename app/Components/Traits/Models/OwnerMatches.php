@@ -9,7 +9,9 @@ use Grimzy\LaravelMysqlSpatial\Types\Point;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Query\Builder;
+use mysql_xdevapi\Exception;
 use Predis\Client;
+use DB;
 
 /**
  * Trait OwnerMatches
@@ -109,6 +111,23 @@ trait OwnerMatches
     }
 
     /**
+     * @param $lat
+     * @param $lng
+     * @param array $additionalFields
+     * @return $this
+     */
+    public function updateLocation ($lat, $lng, array $additionalFields = [])
+    {
+        $updateArray = [
+                'location_point' => DB::raw("ST_PointFromText('POINT({$lng} {$lat})', 4326)"),
+                'location_updated_at' => Carbon::now()
+            ] + $additionalFields;
+
+        $this->update($updateArray);
+        return $this;
+    }
+
+    /**
      * @return Owner
      */
     public function findToConnect ()
@@ -124,45 +143,16 @@ trait OwnerMatches
         $thisOwnerId = $this->id;
 
         $matches = $this->getStaticQuery()
+            ->ownersInRadius($this->location_point->getLat(), $this->location_point->getLng(), self::RADIUS)
             ->whereNotIn('id', $existingIds)
             ->where('id', '<>', $thisOwnerId)
             ->where('signup_step', 0)
             ->where('status', '<>', self::STATUS['banned'])
             ->whereDate('location_updated_at', '>', Carbon::now()->subHours(24)->format('Y-m-d H:i:s'))
-            ->distance(
-                'location_point',
-                (new Point($this->location_point->getLat(), $this->location_point->getLng())),
-                self::RADIUS/self::DISTANCE_IN_MILE,
-                false
-            )
             ->with('pet.pictures')
             ->get();
 
-        if($matches->count()){
-            $geoadd = ['GEOADD', 'locs'];
-            $zrem = ['ZREM', 'locs'];
-            foreach ($matches as $match) {
-                $geoadd[] = $match->location_point->getLng();
-                $geoadd[] = $match->location_point->getLat();
-                $geoadd[] = (string)$match->id;
-                $zrem[] = (string)$match->id;
-            }
-            $georadius = ['GEORADIUS', 'locs', $this->location_point->getLng(), $this->location_point->getLat(), self::RADIUS, 'mi'];
-
-            $redis = new Client();
-            try{
-                $redis->connect();
-            }catch(\Exception $e){
-                return $matches->first();
-            }
-            $redis->executeRaw($geoadd);
-            $inRadius = $redis->executeRaw($georadius);
-            $redis->executeRaw($zrem);
-
-            $match = $inRadius ? $matches->where('id', $inRadius[0])->first() : null;
-        }else{
-            $match = null;
-        }
+        $match = $matches->count() ? Owner::query()->find($matches->first()->id) : null;
 
         return $match;
     }
@@ -272,6 +262,32 @@ trait OwnerMatches
             ->selectRaw('connects.closed');
     }
 
+    public function scopeOwnersInRadius ($query, $lat, $lng, int $radius, bool $millage = true)
+    {
+        $ml = 3659;
+        $km = 6371;
+        $faultMlDistance = 20;
+        $faultKmDistance = 32.1869;
+        $faultMl = 1.5;
+        $faultKm = 1.60934;
+
+        if($radius <= 0)
+            throw new \Exception('Radius must be greater 0.');
+
+        $fault = $radius / ($millage ? $faultMlDistance : $faultKmDistance) * ($millage ? $faultMl : $faultKm);
+
+        $formatter = $millage ? $ml : $km;
+
+        $radiusSelect = "({$formatter} * acos(cos(radians(?)) * cos(radians(st_y(`location_point`))) * cos(radians(st_x(`location_point`)) - radians(?)) + sin(radians(?)) * sin(radians(st_y(`location_point`))))) as distance";
+
+        return $query->selectRaw($radiusSelect, [
+            $lat, $lng, $lat
+        ])->selectRaw('id')->having('distance', '<=', $radius - $fault);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     private function getStaticQuery ()
     {
         return static::query();
