@@ -23,7 +23,8 @@ class LoginRequest extends MainFormRequest
     {
         return [
             'email' => 'required|email|exists:users,email',
-            'password' => 'required|string'
+            'password' => 'required|string',
+            'utc' => 'required|integer|min:-12|max:12'
         ];
     }
 }

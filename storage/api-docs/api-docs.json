@@ -216,7 +216,8 @@
                             "schema": {
                                 "required": [
                                     "email",
-                                    "password"
+                                    "password",
+                                    "utc"
                                 ],
                                 "properties": {
                                     "email": {
@@ -226,6 +227,10 @@
                                     "password": {
                                         "description": "User password",
                                         "type": "string"
+                                    },
+                                    "utc": {
+                                        "description": "User time zone in UTC format",
+                                        "type": "integer"
                                     }
                                 },
                                 "type": "object"
@@ -493,12 +498,17 @@
                         "multipart/form-data": {
                             "schema": {
                                 "required": [
-                                    "fb_token"
+                                    "fb_token",
+                                    "utc"
                                 ],
                                 "properties": {
                                     "fb_token": {
                                         "description": "Facebook User Auth Token",
                                         "type": "string"
+                                    },
+                                    "utc": {
+                                        "description": "User time zone in UTC format",
+                                        "type": "integer"
                                     }
                                 },
                                 "type": "object"
@@ -719,7 +729,8 @@
                                 "required": [
                                     "email",
                                     "password",
-                                    "password_confirmation"
+                                    "password_confirmation",
+                                    "utc"
                                 ],
                                 "properties": {
                                     "email": {
@@ -733,6 +744,10 @@
                                     "password_confirmation": {
                                         "description": "User password confirm",
                                         "type": "string"
+                                    },
+                                    "utc": {
+                                        "description": "User time zone in UTC format",
+                                        "type": "integer"
                                     }
                                 },
                                 "type": "object"
@@ -929,12 +944,17 @@
                         "multipart/form-data": {
                             "schema": {
                                 "required": [
-                                    "fb_token"
+                                    "fb_token",
+                                    "utc"
                                 ],
                                 "properties": {
                                     "fb_token": {
                                         "description": "Facebook user auth token",
                                         "type": "string"
+                                    },
+                                    "utc": {
+                                        "description": "User time zone in UTC format",
+                                        "type": "integer"
                                     }
                                 },
                                 "type": "object"
@@ -1683,6 +1703,25 @@
                                 }
                             }
                         }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "field": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Invalid data"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1900,14 +1939,14 @@
                         }
                     },
                     "403": {
-                        "description": "Not found error",
+                        "description": "Forbidden error",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Message"
+                                            "example": "Cannot send message for this chat.|Cannot be direct create message of this type."
                                         }
                                     },
                                     "type": "object"
@@ -2133,9 +2172,9 @@
                                 "schema": {
                                     "properties": {
                                         "is_read": {
-                                            "description": "0 or 1. If 1 - chats readed else chats not readed",
-                                            "type": "string",
-                                            "example": "0"
+                                            "description": "true or false. If true - chats readed else chats not readed",
+                                            "type": "boolean",
+                                            "example": true
                                         }
                                     },
                                     "type": "object"
@@ -4696,6 +4735,15 @@
                         "required": true,
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    {
+                        "name": "utc",
+                        "in": "query",
+                        "description": "User time zone in UTC format",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
                         }
                     }
                 ],
@@ -7304,6 +7352,25 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Room not found.|Np query results for model"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "field": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Invalid data"
+                                            }
                                         }
                                     },
                                     "type": "object"

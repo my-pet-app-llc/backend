@@ -34,7 +34,12 @@ class LoginController extends Controller
      *                     type="string",
      *                     description="User password"
      *                 ),
-     *                 required={"email","password"}
+     *                 @OA\Property(
+     *                     property="utc",
+     *                     type="integer",
+     *                     description="User time zone in UTC format"
+     *                 ),
+     *                 required={"email","password","utc"}
      *             )
      *         )
      *     ),
@@ -262,6 +267,7 @@ class LoginController extends Controller
         $password = $request->get('password', '');
         if(($user = $this->attempt($email, $password))){
             $token = $user->apiLogin();
+            $user->owner->update(['utc' => $request->get('utc', 0)]);
         }else{
             return response()->json(['message' => "Credentials don't match."], 401);
         }

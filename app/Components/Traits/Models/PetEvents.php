@@ -87,6 +87,13 @@ trait PetEvents
     public function reminder()
     {
         $now = Carbon::now();
+
+        $utc = $this->owner->utc;
+        if($utc > 0)
+            $now->addHours($utc);
+        elseif($utc < 0)
+            $now->subHours(abs($utc));
+
         $from = $now->format('Y-m-d H:i:s');
         $fromDay = $now->dayOfWeek - 1;
         $now->addHours(24);

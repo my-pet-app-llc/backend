@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\ChatMessage;
 use App\Components\Classes\Chat\Chat;
 use App\Exceptions\FriendshipException;
 use App\Http\Resources\ChatMessageResource;
@@ -11,6 +12,7 @@ use App\Pet;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\ValidationException;
 
 class ChatController extends Controller
 {
@@ -324,6 +326,17 @@ class ChatController extends Controller
      *             )
      *         )
      *     ),
+     *     @OA\Response(
+     *         response="422",
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="array",
+     *                 property="field",
+     *                 @OA\Items(type="string", example="Invalid data")
+     *             )
+     *         )
+     *     ),
      *     security={{"bearerAuth":{}}}
      * )
      */
@@ -331,12 +344,15 @@ class ChatController extends Controller
      * @param Request $request
      * @param $room
      * @return JsonResponse
+     * @throws ValidationException
      */
     public function roomMessages(Request $request, $room)
     {
+        $this->validate($request, ['page' => 'nullable|integer|min:1']);
+
         $chat = Chat::get((int)$room);
 
-        if($request->input('page') == 1)
+        if($request->input('page', 1) == 1)
             $chat->updateRead();
 
         return response()->json($chat->getMessages());
@@ -549,12 +565,12 @@ class ChatController extends Controller
      *     ),
      *     @OA\Response(
      *         response="403",
-     *         description="Not found error",
+     *         description="Forbidden error",
      *         @OA\JsonContent(
      *             @OA\Property(
      *                 type="string",
      *                 property="message",
-     *                 example="Message"
+     *                 example="Cannot send message for this chat.|Cannot be direct create message of this type."
      *             )
      *         )
      *     ),
@@ -591,6 +607,12 @@ class ChatController extends Controller
      */
     public function send(Request $request, $room)
     {
+        $message = $request->get('message');
+        $type = $request->get('type');
+
+        if(array_search($type, ChatMessage::DIRECT_TYPES) === false)
+            abort(403, 'Cannot be direct create message of this type.');
+
         $roomId = (int)$room;
         if(!$roomId){
             if(!$request->get('pet_id'))
@@ -600,9 +622,6 @@ class ChatController extends Controller
         }else{
             $chat = Chat::get($roomId);
         }
-
-        $message = $request->get('message');
-        $type = $request->get('type');
 
         try{
             $chatMessage = $chat->send($message, $type);
@@ -769,10 +788,10 @@ class ChatController extends Controller
      *         description="Chats readed",
      *         @OA\JsonContent(
      *             @OA\Property(
-     *                 type="string",
+     *                 type="boolean",
      *                 property="is_read",
-     *                 description="0 or 1. If 1 - chats readed else chats not readed",
-     *                 example="0"
+     *                 description="true or false. If true - chats readed else chats not readed",
+     *                 example=true
      *             )
      *         )
      *     ),

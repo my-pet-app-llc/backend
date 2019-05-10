@@ -22,7 +22,8 @@ class LoginFbRequest extends MainFormRequest
     public function rules()
     {
         return [
-            'facebook_id' => 'required|exists:users,facebook_id'
+            'facebook_id' => 'required|exists:users,facebook_id',
+            'utc' => 'required|integer|min:-12|max:12'
         ];
     }
 
