@@ -788,10 +788,10 @@ class ChatController extends Controller
      *         description="Chats readed",
      *         @OA\JsonContent(
      *             @OA\Property(
-     *                 type="string",
+     *                 type="boolean",
      *                 property="is_read",
-     *                 description="0 or 1. If 1 - chats readed else chats not readed",
-     *                 example="0"
+     *                 description="true or false. If true - chats readed else chats not readed",
+     *                 example=true
      *             )
      *         )
      *     ),
