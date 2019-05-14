@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\API;
 
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 class ConnectStoreRequest extends MainFormRequest
 {
     /**
