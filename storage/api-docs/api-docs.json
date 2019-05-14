@@ -2770,7 +2770,7 @@
                 "requestBody": {
                     "required": true,
                     "content": {
-                        "multipart/from-data": {
+                        "multipart/form-data": {
                             "schema": {
                                 "required": [
                                     "owner_id",
