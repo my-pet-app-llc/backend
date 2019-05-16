@@ -14,8 +14,7 @@ class BroadcastServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $isApiRequest = request()->is('api/*');
-        $attributes = $isApiRequest ? ['middleware' => 'auth:api'] : [];
+        $attributes = request()->bearerToken() ? ['middleware' => 'auth:api'] : [];
 
         Broadcast::routes($attributes);
 
