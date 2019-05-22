@@ -2,8 +2,8 @@
 
 @section('mainContent')
     <div class="row updates_section">
-        <div class="col-sm-6">
-            <table class="table table-bordered" id="materials-table" data-url="{{ route('data_materials') }}">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+            <table style="width: 100%" class="table table-bordered" id="materials-table" data-url="{{ route('data_materials') }}">
                 <thead>
                     <tr>
                         <th class="table_head">{{ __('admin.materials.material_title') }}</th>
@@ -18,7 +18,7 @@
             <span class="flesh_message" data-message="{{ Request::session()->get('flash_message') }}"></span>
         @endif
 
-        <div class="col-sm-6 form_box">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 form_box">
             <h2><strong>{{ __('admin.materials.add_new_promotion') }}</strong></h2>
             <form id="sendMaterials" method="POST" action="{{ route('materials.store') }}" enctype="multipart/form-data">
                 @csrf
@@ -76,7 +76,7 @@
                 <div class="form-group">
                     <label for="materialNumber">{{__('admin.materials.promotion_phone') }}</label>
                     <input type="text" class="form-control {{ $errors->has('phone_number') ? ' is-invalid' : '' }}" 
-                            name="phone_number" id="materialNumber" placeholder="Enter Promotion Phone Number..." value="{{ old('phone_number') }}" data-mask="00/00/0000" data-mask-reverse="true">
+                            name="phone_number" id="materialNumber" placeholder="Enter Promotion Phone Number..." value="{{ old('phone_number') }}" data-mask="(000) 000-0000" data-mask-reverse="true">
                     @if ($errors->has('phone_number'))
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $errors->first('phone_number') }}</strong>

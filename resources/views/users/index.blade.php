@@ -3,7 +3,7 @@
 @section('mainContent')
     <div class="row users_section">
         <div class="col-sm-12">
-            <table class="table table-bordered" id="users-table" data-url="{{ route('data_users') }}">
+            <table style="width: 100%" class="table table-bordered" id="users-table" data-url="{{ route('data_users') }}">
                 <thead>
                     <tr>
                         <th class="table_head">{{ __('admin.users.username') }}</th>
@@ -21,5 +21,6 @@
 
 @section('modals')
     @include('users.modal._delete_modal')
+    @include('users.modal._un_ban_modal')
     @include('users.modal._img_modal')
 @endsection

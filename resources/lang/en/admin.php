@@ -27,6 +27,7 @@ return [
         'delete'       => 'Delete',
         'email'        => 'Email',
         'ban'          => 'Ban',
+        'un_ban'       => 'Unban',
         'confirm'      => 'Confirm',
     ],
 
@@ -82,13 +83,15 @@ return [
     ],
 
     'messages' => [
-        'update_save'      => 'Update successfully added!',
-        'material_save'    => 'Material successfully added!',
-        'user_ban'         => 'User was banned!',
-        'update_warning'   => 'Are you sure you want to delete the update? <br/> This cannot be undone!',
-        'material_warning' => 'Are you sure you want to delete the material? <br/> This cannot be undone!',
-        'update_remove'    => 'Update deleted successfully!',
-        'material_remove'  => 'Material deleted successfully!',
-        'confirm_user_ban' => 'Are you sure want to ban the user?',
+        'update_save'         => 'Update successfully added!',
+        'material_save'       => 'Material successfully added!',
+        'user_ban'            => 'User was banned!',
+        'user_un_ban'         => 'User was unbanned!',
+        'update_warning'      => 'Are you sure you want to delete the update? <br/> This cannot be undone!',
+        'material_warning'    => 'Are you sure you want to delete the material? <br/> This cannot be undone!',
+        'update_remove'       => 'Update deleted successfully!',
+        'material_remove'     => 'Material deleted successfully!',
+        'confirm_user_ban'    => 'Are you sure you want to ban the user?',
+        'confirm_user_un_ban' => 'Are you sure you want to unbanned the user?',
     ]
 ];

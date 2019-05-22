@@ -55,4 +55,8 @@ $(function() {
             showMessage(message); 
         }
     });
+
+    $(document).on('change', '.file', function () {
+        $('.fileinput-upload').css('display', 'none');
+    });
 });
