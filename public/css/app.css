@@ -219,6 +219,10 @@ div.info_img .img_box {
   color: #fff;
 }
 
+.element_none {
+  display: none;
+}
+
 .tickets_chat {
   padding: 0;
   margin-top: 43px;

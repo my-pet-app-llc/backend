@@ -1,4 +1,4 @@
-<div class="col-sm-3 tickets_chat">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 tickets_chat">
     <div class="t_header"><strong>{{ __('admin.tickets.messages') }}</strong></div>
     <div class="t_messages">
         <div class="t_not-select">Select Ticket</div>

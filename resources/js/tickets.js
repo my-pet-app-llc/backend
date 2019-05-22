@@ -17,6 +17,7 @@ $(function() {
         table.DataTable({
             serverSide: true,
             "autoWidth": true,
+            "bSort": true,
             ajax: url,
             columns: columns,
             createdRow: function (row, data) {

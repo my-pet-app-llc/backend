@@ -6,6 +6,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
     <title>{{ __('admin.title.mypet_admin_panel') }}</title>
     <link rel="stylesheet" href="{{  mix('/css/index.css') }}">
     <link rel="stylesheet" href="{{  mix('/css/app.css') }}">
@@ -41,6 +43,8 @@
     </script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/js/fileinput.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNSsSHCDXZ3DgXfDGCSklTLNbrQNgpAZE&libraries=places"></script>
     <script defer src="{{mix('/js/app.js')}}"></script>
 </body>

@@ -51,7 +51,11 @@ class UsersController extends Controller
 
     public function userBan(User $user) 
     {
-        $user->owner->status = Owner::STATUS['banned'];
+        if ($user->owner->status == Owner::STATUS['banned']) {
+            $user->owner->status = Owner::STATUS['normal'];
+        } else {
+            $user->owner->status = Owner::STATUS['banned'];
+        }
         $user->owner->save();
     }
 }
