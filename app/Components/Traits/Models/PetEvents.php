@@ -8,6 +8,7 @@ use App\Event;
 use App\Http\Resources\EventWithoutInvitesResource;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use function foo\func;
 
 trait PetEvents
 {
@@ -86,32 +87,51 @@ trait PetEvents
     public function reminder()
     {
         $now = Carbon::now();
-        $from = $now->format('Y-m-d H-i-s');
+
+        $utc = $this->owner->utc;
+        if($utc > 0)
+            $now->addHours($utc);
+        elseif($utc < 0)
+            $now->subHours(abs($utc));
+
+        $from = $now->format('Y-m-d H:i:s');
         $fromDay = $now->dayOfWeek - 1;
         $now->addHours(24);
-        $toCare = $now->format('Y-m-d H-i-s');
+        $toCare = $now->format('Y-m-d H:i:s');
         $toCareDay = $now->dayOfWeek - 1;
         $now->addHours(48);
-        $toSocial = $now->format('Y-m-d H-i-s');
+        $toSocial = $now->format('Y-m-d H:i:s');
         $toSocialDay = $now->dayOfWeek - 1;
 
         $query = function ($query) use ($from, $toSocial, $toCare) {
             return $query->where(function ($q) use ($from, $toSocial) {
-                return $q->whereRaw("CONCAT(from_date, ' ', from_time) >= ?", [$from])
-                    ->whereRaw("CONCAT(from_date, ' ', from_time) <= ?", [$toSocial])
-                    ->where('type', Event::TYPES['social']);
+                return $q->where(function ($q) use ($from, $toSocial) {
+                    return $q->where(function ($q) use ($from, $toSocial) {
+                        return $q->whereRaw("STR_TO_DATE(CONCAT(from_date, ' ', from_time), '%Y-%m-%d %H:%i:%s') >= STR_TO_DATE(?, '%Y-%m-%d %H:%i:%s')", [$from])
+                                ->whereRaw("STR_TO_DATE(CONCAT(from_date, ' ', from_time), '%Y-%m-%d %H:%i:%s') <= STR_TO_DATE(?, '%Y-%m-%d %H:%i:%s')", [$toSocial]);
+                    })->orWhere(function ($q) use ($from, $toSocial) {
+                        return $q->whereRaw("STR_TO_DATE(CONCAT(from_date, ' ', to_time), '%Y-%m-%d %H:%i:%s') >= STR_TO_DATE(?, '%Y-%m-%d %H:%i:%s')", [$from])
+                            ->whereRaw("STR_TO_DATE(CONCAT(from_date, ' ', to_time), '%Y-%m-%d %H:%i:%s') <= STR_TO_DATE(?, '%Y-%m-%d %H:%i:%s')", [$toSocial]);
+                    });
+                })->where('type', Event::TYPES['social']);
             })->orWhere(function ($q) use ($from, $toCare) {
-                return $q->whereRaw("CONCAT(from_date, ' ', from_time) >= ?", [$from])
-                    ->whereRaw("CONCAT(from_date, ' ', from_time) <= ?", [$toCare])
-                    ->where('type', Event::TYPES['care']);
+                return $q->where(function ($q) use ($from, $toCare) {
+                    return $q->where(function ($q) use ($from, $toCare) {
+                        return $q->whereRaw("STR_TO_DATE(CONCAT(from_date, ' ', from_time), '%Y-%m-%d %H:%i:%s') >= STR_TO_DATE(?, '%Y-%m-%d %H:%i:%s')", [$from])
+                            ->whereRaw("STR_TO_DATE(CONCAT(from_date, ' ', from_time), '%Y-%m-%d %H:%i:%s') <= STR_TO_DATE(?, '%Y-%m-%d %H:%i:%s')", [$toCare]);
+                    })->orWhere(function ($q) use ($from, $toCare) {
+                        return $q->whereRaw("STR_TO_DATE(CONCAT(from_date, ' ', to_time), '%Y-%m-%d %H:%i:%s') >= STR_TO_DATE(?, '%Y-%m-%d %H:%i:%s')", [$from])
+                            ->whereRaw("STR_TO_DATE(CONCAT(from_date, ' ', to_time), '%Y-%m-%d %H:%i:%s') <= STR_TO_DATE(?, '%Y-%m-%d %H:%i:%s')", [$toCare]);
+                    });
+                })->where('type', Event::TYPES['care']);
             })->orWhere(function ($q) use ($toCare, $toSocial) {
                 return $q->where('repeat', '<>', '[]')
                     ->where(function ($q) use ($toSocial, $toCare) {
                         return $q->where(function ($q) use ($toSocial) {
-                            return $q->whereRaw("CONCAT(from_date, ' ', from_time) <= ?", [$toSocial])
+                            return $q->whereRaw("STR_TO_DATE(CONCAT(from_date, ' ', to_time), '%Y-%m-%d %H:%i:%s') <= STR_TO_DATE(?, '%Y-%m-%d %H:%i:%s')", [$toSocial])
                                 ->where('type', Event::TYPES['social']);
                         })->orWhere(function ($q) use ($toCare) {
-                            return $q->whereRaw("CONCAT(from_date, ' ', from_time) <= ?", [$toCare])
+                            return $q->whereRaw("STR_TO_DATE(CONCAT(from_date, ' ', to_time), '%Y-%m-%d %H:%i:%s') <= STR_TO_DATE(?, '%Y-%m-%d %H:%i:%s')", [$toCare])
                                 ->where('type', Event::TYPES['care']);
                         });
                     });

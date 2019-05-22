@@ -23,9 +23,9 @@ class Friendship
 
     const FRIEND_REQUEST = 'friend_request';
 
-    const MATCH = 'match';
-
     const MATCH_CLOSED = 'match_closed';
+
+    const MATCH = 'match';
 
     const NOTHING = 'nothing';
 
@@ -53,7 +53,10 @@ class Friendship
     private function loadStatus()
     {
         if($this->authOwner->id == $this->friendOwner->id)
-            throw new FriendshipException('Do you want to fuck yourself?');
+            throw new FriendshipException('You cannot perform actions with yourself.');
+
+        if($this->friendOwner->signup_step)
+            throw new FriendshipException('Owner not found.', 404);
 
         $isFriend = $this->authOwner->pet->findFriend($this->friendOwner->pet->id);
         if($isFriend){
@@ -73,7 +76,7 @@ class Friendship
                 $match = Connect::query()->where(function ($query) {
                     return $query->where('requesting_owner_id', $this->authOwner->id)->where('responding_owner_id', $this->friendOwner->id);
                 })->orWhere(function ($query) {
-                    return $query->where('responding_owner_id', $this->authOwner->id)->orWhere('requesting_owner_id', $this->friendOwner->id);
+                    return $query->where('responding_owner_id', $this->authOwner->id)->where('requesting_owner_id', $this->friendOwner->id);
                 })->first();
                 if($match && !$match->closed){
                     $this->match = $match;
@@ -145,6 +148,9 @@ class Friendship
 
         if($this->match->closed)
             throw new FriendshipException('Match already closed');
+
+        if($this->match->matches == Connect::MATCHES['blacklist'])
+            throw new FriendshipException('This user was declined.');
 
         if($this->match->matches != Connect::MATCHES['all_matches'])
             throw new FriendshipException('Cannot be close match');

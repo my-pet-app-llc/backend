@@ -35,6 +35,15 @@ class LocationController extends Controller
      *             type="string"
      *         )
      *     ),
+     *     @OA\Parameter(
+     *         name="utc",
+     *         description="User time zone in UTC format",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
      *     @OA\Response(
      *         response="200",
      *         description="Updated location successfully",
@@ -81,12 +90,10 @@ class LocationController extends Controller
     {
         $lat = $request->get('lat');
         $lng = $request->get('lng');
+        $utc = $request->get('utc', 0);
         $owner = $request->user()->owner;
 
-        $owner->update([
-            'location_point' => DB::raw("ST_PointFromText('POINT({$lat} {$lng})', 4326)"),
-            'location_updated_at' => Carbon::now()
-        ]);
+        $owner->updateLocation($lat, $lng, ['utc' => $utc]);
 
         return response()->json(['message' => 'success']);
     }

@@ -23,7 +23,8 @@ class LocationRequest extends MainFormRequest
     {
         return [
             'lng' => 'required|numeric|min:-180|max:180',
-            'lat' => 'required|numeric|min:-90|max:90'
+            'lat' => 'required|numeric|min:-90|max:90',
+            'utc' => 'required|integer|min:-12|max:12'
         ];
     }
 }

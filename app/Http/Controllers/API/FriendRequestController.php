@@ -4,7 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Components\Classes\Friendship\Friendship;
 use App\Connect;
+use App\Exceptions\FriendshipException;
 use App\FriendRequest;
+use App\Http\Requests\API\FriendRequestUpdateRequest;
 use App\Http\Resources\FriendRequestsResource;
 use App\Owner;
 use Illuminate\Http\Request;
@@ -298,7 +300,7 @@ class FriendRequestController extends Controller
      *
      * @param Request $request
      * @return Response
-     * @throws \App\Exceptions\FriendshipException
+     * @throws FriendshipException
      */
     public function store(Request $request)
     {
@@ -353,7 +355,7 @@ class FriendRequestController extends Controller
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\MediaType(
-     *             mediaType="multipart/from-data",
+     *             mediaType="application/x-www-form-urlencoded",
      *             @OA\Schema(
      *                 @OA\Property(
      *                     type="integer",
@@ -408,18 +410,29 @@ class FriendRequestController extends Controller
      *             )
      *         )
      *     ),
+     *     @OA\Response(
+     *         response="422",
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="array",
+     *                 property="field",
+     *                 @OA\Items(type="string", example="Invalid data")
+     *             )
+     *         )
+     *     ),
      *     security={{"bearerAuth":{}}}
      * )
      */
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param FriendRequestUpdateRequest $request
      * @param FriendRequest $friendRequest
      * @return Response
-     * @throws \App\Exceptions\FriendshipException
+     * @throws FriendshipException
      */
-    public function update(Request $request, FriendRequest $friendRequest)
+    public function update(FriendRequestUpdateRequest $request, FriendRequest $friendRequest)
     {
         $owner = $request->user()->owner;
         $accept = (bool)$request->get('accept');

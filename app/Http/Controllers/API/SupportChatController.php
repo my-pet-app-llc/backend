@@ -362,6 +362,16 @@ class SupportChatController extends Controller
      *             type="integer"
      *         )
      *     ),
+     *     @OA\Parameter(
+     *         name="page",
+     *         description="Page pagination. Count messages in page - 25",
+     *         in="query",
+     *         required=true,
+     *         example="1",
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
      *     @OA\Response(
      *         response="200",
      *         description="Messages list",
@@ -641,19 +651,37 @@ class SupportChatController extends Controller
      *             )
      *         )
      *     ),
+     *     @OA\Response(
+     *         response="422",
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="array",
+     *                 property="field",
+     *                 @OA\Items(type="string", example="Invalid data")
+     *             )
+     *         )
+     *     ),
      *     security={{"bearerAuth":{}}}
      * )
      */
     /**
+     * @param Request $request
      * @param SupportChatRoom $room
      * @return JsonResponse
+     * @throws ValidationException
      */
-    public function getRoomMessages(SupportChatRoom $room)
+    public function getRoomMessages(Request $request, SupportChatRoom $room)
     {
+        $this->validate($request, ['page' => 'nullable|integer|min:1']);
+
         $owner = auth()->user()->owner;
 
         if($room->owner_id != $owner->id)
             return response()->json(['message' => 'Room not found.'], 404);
+
+        if($request->input('page', 1) == 1)
+            $room->update(['is_read' => true]);
 
         $messages = $room->supportChatMessages()->with(['messagable', 'sender.pet'])->paginate(25);
 

@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\API;
 
-class RegisterRequest extends MainFormRequest
+use Illuminate\Foundation\Http\FormRequest;
+
+class EventIndexRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +24,8 @@ class RegisterRequest extends MainFormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|max:128|unique:users,email',
-            'password' => 'required|string|min:10|max:32|confirmed|regex:~^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{10,32}$~',
-            'password_confirmation' => 'required',
-            'utc' => 'required|integer|min:-12|max:12'
+            'from_date' => 'nullable|date_format:Y-m-d',
+            'to_date' => 'nullable|date_format:Y-m-d'
         ];
     }
 }

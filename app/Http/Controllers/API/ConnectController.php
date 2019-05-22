@@ -5,6 +5,9 @@ namespace App\Http\Controllers\APi;
 use App\Components\Classes\Friendship\Friendship;
 use App\Connect;
 use App\Events\MatchEvent;
+use App\Exceptions\FriendshipException;
+use App\Http\Requests\API\ConnectStoreRequest;
+use App\Http\Requests\API\ConnectUpdateRequest;
 use App\Http\Resources\OwnerResource;
 use App\Owner;
 use Illuminate\Http\Request;
@@ -25,9 +28,10 @@ class ConnectController extends Controller
      *         description="First find matches for user. If user not have matches - find users who are within a radius of 20 miles",
      *         @OA\JsonContent(
      *             @OA\Property(
-     *                 type="boolean",
+     *                 type="integer",
      *                 property="match",
-     *                 description="If match exist - connect_id, else 0"
+     *                 description="If match exist - connect_id, else 0",
+     *                 example=0
      *             ),
      *             @OA\Property(
      *                 type="object",
@@ -262,7 +266,7 @@ class ConnectController extends Controller
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\MediaType(
-     *             mediaType="multipart/from-data",
+     *             mediaType="multipart/form-data",
      *             @OA\Schema(
      *                 @OA\Property(
      *                     type="integer",
@@ -324,17 +328,28 @@ class ConnectController extends Controller
      *             )
      *         )
      *     ),
+     *     @OA\Response(
+     *         response="422",
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="array",
+     *                 property="field",
+     *                 @OA\Items(type="string", example="Invalid data")
+     *             )
+     *         )
+     *     ),
      *     security={{"bearerAuth":{}}}
      * )
      */
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param ConnectStoreRequest $request
      * @return Response
-     * @throws \App\Exceptions\FriendshipException
+     * @throws FriendshipException
      */
-    public function store(Request $request)
+    public function store(ConnectStoreRequest $request)
     {
         $owner = $request->user()->owner;
 
@@ -392,7 +407,7 @@ class ConnectController extends Controller
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\MediaType(
-     *             mediaType="multipart/from-data",
+     *             mediaType="application/x-www-form-urlencoded",
      *             @OA\Schema(
      *                 @OA\Property(
      *                     type="integer",
@@ -412,6 +427,12 @@ class ConnectController extends Controller
      *                 type="string",
      *                 property="message",
      *                 example="success"
+     *             ),
+     *             @OA\Property(
+     *                 type="boolean",
+     *                 property="not_seen_matches",
+     *                 example=false,
+     *                 description="User has not seen matches"
      *             )
      *         )
      *     ),
@@ -448,18 +469,29 @@ class ConnectController extends Controller
      *             )
      *         )
      *     ),
+     *     @OA\Response(
+     *         response="422",
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="array",
+     *                 property="field",
+     *                 @OA\Items(type="string", example="Invalid data")
+     *             )
+     *         )
+     *     ),
      *     security={{"bearerAuth":{}}}
      * )
      */
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param ConnectUpdateRequest $request
      * @param Connect $connect
      * @return Response
-     * @throws \App\Exceptions\FriendshipException
+     * @throws FriendshipException
      */
-    public function update(Request $request, Connect $connect)
+    public function update(ConnectUpdateRequest $request, Connect $connect)
     {
         $owner = $request->user()->owner;
 

@@ -28,10 +28,6 @@ class Owner extends Model
 
     const RADIUS = 20;
 
-    const PRE_RADIUS = 30;
-
-    const DISTANCE_IN_MILE = 69.0585729;
-
     const STATUS = [
         'in_progres' => 1,
         'reported'   => 2,

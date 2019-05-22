@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\API;
 
-class RegisterRequest extends MainFormRequest
+class FriendRequestUpdateRequest extends MainFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,7 @@ class RegisterRequest extends MainFormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|max:128|unique:users,email',
-            'password' => 'required|string|min:10|max:32|confirmed|regex:~^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{10,32}$~',
-            'password_confirmation' => 'required',
-            'utc' => 'required|integer|min:-12|max:12'
+            'accept' => 'required|integer|in:0,1'
         ];
     }
 }

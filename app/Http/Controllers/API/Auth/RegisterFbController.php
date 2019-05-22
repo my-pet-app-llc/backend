@@ -30,7 +30,12 @@ class RegisterFbController extends Controller
      *                     type="string",
      *                     description="Facebook user auth token"
      *                 ),
-     *                 required={"fb_token"}
+     *                 @OA\Property(
+     *                     property="utc",
+     *                     type="integer",
+     *                     description="User time zone in UTC format"
+     *                 ),
+     *                 required={"fb_token","utc"}
      *             )
      *         )
      *     ),

@@ -216,7 +216,8 @@
                             "schema": {
                                 "required": [
                                     "email",
-                                    "password"
+                                    "password",
+                                    "utc"
                                 ],
                                 "properties": {
                                     "email": {
@@ -226,6 +227,10 @@
                                     "password": {
                                         "description": "User password",
                                         "type": "string"
+                                    },
+                                    "utc": {
+                                        "description": "User time zone in UTC format",
+                                        "type": "integer"
                                     }
                                 },
                                 "type": "object"
@@ -493,12 +498,17 @@
                         "multipart/form-data": {
                             "schema": {
                                 "required": [
-                                    "fb_token"
+                                    "fb_token",
+                                    "utc"
                                 ],
                                 "properties": {
                                     "fb_token": {
                                         "description": "Facebook User Auth Token",
                                         "type": "string"
+                                    },
+                                    "utc": {
+                                        "description": "User time zone in UTC format",
+                                        "type": "integer"
                                     }
                                 },
                                 "type": "object"
@@ -719,7 +729,8 @@
                                 "required": [
                                     "email",
                                     "password",
-                                    "password_confirmation"
+                                    "password_confirmation",
+                                    "utc"
                                 ],
                                 "properties": {
                                     "email": {
@@ -733,6 +744,10 @@
                                     "password_confirmation": {
                                         "description": "User password confirm",
                                         "type": "string"
+                                    },
+                                    "utc": {
+                                        "description": "User time zone in UTC format",
+                                        "type": "integer"
                                     }
                                 },
                                 "type": "object"
@@ -929,12 +944,17 @@
                         "multipart/form-data": {
                             "schema": {
                                 "required": [
-                                    "fb_token"
+                                    "fb_token",
+                                    "utc"
                                 ],
                                 "properties": {
                                     "fb_token": {
                                         "description": "Facebook user auth token",
                                         "type": "string"
+                                    },
+                                    "utc": {
+                                        "description": "User time zone in UTC format",
+                                        "type": "integer"
                                     }
                                 },
                                 "type": "object"
@@ -1683,6 +1703,25 @@
                                 }
                             }
                         }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "field": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Invalid data"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1900,14 +1939,14 @@
                         }
                     },
                     "403": {
-                        "description": "Not found error",
+                        "description": "Forbidden error",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Message"
+                                            "example": "Cannot send message for this chat.|Cannot be direct create message of this type."
                                         }
                                     },
                                     "type": "object"
@@ -2133,9 +2172,9 @@
                                 "schema": {
                                     "properties": {
                                         "is_read": {
-                                            "description": "0 or 1. If 1 - chats readed else chats not readed",
-                                            "type": "string",
-                                            "example": "0"
+                                            "description": "true or false. If true - chats readed else chats not readed",
+                                            "type": "boolean",
+                                            "example": true
                                         }
                                     },
                                     "type": "object"
@@ -2547,7 +2586,8 @@
                                     "properties": {
                                         "match": {
                                             "description": "If match exist - connect_id, else 0",
-                                            "type": "boolean"
+                                            "type": "integer",
+                                            "example": 0
                                         },
                                         "owner": {
                                             "properties": {
@@ -2730,7 +2770,7 @@
                 "requestBody": {
                     "required": true,
                     "content": {
-                        "multipart/from-data": {
+                        "multipart/form-data": {
                             "schema": {
                                 "required": [
                                     "owner_id",
@@ -2817,6 +2857,25 @@
                                 }
                             }
                         }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "field": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Invalid data"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -2848,7 +2907,7 @@
                 "requestBody": {
                     "required": true,
                     "content": {
-                        "multipart/from-data": {
+                        "application/x-www-form-urlencoded": {
                             "schema": {
                                 "required": [
                                     "match"
@@ -2875,6 +2934,11 @@
                                         "message": {
                                             "type": "string",
                                             "example": "success"
+                                        },
+                                        "not_seen_matches": {
+                                            "description": "User has not seen matches",
+                                            "type": "boolean",
+                                            "example": false
                                         }
                                     },
                                     "type": "object"
@@ -2923,6 +2987,25 @@
                                         "message": {
                                             "type": "string",
                                             "example": "No query result from model.|Not found match"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "field": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Invalid data"
+                                            }
                                         }
                                     },
                                     "type": "object"
@@ -3498,6 +3581,22 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Unauthenticated.|Sign-Up steps not done."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Event not found."
                                         }
                                     },
                                     "type": "object"
@@ -4450,7 +4549,7 @@
                 "requestBody": {
                     "required": true,
                     "content": {
-                        "multipart/from-data": {
+                        "application/x-www-form-urlencoded": {
                             "schema": {
                                 "properties": {
                                     "accept": {
@@ -4522,6 +4621,25 @@
                                         "message": {
                                             "type": "string",
                                             "example": "No query result from model.|Request not found."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "field": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Invalid data"
+                                            }
                                         }
                                     },
                                     "type": "object"
@@ -4617,6 +4735,15 @@
                         "required": true,
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    {
+                        "name": "utc",
+                        "in": "query",
+                        "description": "User time zone in UTC format",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
                         }
                     }
                 ],
@@ -6970,6 +7097,16 @@
                         "schema": {
                             "type": "integer"
                         }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page pagination. Count messages in page - 25",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
                     }
                 ],
                 "responses": {
@@ -7225,6 +7362,25 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Room not found.|Np query results for model"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "field": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Invalid data"
+                                            }
                                         }
                                     },
                                     "type": "object"

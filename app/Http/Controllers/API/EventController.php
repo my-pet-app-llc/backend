@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Components\Classes\Chat\Chat;
 use App\Event;
 use App\EventInvite;
+use App\Http\Requests\API\EventIndexRequest;
 use App\Http\Requests\API\EventStoreRequest;
 use App\Http\Resources\EventResource;
 use App\Http\Resources\FriendResource;
@@ -14,6 +15,7 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class EventController extends Controller
 {
@@ -121,10 +123,10 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param Request $request
+     * @param EventIndexRequest $request
      * @return Response
      */
-    public function index(Request $request)
+    public function index(EventIndexRequest $request)
     {
         $fromDate = $request->get('from_date');
         $toDate = $request->get('to_date');
@@ -446,13 +448,13 @@ class EventController extends Controller
     {
         $request->merge([
             'type' => Event::TYPES[$request->get('type')],
-            'repeat' => array_unique($request->get('repeat', []))
+            'repeat' => array_unique((array)$request->get('repeat', []))
         ]);
 
         $event = new Event($request->except(['invite']));
         $request->user()->pet->events()->save($event);
 
-        $inviting = array_unique($request->get('invite', []));
+        $inviting = array_unique((array)$request->get('invite', []));
         if($inviting){
             $invitesModels = [];
             foreach ($inviting as $item) {
@@ -656,6 +658,17 @@ class EventController extends Controller
      *             )
      *         )
      *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Not found error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Event not found."
+     *             )
+     *         )
+     *     ),
      *     security={{"bearerAuth":{}}}
      * )
      */
@@ -667,6 +680,11 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
+        $pet = auth()->user()->owner->pet;
+
+        if(!$pet->events()->find($event->id) && !$pet->eventInvites()->find($event->id))
+            throw new NotFoundHttpException('Event not found.');
+
         return response()->json(new EventResource($event));
     }
 
@@ -967,12 +985,12 @@ class EventController extends Controller
 
         $request->merge([
             'type' => Event::TYPES[$request->get('type')],
-            'repeat' => array_unique($request->get('repeat', []))
+            'repeat' => array_unique((array)$request->get('repeat', []))
         ]);
 
         $event->update($request->except('invite'));
 
-        $invitingIds = array_unique($request->get('invite', []));
+        $invitingIds = array_unique((array)$request->get('invite', []));
         if($invitingIds){
             $invitedIds = [];
             foreach ($invitingIds as $invitingId) {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Events\NewTicketMessageEvent;
 use App\Events\SupportTicketMessage;
+use App\Exceptions\FriendshipException;
 use App\Http\Requests\API\StoreReportRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SupportChatMessageResource;
@@ -93,12 +94,16 @@ class ReportController extends Controller
      *
      * @param StoreReportRequest $request
      * @return Response
+     * @throws FriendshipException
      */
     public function __invoke(StoreReportRequest $request)
     {
         $owner = auth()->user()->owner;
         $reportedOwner = Pet::with(['owner'])->find($request->get('pet_id'))->owner;
         $reportReason = $request->get('reason');
+
+        if($owner->id == $reportedOwner->id)
+            throw new FriendshipException('You cannot perform actions with yourself.');
 
         $ticket = $owner->tickets()->save(new Ticket([
             'reported_owner_id' => $reportedOwner->id,
