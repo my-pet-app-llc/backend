@@ -16,6 +16,7 @@ $(function() {
     function datatable() {
         table.DataTable({
             serverSide: true,
+            scrollX: true,
             ajax: url,
             columns: columns
         });
