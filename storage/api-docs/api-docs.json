@@ -1759,7 +1759,7 @@
                                 ],
                                 "properties": {
                                     "type": {
-                                        "description": "Type of message. Message types: text, image, event",
+                                        "description": "Type of message. Message types: text, image",
                                         "type": "string",
                                         "example": "event"
                                     },
