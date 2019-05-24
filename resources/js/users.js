@@ -20,6 +20,7 @@ $(function() {
         table.DataTable({
             serverSide: true,
             "autoWidth": true,
+            scrollX: true,
             ajax: url,
             columns: columns,
             "createdRow": function(row) {

@@ -18,6 +18,7 @@ $(function() {
             serverSide: true,
             "autoWidth": true,
             "bSort": true,
+            scrollX: true,
             ajax: url,
             columns: columns,
             createdRow: function (row, data) {
