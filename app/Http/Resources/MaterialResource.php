@@ -17,7 +17,7 @@ class MaterialResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'image' => config('filesystems.disks')[env('FILESYSTEM_DRIVER', 'public')]['url'] . $this->image,
+            'image' => config('filesystems.disks')[env('FILESYSTEM_DRIVER', 'public')]['url'] . '/' . $this->image,
             'title' => $this->title,
             'short_text' => $this->short_text,
             'full_text' => $this->full_text,

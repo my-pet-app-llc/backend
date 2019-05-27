@@ -31,6 +31,7 @@ class StoreMaterialRequest extends FormRequest
             'address'      => 'required',
             'phone_number' => 'required',
             'website'      => 'required|url',
+            'state'        => 'required'
         ];
     }
 }

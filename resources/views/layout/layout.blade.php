@@ -41,7 +41,7 @@
     </script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/js/fileinput.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNSsSHCDXZ3DgXfDGCSklTLNbrQNgpAZE&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNSsSHCDXZ3DgXfDGCSklTLNbrQNgpAZE&libraries=places&language=en"></script>
     <script defer src="{{mix('/js/app.js')}}"></script>
 </body>
 </html>
