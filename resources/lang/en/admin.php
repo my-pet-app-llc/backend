@@ -84,7 +84,7 @@ return [
 
     'messages' => [
         'update_save'         => 'Update successfully added!',
-        'material_save'       => 'Material successfully added!',
+        'material_save'       => 'Promotion successfully added!',
         'user_ban'            => 'User was banned!',
         'user_un_ban'         => 'User was unbanned!',
         'update_warning'      => 'Are you sure you want to delete the update? <br/> This cannot be undone!',

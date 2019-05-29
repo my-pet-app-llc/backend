@@ -176,12 +176,6 @@ ul li:hover a span {
   color: #fff;
 }
 
-.tickets_chat {
-  padding: 0;
-  margin-top: 43px;
-  border: solid #efefef 1px;
-}
-
 .t_header {
   background-color: #45763c;
   padding: 11px 0 14px 15px;
@@ -223,9 +217,13 @@ div.info_img .img_box {
   display: none;
 }
 
+div.dataTables_wrapper div.dataTables_paginate {
+  margin-top: 15px;
+}
+
 .tickets_chat {
   padding: 0;
-  margin-top: 43px;
+  margin-top: 49px;
   border: solid #efefef 1px;
 }
 
