@@ -920,6 +920,8 @@ class ProfileController extends Controller
         $owner->update($ownerData);
         $pet->update($petData);
 
+        $this->user->refresh();
+
         $responseData = [
             'user' => (new UserResource($this->user, true, true, true, true)),
             'message' => 'success'

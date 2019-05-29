@@ -382,7 +382,7 @@ class ChatController extends Controller
      *                 @OA\Property(
      *                     type="string",
      *                     property="type",
-     *                     description="Type of message. Message types: text, image, event",
+     *                     description="Type of message. Message types: text, image",
      *                     example="event"
      *                 ),
      *                 @OA\Property(
