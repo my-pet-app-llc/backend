@@ -95,6 +95,11 @@ ul.sidebar-menu ul li:hover {
   color: #fff;
 }
 
+.alert_error {
+  background-color: #ff383a;
+  color: #fff;
+}
+
 .updates_section .table_head,
 .users_section .table_head,
 .tickets_section .table_head {
@@ -134,6 +139,10 @@ div.user_info {
   padding: 0 5px 0 3px;
 }
 
+.btn_suspend {
+  margin-left: 10px;
+}
+
 .bg_status_1 {
   background-color: #fec526;
 }
@@ -155,6 +164,11 @@ div.user_info {
 
 .bg_status_5 {
   background-color: #7eff60;
+}
+
+.bg_status_6 {
+  background-color: #ff7171;
+  color: #fff;
 }
 
 p.greeting {
@@ -504,5 +518,50 @@ div.dataTables_wrapper div.dataTables_paginate {
   color: #fff;
   font-size: 24px;
   font-weight: 700;
+}
+
+.modal-user-reports {
+  flex-direction: column;
+}
+
+.modal-user-reports .reports-modal__tickets {
+  border: 1px solid;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: scroll;
+}
+
+.modal-user-reports .reports-modal__tickets #example-ticket {
+  display: none;
+}
+
+.modal-user-reports .reports-modal__tickets .reports-modal-ticket__container {
+  border-bottom: 1px solid;
+  border-top: 1px solid;
+  display: flex;
+}
+
+.modal-user-reports .reports-modal__tickets .reports-modal-ticket__container .reports-modal-ticket__radio-container {
+  padding: 10px;
+  display: flex;
+}
+
+.modal-user-reports .reports-modal__tickets .reports-modal-ticket__container .reports-modal-ticket__radio-container input[type=radio] {
+  align-self: center;
+}
+
+.modal-user-reports .reports-modal__tickets .reports-modal-ticket__container .reports-modal-ticket__desc__container {
+  padding: 5px;
+}
+
+.modal-user-reports .reports-modal__tickets .reports-modal-ticket__container .reports-modal-ticket__desc__container .reports-modal-ticket__no {
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.modal-user-reports .reports-modal__tickets .reports-modal-ticket__container .reports-modal-ticket__desc__container .reports-modal-ticket__reason {
+  margin-bottom: 0;
+  font-size: 12px;
 }
 

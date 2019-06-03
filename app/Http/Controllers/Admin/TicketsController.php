@@ -136,6 +136,11 @@ class TicketsController extends Controller
             'status' => $newStatus
         ]);
 
+        $ticket->owner->reloadStatus();
+        if($ticket->reportedOwner){
+            $ticket->reportedOwner->reloadStatus();
+        }
+
         return response()->json(['message' => 'success']);
     }
 }

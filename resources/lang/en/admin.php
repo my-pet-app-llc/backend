@@ -28,6 +28,8 @@ return [
         'email'        => 'Email',
         'ban'          => 'Ban',
         'un_ban'       => 'Unban',
+        'suspend'      => 'Suspend to 72 hours',
+        'un_suspend'      => 'Unsuspend',
         'confirm'      => 'Confirm',
     ],
 
@@ -41,9 +43,10 @@ return [
         'uploaded_images' => 'Uploaded Images',
         'state' => [
             'in_progress' => 'Support Ticket in Progress',
-            'reported'    => 'REPORTED/Support Ticket',
-            'reporting'   => 'REPORTING/Support Ticket',
+            'reported'    => 'REPORTED',
+            'reporting'   => 'REPORTED/Support Ticket',
             'banned'      => 'Banned',
+            'suspended'   => 'Suspended',
             'normal'      => 'Normal',
         ], 
     ],
@@ -87,11 +90,15 @@ return [
         'material_save'       => 'Promotion successfully added!',
         'user_ban'            => 'User was banned!',
         'user_un_ban'         => 'User was unbanned!',
+        'user_suspend'         => 'User was suspended!',
+        'user_un_suspend'         => 'User was unsuspended!',
         'update_warning'      => 'Are you sure you want to delete the update? <br/> This cannot be undone!',
         'material_warning'    => 'Are you sure you want to delete the material? <br/> This cannot be undone!',
         'update_remove'       => 'Update deleted successfully!',
         'material_remove'     => 'Material deleted successfully!',
         'confirm_user_ban'    => 'Are you sure you want to ban the user?',
         'confirm_user_un_ban' => 'Are you sure you want to unbanned the user?',
+        'confirm_user_suspend' => 'Are you sure you want to suspend the user?',
+        'confirm_user_un_suspend' => 'Are you sure you want to unsuspend the user?',
     ]
 ];

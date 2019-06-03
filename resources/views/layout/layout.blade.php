@@ -45,7 +45,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/js/fileinput.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNSsSHCDXZ3DgXfDGCSklTLNbrQNgpAZE&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNSsSHCDXZ3DgXfDGCSklTLNbrQNgpAZE&libraries=places&language=en"></script>
     <script defer src="{{mix('/js/app.js')}}"></script>
 </body>
 </html>

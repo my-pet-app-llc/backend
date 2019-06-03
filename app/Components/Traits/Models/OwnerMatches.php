@@ -147,7 +147,7 @@ trait OwnerMatches
             ->whereNotIn('id', $existingIds)
             ->where('id', '<>', $thisOwnerId)
             ->where('signup_step', 0)
-            ->where('status', '<>', self::STATUS['banned'])
+            ->whereNotIn('status', [self::STATUS['banned'], self::STATUS['suspended']])
             ->whereDate('location_updated_at', '>', Carbon::now()->subHours(24)->format('Y-m-d H:i:s'))
             ->with('pet.pictures')
             ->get();
