@@ -9,8 +9,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('admin.buttons.cancel') }}</button>
-                <button id="banUser" data-flash-message="{{ __('admin.messages.user_ban') }}" 
-                        type="button" class="btn btn-danger confirm_ban">{{ __('admin.buttons.confirm') }}</button>
+                <button id="banUser" type="button" class="btn btn-danger confirm_ban">{{ __('admin.buttons.confirm') }}</button>
             </div>
         </div>
     </div>

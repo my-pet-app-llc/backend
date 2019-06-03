@@ -16,6 +16,7 @@ $(function() {
     function datatable() {
         table.DataTable({
             serverSide: true,
+            scrollX: true,
             ajax: url,
             columns: columns
         });
@@ -54,5 +55,9 @@ $(function() {
         if (typeof(message) != "undefined") {
             showMessage(message); 
         }
+    });
+
+    $(document).on('change', '.file', function () {
+        $('.fileinput-upload').css('display', 'none');
     });
 });

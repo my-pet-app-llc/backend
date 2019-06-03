@@ -8,6 +8,7 @@ use App\Exceptions\FriendshipException;
 use App\Http\Requests\API\StoreReportRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SupportChatMessageResource;
+use App\Notifications\API\ReportUser;
 use App\Owner;
 use App\Pet;
 use App\SupportChatMessage;
@@ -122,12 +123,8 @@ class ReportController extends Controller
 
         $this->sendHandler($ticket, $owner, $reportedOwner);
 
-        $reportedOwnerStatus = Owner::STATUS['reported'];
-        if($reportedOwner->status == Owner::STATUS['in_progres'] || $reportedOwner->status == Owner::STATUS['reporting'])
-            $reportedOwnerStatus = Owner::STATUS['reporting'];
-
-        if($reportedOwner->status != $reportedOwnerStatus)
-            $reportedOwner->update(['status' => $reportedOwnerStatus]);
+        $reportedOwner->reloadStatus();
+        $owner->reloadStatus();
 
         return response()->json([
             'ticket_id' => $ticket->id,
@@ -171,6 +168,8 @@ class ReportController extends Controller
 
         broadcast(new SupportTicketMessage($authRoom, $authChatMessage));
         broadcast(new SupportTicketMessage($reportRoom, $reportChatMessage));
+
+        $reportOwner->user->notify(new ReportUser($ticket));
     }
 
     private function getAuthMessage($authFullName, $reportFullName, $reason)

@@ -29,7 +29,7 @@ class StoreMaterialRequest extends FormRequest
             'short_text'   => 'required|max:50',
             'full_text'    => 'required',
             'address'      => 'required',
-            'phone_number' => 'required',
+            'phone_number' => 'required|min:14',
             'website'      => 'required|url',
             'state'        => 'required'
         ];

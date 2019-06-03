@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Jobs\UnSuspendJob;
+use App\Notifications\API\UserSuspended;
+use App\Ticket;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use \Yajra\DataTables\Facades\DataTables;
@@ -51,7 +55,40 @@ class UsersController extends Controller
 
     public function userBan(User $user) 
     {
-        $user->owner->status = Owner::STATUS['banned'];
+        if ($user->owner->status == Owner::STATUS['banned']) {
+            $user->owner->reloadStatus(true);
+        } else {
+            $user->owner->status = Owner::STATUS['banned'];
+        }
         $user->owner->save();
+    }
+
+    public function userSuspend(Request $request, User $user)
+    {
+        $owner = $user->owner;
+
+        if($owner->status == Owner::STATUS['suspended']){
+            $owner->reloadStatus(true);
+        }else{
+            $ticket = $owner->reports()->findOrFail($request->input('ticket'));
+
+            $owner->suspendedTicket = $ticket;
+            $result = $owner->update([
+                'status' => Owner::STATUS['suspended']
+            ]);
+
+            if(!$result)
+                throw new \RuntimeException('Whoops, something went wrong.');
+        }
+    }
+
+    public function getReportsForUser (User $user)
+    {
+        $reports = $user->owner->reports()
+            ->where('status', '<>', Ticket::STATUSES['resolved'])
+            ->latest()
+            ->get(['id', 'report_reason']);
+
+        return response()->json($reports);
     }
 }

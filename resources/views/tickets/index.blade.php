@@ -2,8 +2,8 @@
 
 @section('mainContent')
     <div class="row tickets_section">
-        <div class="col-sm-9">
-            <table class="table table-bordered" id="tickets-table" data-url="{{ route('data_tickets') }}">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9">
+            <table style="width: 100%" class="table table-bordered" id="tickets-table" data-url="{{ route('data_tickets') }}">
                 <thead>
                     <tr>
                         <th class="table_head">{{ __('admin.users.username') }}</th>

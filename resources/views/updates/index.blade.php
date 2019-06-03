@@ -2,8 +2,8 @@
 
 @section('mainContent')
     <div class="row updates_section">
-        <div class="col-sm-6">
-            <table class="table table-bordered" id="updates-table" data-url="{{ route('data_updates') }}">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+            <table style="width: 100%" class="table table-bordered" id="updates-table" data-url="{{ route('data_updates') }}">
                 <thead>
                     <tr>
                         <th class="table_head">{{ __('admin.updates.update_title') }}</th>
@@ -18,7 +18,7 @@
             <span class="flesh_message" data-message="{{ Request::session()->get('flash_message') }}"></span>
         @endif
 
-        <div class="col-sm-6 form_box">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 form_box">
             <h2><strong>{{ __('admin.updates.add_new_update') }}</strong></h2>
             <form method="POST" action="{{ route('updates.store') }}" enctype="multipart/form-data">
                 @csrf

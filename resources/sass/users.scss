@@ -1,0 +1,42 @@
+.modal-user-reports {
+  flex-direction: column;
+
+  .reports-modal__tickets {
+    border: 1px solid;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: scroll;
+
+    #example-ticket {
+      display: none;
+    }
+    .reports-modal-ticket__container {
+      border-bottom: 1px solid;
+      border-top: 1px solid;
+      display: flex;
+
+      .reports-modal-ticket__radio-container {
+        padding: 10px;
+        display: flex;
+
+        input[type="radio"] {
+          align-self: center;
+        }
+      }
+
+      .reports-modal-ticket__desc__container {
+        padding: 5px;
+
+        .reports-modal-ticket__no {
+          margin-bottom: 0;
+          font-size: 14px;
+          font-weight: 700;
+        }
+        .reports-modal-ticket__reason {
+          margin-bottom: 0;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}
