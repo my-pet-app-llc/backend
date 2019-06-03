@@ -87,7 +87,7 @@ return [
 
     'messages' => [
         'update_save'         => 'Update successfully added!',
-        'material_save'       => 'Material successfully added!',
+        'material_save'       => 'Promotion successfully added!',
         'user_ban'            => 'User was banned!',
         'user_un_ban'         => 'User was unbanned!',
         'user_suspend'         => 'User was suspended!',
