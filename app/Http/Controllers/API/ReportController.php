@@ -159,11 +159,11 @@ class ReportController extends Controller
 
         broadcast(new NewTicketMessageEvent($authOwner->user, [
             'room_id' => $authRoom->id,
-            'message' => new SupportChatMessageResource($authChatMessage)
+            'message' => (new SupportChatMessageResource($authChatMessage))->toArray(request())
         ]));
         broadcast(new NewTicketMessageEvent($reportOwner->user, [
             'room_id' => $reportRoom->id,
-            'message' => new SupportChatMessageResource($reportChatMessage)
+            'message' => (new SupportChatMessageResource($reportChatMessage))->toArray(request())
         ]));
 
         broadcast(new SupportTicketMessage($authRoom, $authChatMessage));

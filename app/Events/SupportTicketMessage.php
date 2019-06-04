@@ -22,6 +22,8 @@ class SupportTicketMessage implements ShouldBroadcast
 
     private $message;
 
+    private $resource;
+
     /**
      * Create a new event instance.
      *
@@ -32,6 +34,8 @@ class SupportTicketMessage implements ShouldBroadcast
     {
         $this->room = $room;
         $this->message = $message;
+
+        $this->resource = (new SupportChatMessageResource($this->message))->toArray(request());
     }
 
     /**
@@ -51,6 +55,6 @@ class SupportTicketMessage implements ShouldBroadcast
 
     public function broadcastWith()
     {
-        return (new SupportChatMessageResource($this->message))->toArray(request());
+        return $this->resource;
     }
 }
