@@ -114,7 +114,7 @@ class TicketsController extends Controller
 
         broadcast(new NewTicketMessageEvent($room->owner->user, [
             'room_id' => $room->id,
-            'message' => $messageResource
+            'message' => $messageResource->toArray($request)
         ]));
 
         return response()->json($messageResource);

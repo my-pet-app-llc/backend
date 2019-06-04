@@ -126,7 +126,7 @@ class Room
         $user = $this->recipient->owner->user;
         broadcast(new ChatMessageEvent($user, [
             'room_id' => $this->room->id,
-            'message' => new ChatMessageResource($chatMessage)
+            'message' => (new ChatMessageResource($chatMessage))->toArray(request())
         ]));
 
         broadcast(new NewChatMessage($this->room, $chatMessage))->toOthers();

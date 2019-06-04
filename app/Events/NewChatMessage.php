@@ -21,6 +21,8 @@ class NewChatMessage implements ShouldBroadcast
 
     private $message;
 
+    private $resource;
+
     /**
      * Create a new event instance.
      *
@@ -31,6 +33,8 @@ class NewChatMessage implements ShouldBroadcast
     {
         $this->room = $room;
         $this->message = $message;
+
+        $this->resource = (new ChatMessageResource($this->message))->toArray(request());
     }
 
     /**
@@ -52,6 +56,6 @@ class NewChatMessage implements ShouldBroadcast
 
     public function broadcastWith()
     {
-        return (new ChatMessageResource($this->message))->toArray(request());
+        return $this->resource;
     }
 }
