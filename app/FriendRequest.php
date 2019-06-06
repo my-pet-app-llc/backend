@@ -3,12 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class FriendRequest extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'requesting_owner_id', 'responding_owner_id', 'accept'
     ];
+
+    protected $dates = ['deleted_at'];
 
     public function requested ()
     {

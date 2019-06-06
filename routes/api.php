@@ -47,7 +47,7 @@ Route::namespace('API')->group(function () {
 
         Route::middleware('signup.done')->group(function () {
 
-            Route::match(['get', 'put'], 'profile', 'ProfileController');
+            Route::match(['get', 'put', 'delete'], 'profile', 'ProfileController');
 
             Route::resource('friends', 'FriendController')->only(['index']);
 

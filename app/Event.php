@@ -7,9 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Event extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'pet_id', 'type', 'name',
         'from_date', 'from_time', 'to_time',
@@ -24,6 +27,8 @@ class Event extends Model
         'social' => 1,
         'care' => 2
     ];
+
+    protected $dates = ['deleted_at'];
 
     /**
      * @return BelongsTo

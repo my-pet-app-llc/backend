@@ -33,8 +33,7 @@ class StartSuspendTimer
     public function handle(ShouldReportEvent $event)
     {
         $owner = $event->getOwner();
-//        $outOfSuspend = Carbon::now()->addMinutes(Owner::SUSPENDED_TIME);
-        $outOfSuspend = Carbon::now()->addSeconds(30);
+        $outOfSuspend = Carbon::now()->addMinutes(Owner::SUSPENDED_TIME);
 
         $unsuspendJob = new UnSuspendJob($owner->id);
         $unsuspendJob->delay($outOfSuspend);

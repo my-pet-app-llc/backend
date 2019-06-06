@@ -9,6 +9,7 @@ use GeoJson\Geometry\Point;
 use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -41,7 +42,7 @@ use Illuminate\Support\Facades\DB;
  */
 class Owner extends Model
 {
-    use OwnerMatches, OwnerRequests, SpatialTrait;
+    use OwnerMatches, OwnerRequests, SpatialTrait, SoftDeletes;
 
     protected $spatialFields = [
         'location_point'
@@ -56,7 +57,7 @@ class Owner extends Model
         'status', 'suspended_to', 'suspended_job_id'
     ];
 
-    protected $dates = ['location_updated_at', 'suspended_to'];
+    protected $dates = ['location_updated_at', 'suspended_to', 'deleted_at'];
 
     /**
      * Use this fields if when update owner status
