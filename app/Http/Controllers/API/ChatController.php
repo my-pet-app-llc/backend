@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\ChatMessage;
 use App\Components\Classes\Chat\Chat;
+use App\Components\Classes\Friendship\Friendship;
 use App\Exceptions\FriendshipException;
 use App\Http\Resources\ChatMessageResource;
 use App\Http\Resources\ChatPetResource;
@@ -1157,10 +1158,17 @@ class ChatController extends Controller
     /**
      * @param Pet $pet
      * @return JsonResponse
+     * @throws FriendshipException
      */
     public function pet($pet)
     {
         $pet = Pet::query()->findOrFail($pet);
+        $authOwner = auth()->user()->owner;
+
+        $friendship = new Friendship($authOwner, $pet->owner);
+        if(!$friendship->hasAccessToChat())
+            abort(404, 'User not found.');
+
         return response()->json(new ChatPetResource($pet));
     }
 }

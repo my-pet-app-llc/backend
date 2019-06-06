@@ -12,8 +12,11 @@ use function foo\func;
 
 trait PetEvents
 {
-    public function getEventsByDates($fromDate, $toDate)
+    private $convertFn;
+
+    public function getEventsByDates($fromDate, $toDate, $convertForOwnerUtc = true)
     {
+        $utc = $convertForOwnerUtc ? (int)$this->owner->utc : 0;
         $petEvents = $this->events()
             ->where(function ($query) use ($fromDate, $toDate) {
                 $query->where(function ($q) use ($fromDate, $toDate) {
@@ -36,12 +39,17 @@ trait PetEvents
         $eventsArr = [];
 
         foreach ($allEvents as $event) {
-            if(strtotime($event->from_date) < strtotime($fromDate)){
-                $fromDateCarbon = Carbon::parse($fromDate);
-            }elseif(strtotime($event->from_date) > strtotime($toDate)){
+            $eventFromDate = $event->from_date;
+            $eventFromTime = $event->from_time;
+
+            $event->convertDateTimeAttributesToTimezone($utc);
+
+            if(strtotime($eventFromDate) < strtotime($fromDate)){
+                $fromDateCarbon = Carbon::parse($fromDate . ' ' . $eventFromTime);
+            }elseif(strtotime($eventFromDate) > strtotime($toDate)){
                 continue;
             }else{
-                $fromDateCarbon = Carbon::parse($event->from_date);
+                $fromDateCarbon = Carbon::parse($eventFromDate . ' ' . $eventFromTime)->addHours($utc);
 
                 if(!isset($eventsArr[$fromDateCarbon->format('Y-m-d')]))
                     $eventsArr[$fromDateCarbon->format('Y-m-d')] = [];
@@ -49,7 +57,7 @@ trait PetEvents
                 $eventsArr[$fromDateCarbon->format('Y-m-d')][$event->id] = $event;
             }
 
-            $formatFromDate = $fromDateCarbon->format('Y-m-d');
+            $formatFromDate = $fromDateCarbon->subHours($utc)->format('Y-m-d');
 
             if($event->repeat){
                 $repeats = collect($event->repeat)->sort();
@@ -89,10 +97,6 @@ trait PetEvents
         $now = Carbon::now();
 
         $utc = $this->owner->utc;
-        if($utc > 0)
-            $now->addHours($utc);
-        elseif($utc < 0)
-            $now->subHours(abs($utc));
 
         $from = $now->format('Y-m-d H:i:s');
         $fromDay = $now->dayOfWeek - 1;
@@ -159,6 +163,9 @@ trait PetEvents
             'from' => $from, 'social' => $toSocial, 'care' => $toCare
         ];
         foreach ($allEvents as $event) {
+            $eventFromTime = $event->from_time;
+            $event->convertDateTimeAttributesToTimezone($utc);
+
             if(!$event->repeat){
                 $events[$event->from_date][] = $event;
                 continue;
@@ -170,13 +177,13 @@ trait PetEvents
                         continue;
 
                     $eventDateTime = Carbon::parse($dateTimes[$eventDays])->format('Y-m-d');
-                    $eventDateTime = $eventDateTime . ' ' . $event->from_time;
+                    $eventDateTime = $eventDateTime . ' ' . $eventFromTime;
                     if($eventDays == 'from' && strtotime($eventDateTime) < strtotime($dateTimes[$eventDays])){
                         continue;
                     }elseif(strtotime($eventDateTime) > strtotime($dateTimes[$eventDays])){
                         continue;
                     }else{
-                        $events[Carbon::parse($dateTimes[$eventDays])->format('Y-m-d')][] = new EventWithoutInvitesResource($event);
+                        $events[Carbon::parse($dateTimes[$eventDays])->addHours($utc)->format('Y-m-d')][] = $event;
                     }
                 }
             }

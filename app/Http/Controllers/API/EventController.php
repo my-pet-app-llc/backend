@@ -451,8 +451,9 @@ class EventController extends Controller
             'repeat' => array_unique((array)$request->get('repeat', []))
         ]);
 
+        $utc = auth()->user()->owner->utc;
         $event = new Event($request->except(['invite']));
-        $request->user()->pet->events()->save($event);
+        $request->user()->pet->events()->save($event->convertDateTimeAttributesFromTimezoneToUTC($utc));
 
         $inviting = array_unique((array)$request->get('invite', []));
         if($inviting){
@@ -988,7 +989,9 @@ class EventController extends Controller
             'repeat' => array_unique((array)$request->get('repeat', []))
         ]);
 
-        $event->update($request->except('invite'));
+        $event->fill($request->except('invite'));
+        $event->convertDateTimeAttributesFromTimezoneToUTC($request->user()->owner->utc);
+        $event->save();
 
         $invitingIds = array_unique((array)$request->get('invite', []));
         if($invitingIds){
@@ -1246,6 +1249,8 @@ class EventController extends Controller
         if(!$event){
             $friends = $pet->friends;
         }else{
+            $pet->events()->findOrFail($event->id);
+
             $invitedPets = $event->eventInvites()
                 ->whereNull('accepted')
                 ->orWhere('accepted', true)

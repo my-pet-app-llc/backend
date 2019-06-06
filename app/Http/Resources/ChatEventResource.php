@@ -16,6 +16,12 @@ class ChatEventResource extends JsonResource
      */
     public function toArray($request)
     {
+        $authUser = auth()->user();
+        if(optional($authUser)->owner){
+            $utc = $authUser->owner->utc;
+            $this->convertDateTimeAttributesToTimezone($utc);
+        }
+
         return [
             'type' => array_search($this->type, Event::TYPES),
             'name' => $this->name,
