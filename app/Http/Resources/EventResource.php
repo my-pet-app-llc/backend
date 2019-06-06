@@ -20,6 +20,12 @@ class EventResource extends JsonResource
             return $q->whereNull('accepted')->orWhere('accepted', true);
         })->get()->pluck('pet');
 
+        $authUser = auth()->user();
+        if(optional($authUser)->owner){
+            $utc = $authUser->owner->utc;
+            $this->convertDateTimeAttributesToTimezone($utc);
+        }
+
         return [
             'id' => $this->id,
             'type' => array_search($this->type, Event::TYPES),

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -48,5 +49,29 @@ class Event extends Model
     public function chatEventMessages()
     {
         return $this->hasMany(ChatEventMessage::class);
+    }
+
+    public function convertDateTimeAttributesToTimezone ($utc)
+    {
+        $fromDateTime = Carbon::parse($this->attributes['from_date'] . ' ' . $this->attributes['from_time'])->addHours($utc);
+        $toDateTime = Carbon::parse($this->attributes['from_date'] . ' ' . $this->attributes['to_time'])->addHours($utc);
+
+        $this->attributes['from_date'] = $fromDateTime->format('Y-m-d');
+        $this->attributes['from_time'] = $fromDateTime->format('H:i');
+        $this->attributes['to_time'] = $toDateTime->format('H:i');
+
+        return $this;
+    }
+
+    public function convertDateTimeAttributesFromTimezoneToUTC ($utc)
+    {
+        $fromDateTime = Carbon::parse($this->attributes['from_date'] . ' ' . $this->attributes['from_time'])->subHours($utc);
+        $toDateTime = Carbon::parse($this->attributes['from_date'] . ' ' . $this->attributes['to_time'])->subHours($utc);
+
+        $this->attributes['from_date'] = $fromDateTime->format('Y-m-d');
+        $this->attributes['from_time'] = $fromDateTime->format('H:i');
+        $this->attributes['to_time'] = $toDateTime->format('H:i');
+
+        return $this;
     }
 }

@@ -14,9 +14,9 @@
     <div style="padding: 0 20px;">
         @yield('content')
         <p style="margin-top: 40px;">
-            Sincerely,
+            Regards,
             <br />
-            MyPet App Support
+            MyPet team.
         </p>
     </div>
     <p style="margin: 40px 0 0 0; height: 40px; background: #71a850;"></p>

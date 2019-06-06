@@ -24,13 +24,8 @@ class Chat
 
         $friendship = new Friendship($pet->owner, $recipientPet->owner);
         $friendshipStatus = $friendship->getStatus();
-        $accessStatuses = [Friendship::FRIENDS, Friendship::FRIEND_REQUEST, Friendship::MATCH_CLOSED, Friendship::MATCH];
 
-        if(
-            ($statusKey = array_search($friendshipStatus, $accessStatuses)) === false &&
-            ($accessStatuses[$statusKey] != Friendship::MATCH ||
-                $friendship->getMatch()->matches != Connect::MATCHES['all_matches'])
-        )
+        if(!$friendship->hasAccessToChat())
             abort(403, 'Cannot create chat with this user.');
 
         $friendsIds = $pet->chatRooms->pluck('pets')->collapse()->pluck('id')->toArray();
@@ -44,7 +39,7 @@ class Chat
 
         $newRoom = (new Room($room, $pet, $recipientPet))->setNew();
 
-        if($accessStatuses[$statusKey] == Friendship::MATCH)
+        if($friendshipStatus == Friendship::MATCH)
             $newRoom->setFriendship($friendship);
 
         return $newRoom;

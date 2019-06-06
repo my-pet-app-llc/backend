@@ -215,6 +215,20 @@ class Friendship
         return $this->friendOwner;
     }
 
+    public function hasAccessToChat()
+    {
+        $accessStatuses = [self::FRIENDS, self::FRIEND_REQUEST, self::MATCH_CLOSED, self::MATCH];
+
+        if(
+            ($statusKey = array_search($this->status, $accessStatuses)) === false &&
+            ($accessStatuses[$statusKey] != Friendship::MATCH ||
+                $this->match->matches != Connect::MATCHES['all_matches'])
+        )
+            return false;
+
+        return true;
+    }
+
     private function handleStatusError()
     {
         $message = '';
