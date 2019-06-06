@@ -28,7 +28,8 @@ class ProfileController extends Controller
 
     const ACTIONS = [
         'get' => 'show',
-        'put' => 'update'
+        'put' => 'update',
+        'delete' => 'destroy'
     ];
 
     /**
@@ -928,6 +929,47 @@ class ProfileController extends Controller
         ];
 
         return response()->json($responseData);
+    }
+
+    /**
+     * @OA\Delete(
+     *     path="/profile",
+     *     tags={"Profile"},
+     *     description="Delete profile.",
+     *     summary="Delete profile",
+     *     operationId="profileDelete",
+     *     @OA\Response(
+     *         response="200",
+     *         description="Success message.",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="success"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Unauthenticated error or registration error",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="string",
+     *                 property="message",
+     *                 example="Unauthenticated.|Sign-Up steps not done."
+     *             )
+     *         )
+     *     ),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
+    public function destroy()
+    {
+        $user = auth()->user();
+        $user->token()->revoke();
+        $user->delete();
+
+        return response()->json(['message' => 'success']);
     }
 
     /**
