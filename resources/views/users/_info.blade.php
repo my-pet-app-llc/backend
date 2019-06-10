@@ -1,5 +1,5 @@
 <div id="infoUser" class="row user_info">
-    <div class="col-sm-10">
+    <div class="col-sm-8">
         <p style="margin-bottom: 0"><span class="text-dark">{{ __('admin.users.username') }}: </span>{{ $user->owner->fullName }}</p>
         <p style="margin-bottom: 0"><span class="text-dark">{{ __('admin.users.user_e-mail') }}: </span>{{ $user->email }}</p>
         <p style="margin-bottom: 0"><span class="text-dark">{{ __('admin.users.data_joined') }}: </span>{{ $user->owner->created_at->format('d/m/Y') }}</p>
@@ -7,12 +7,17 @@
         <p style="margin-bottom: 0"><span class="text-dark">{{ __('admin.users.location') }}: </span>{{ $user->owner->pet->city. ' ' .$user->owner->pet->state }}</p>
         <p style="margin-bottom: 0"><span class="text-dark">{{ __('admin.users.status') }}: </span>{{ $user->owner->statusName }}</p>
     </div>
-    <div class="col-sm-2 d-flex align-items-center">
+    <div class="col-sm-4 d-flex align-items-center">
         <form action="mailto:{{ $user->email }}" method="GET">
             <button class="btn btn-primary mr-2">{{ __('admin.buttons.email') }}</button> 
         </form>
         <button id="ban" data-flash-message="{{ __('admin.messages.user_ban') }}" class="btn btn-danger btn_ban element_none" data-ban-url="{{ route('users.ban', $user) }}">{{ __('admin.buttons.ban') }}</button>
         <button id="unBan" data-flash-message="{{ __('admin.messages.user_un_ban') }}" class="btn btn-success btn_ban element_none" data-ban-url="{{ route('users.ban', $user) }}">{{ __('admin.buttons.un_ban') }}</button>
+        @if(in_array($user->owner->status, [\App\Owner::STATUS['reported'], \App\Owner::STATUS['reporting']]))
+            <button id="suspend" data-flash-message="{{ __('admin.messages.user_suspend') }}" class="btn btn-danger btn_suspend" data-suspend-url="{{ route('users.suspend', $user) }}" data-reports-url="{{ route('users.reports', $user) }}">{{ __('admin.buttons.suspend') }}</button>
+        @elseif($user->owner->status == \App\Owner::STATUS['suspended'])
+            <button id="unSuspend" data-flash-message="{{ __('admin.messages.user_un_suspend') }}" class="btn btn-success btn_suspend" data-suspend-url="{{ route('users.suspend', $user) }}">{{ __('admin.buttons.un_suspend') }}</button>
+        @endif
     </div>
 </div>
 @php

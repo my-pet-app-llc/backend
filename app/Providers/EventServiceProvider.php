@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\Owners\SuspendStatusEvent;
+use App\Listeners\Owners\SendSuspendNotification;
+use App\Listeners\Owners\StartSuspendTimer;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -18,6 +21,10 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        SuspendStatusEvent::class => [
+            StartSuspendTimer::class,
+            SendSuspendNotification::class
+        ]
     ];
 
     /**

@@ -5,10 +5,11 @@ namespace App;
 use App\Components\Traits\Models\PetEvents;
 use App\Components\Traits\Models\PetFriends;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Pet extends Model
 {
-    use PetFriends, PetEvents;
+    use PetFriends, PetEvents, SoftDeletes;
 
     public $fillable = [
         'owner_id', 'name', 'gender',
@@ -20,6 +21,8 @@ class Pet extends Model
         'favorite_places', 'spayed', 'birthday',
         'city', 'state',
     ];
+
+    protected $dates = ['deleted_at'];
 
     public function owner()
     {

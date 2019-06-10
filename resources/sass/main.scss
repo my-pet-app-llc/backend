@@ -86,6 +86,11 @@ ul.sidebar-menu {
     color: #fff;
 }
 
+.alert_error {
+    background-color: #ff383a;
+    color: #fff;
+}
+
 .updates_section, .users_section, .tickets_section {
     .table_head {
         background-color: #45763c;
@@ -118,6 +123,10 @@ div.user_info {
     padding: 0 5px 0 3px;
 }
 
+.btn_suspend {
+    margin-left: 10px;
+}
+
 .bg_status_1 {
     background-color: #fec526;
 }
@@ -139,6 +148,11 @@ div.user_info {
 
 .bg_status_5 {
     background-color: #7eff60;
+}
+
+.bg_status_6 {
+    background-color: #ff7171;
+    color: #fff;
 }
 
 p.greeting {

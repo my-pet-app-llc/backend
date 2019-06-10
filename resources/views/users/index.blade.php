@@ -23,4 +23,6 @@
     @include('users.modal._delete_modal')
     @include('users.modal._un_ban_modal')
     @include('users.modal._img_modal')
+    @include('users.modal._suspend_modal')
+    @include('users.modal._un_suspend_modal')
 @endsection

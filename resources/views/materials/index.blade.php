@@ -24,6 +24,7 @@
                 @csrf
                 <input type="hidden" name="lat">
                 <input type="hidden" name="lng">
+                <input type="hidden" name="state">
                 <div class="form-group">
                     <label for="input-b2">{{__('admin.materials.promotion_image') }}</label>
                     <div class="{{ $errors->has('image') ? 'error_image' : '' }}">

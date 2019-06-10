@@ -71,6 +71,7 @@ class MaterialsController extends Controller
         $material->lng = $request->lng;
         $material->phone_number = $request->phone_number;
         $material->website = $request->website;
+        $material->state = strtoupper($request->state);
         $material->save();
 
         return redirect()->route('materials.index')->with('flash_message', __('admin.messages.material_save'));

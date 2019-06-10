@@ -114,7 +114,7 @@ class TicketsController extends Controller
 
         broadcast(new NewTicketMessageEvent($room->owner->user, [
             'room_id' => $room->id,
-            'message' => $messageResource
+            'message' => $messageResource->toArray($request)
         ]));
 
         return response()->json($messageResource);
@@ -135,6 +135,11 @@ class TicketsController extends Controller
         $ticket->update([
             'status' => $newStatus
         ]);
+
+        $ticket->owner->reloadStatus();
+        if($ticket->reportedOwner){
+            $ticket->reportedOwner->reloadStatus();
+        }
 
         return response()->json(['message' => 'success']);
     }

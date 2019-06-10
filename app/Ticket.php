@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ticket extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'reported_owner_id', 'status', 'report_reason'
     ];
@@ -16,6 +19,8 @@ class Ticket extends Model
         'in_progress' => 3,
         'resolved' => 4
     ];
+
+    protected $dates = ['deleted_at'];
 
     public function owner()
     {

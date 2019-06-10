@@ -226,7 +226,7 @@ class ConnectController extends Controller
     public function index()
     {
         $owner = auth()->user()->owner;
-        $inRequests = $owner->notClose()->where('creator', 0)->sortByDesc('closed');
+        $inRequests = $owner->inRequest()->where('creator', 0)->sortByDesc('closed');
         $responseData = [];
 
         if($inRequests->count()){

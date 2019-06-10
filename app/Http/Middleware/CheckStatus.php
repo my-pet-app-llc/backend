@@ -22,7 +22,7 @@ class CheckStatus
         $user = auth()->user();
         $owner = $user->owner;
 
-        if($owner->status == Owner::STATUS['banned']){
+        if(in_array($owner->status, [Owner::STATUS['banned'], Owner::STATUS['suspended']])){
             $user->token()->revoke();
             throw new NotOwnerException('You were banned.');
         }

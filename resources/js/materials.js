@@ -63,7 +63,12 @@ $(function() {
 const input = document.getElementById('materialAddress');
 
 if (input) {
-    const autocomplete = new google.maps.places.Autocomplete(input);
+    const options = {
+        componentRestrictions: {
+            country: ['us']
+        }
+    };
+    const autocomplete = new google.maps.places.Autocomplete(input, options);
     google.maps.event.addDomListener(window, 'load', autocomplete);
     
     google.maps.event.addDomListener(autocomplete, 'place_changed', function() {
@@ -72,6 +77,16 @@ if (input) {
         const lng = place.geometry.location.lng();
         $('#sendMaterials').find('[name="lat"]').val(lat);
         $('#sendMaterials').find('[name="lng"]').val(lng);
+
+        const state = $('#sendMaterials').find('[name="state"]')
+        state.val('')
+
+        for (let addressComponent in place.address_components) {
+            for (let type in place.address_components[addressComponent].types) {
+                if(place.address_components[addressComponent].types[type] === "administrative_area_level_1")
+                    state.val(place.address_components[addressComponent].short_name)
+            }
+        }
     });
 }
     
