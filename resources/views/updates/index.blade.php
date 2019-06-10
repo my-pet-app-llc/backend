@@ -51,7 +51,7 @@
                         </span>
                     @endif
                 </div>
-                <button class="btn btn-success pull-right">{{__('admin.buttons.add_update') }}</button>
+                <button type="submit" class="btn btn-success pull-right">{{__('admin.buttons.add_update') }}</button>
             </form>
         </div>
     </div>
