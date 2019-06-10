@@ -22,9 +22,9 @@
             <h2><strong>{{ __('admin.materials.add_new_promotion') }}</strong></h2>
             <form id="sendMaterials" method="POST" action="{{ route('materials.store') }}" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" name="lat">
-                <input type="hidden" name="lng">
-                <input type="hidden" name="state">
+                <input type="hidden" name="lat" value="{{ old('lat') }}">
+                <input type="hidden" name="lng" value="{{ old('lng') }}">
+                <input type="hidden" name="state" value="{{ old('state') }}">
                 <div class="form-group">
                     <label for="input-b2">{{__('admin.materials.promotion_image') }}</label>
                     <div class="{{ $errors->has('image') ? 'error_image' : '' }}">
