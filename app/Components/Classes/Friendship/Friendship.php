@@ -82,6 +82,7 @@ class Friendship
                     $this->match = $match;
                     $this->status = self::MATCH;
                 }elseif($match && $match->closed){
+                    $this->match = $match;
                     $this->status = self::MATCH_CLOSED;
                 }else{
                     $this->status = self::NOTHING;
