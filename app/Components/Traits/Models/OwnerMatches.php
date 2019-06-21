@@ -241,7 +241,7 @@ trait OwnerMatches
         return $query
             ->where('requesting_owner_id', $id)
             ->orWhere('responding_owner_id', $id)
-            ->whereNull('deleted_at');
+            ->whereNull('connects.deleted_at');
     }
 
     /**
