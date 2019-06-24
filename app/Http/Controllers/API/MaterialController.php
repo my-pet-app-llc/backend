@@ -107,7 +107,12 @@ class MaterialController extends Controller
     public function index()
     {
         $petState = strtoupper(auth()->user()->pet->state);
-        $responseData = MaterialResource::collection(Material::query()->where('state', $petState)->latest()->get());
+        $materials = Material::query()
+            ->where('state', $petState)
+            ->orWhere('is_ecommerce', true)
+            ->latest()
+            ->get();
+        $responseData = MaterialResource::collection($materials);
 
         return response()->json($responseData);
     }
