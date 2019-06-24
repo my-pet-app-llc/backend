@@ -94,6 +94,13 @@
                         </span>
                     @endif
                 </div>
+                <div class="form-group">
+                    <label for="is_ecommerce">
+                        <input type="checkbox" class="{{ $errors->has('is_ecommerce') ? ' is-invalid' : '' }}" style="margin-right: 10px;"
+                               name="is_ecommerce" id="is_ecommerce" @if(old('is_ecommerce')) checked @endif value="1">
+                        {{__('admin.materials.is_ecommerce') }}
+                    </label>
+                </div>
                 <button class="btn btn-success pull-right">{{__('admin.buttons.add_material') }}</button>
             </form>
         </div>

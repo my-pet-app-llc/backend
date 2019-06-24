@@ -83,6 +83,7 @@ return [
         'promotion_address'    => 'Promotion Street Address:',
         'promotion_phone'      => 'Promotion Phone Number:',
         'promotion_website'    => 'Promotion Website:',
+        'is_ecommerce'         => 'E-commerce'
     ],
 
     'messages' => [
