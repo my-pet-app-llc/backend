@@ -491,7 +491,8 @@ class PetController extends Controller
         $ownerResource = (new OwnerResource($pet->owner))->toArray(request());
 
         $authOwner = auth()->user()->owner;
-        $authFriends = $authOwner->pet->friends->pluck('friend_id');
+        $authFriends = $authOwner->pet->friends->pluck('friend_id')->toArray();
+        $authFriends[] = $authOwner->pet->id;
         $ownerResource['pet'] = $ownerResource['pet']->toArray(request());
         $ownerResource['pet']['friends'] = FriendResource::collection($pet->friends->whereIn('friend_id', $authFriends))->toArray(request());
 
