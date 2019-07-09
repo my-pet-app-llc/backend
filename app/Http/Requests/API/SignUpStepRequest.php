@@ -78,7 +78,7 @@ class SignUpStepRequest extends MainFormRequest
             1 => [
                 'owner.first_name' => 'required|string|min:1|max:15|regex:~^([[:alpha:]-]+ ?)+$~',
                 'owner.last_name' => 'required|string|min:1|max:15|regex:~^([[:alpha:]-]+ ?)+$~',
-                'pet.name' => 'required|string|min:1|max:12|regex:~^([[:alpha:]-]+ ?)+$~',
+                'pet.name' => 'required|string|min:1|max:25|regex:~^([[:alpha:]-]+ ?)+$~',
                 'pet.city' => 'required|string|min:1|max:15|regex:~^([[:alpha:]-]+ ?)+$~',
                 'pet.state' => 'required|string|min:2|max:3|regex:~^[A-Z]{2,3}$~'
             ],

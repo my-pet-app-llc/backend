@@ -50,7 +50,7 @@ class ProfileUpdateRequest extends MainFormRequest
                 'pet.odebience_level' => 'required|integer|min:1|max:5',
                 'pet.fetchability' => 'required|integer|min:1|max:5',
                 'pet.swimability' => 'required|integer|min:1|max:5',
-                'pet.name' => 'required|string|min:1|max:12|regex:~^([[:alpha:]-]+ ?)+$~',
+                'pet.name' => 'required|string|min:1|max:25|regex:~^([[:alpha:]-]+ ?)+$~',
                 'pet.gender' => 'required|string|in:male,female',
                 'pet.spayed' => 'required|in:1,0',
                 'pet.size' => 'required|string|in:small,medium,large,giant',
