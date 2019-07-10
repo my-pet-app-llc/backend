@@ -66,7 +66,7 @@ class MaterialsController extends Controller
         $material->title = $request->title;
         $material->short_text = $request->short_text;
         $material->full_text = $request->full_text;
-        $material->address = $request->address;
+        $material->address = $request->get('address', null);
         $material->lat = $request->lat;
         $material->lng = $request->lng;
         $material->phone_number = $request->phone_number;

@@ -1139,8 +1139,18 @@ class SupportChatController extends Controller
             $owner->update(['status' => $newStatus]);
 
         $messageResource = (new SupportChatMessageResource($messageModel))->toArray($request);
-        if(!$ticket)
+        if(!$ticket) {
+            $systemMessage = SupportChatSystemMessage::query()->create([
+                'text' => $this->newTicketDefaultMessage()
+            ]);
+            $messageRespond = $systemMessage->message()->save(new SupportChatMessage([
+                'support_chat_room_id' => $supportRoom->id,
+                'type' => SupportChatMessage::TYPES['system']
+            ]));
+
             $messageResource['room_id'] = $supportRoom->id;
+            $messageResource['system_message'] = (new SupportChatMessageResource($messageRespond))->toArray($request);
+        }
 
         return response()->json($messageResource);
     }
@@ -1347,5 +1357,13 @@ class SupportChatController extends Controller
     private function defaultMessage()
     {
         return "Hi, Thank you for using MyPet!\nHow can we help you today?";
+    }
+
+    /**
+     * @return string
+     */
+    private function newTicketDefaultMessage()
+    {
+        return "Your support request has been recieved, please allow us up to 72 hours to respond.";
     }
 }

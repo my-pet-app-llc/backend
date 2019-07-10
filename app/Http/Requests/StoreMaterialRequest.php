@@ -23,15 +23,18 @@ class StoreMaterialRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'image'        => 'required|image|max:2000',
             'title'        => 'required|max:15',
             'short_text'   => 'required|max:50',
             'full_text'    => 'required',
-            'address'      => 'required',
             'phone_number' => 'required|min:14',
             'website'      => 'required|url',
             'state'        => 'required'
         ];
+
+        if ($this->get('is_ecommerce', null)) $rules['address'] = 'required';
+
+        return $rules;
     }
 }

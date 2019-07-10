@@ -74,7 +74,7 @@ return [
     ],
 
     'materials' => [
-        'material_title'       => 'Material Title:',
+        'material_title'       => 'Promotion Title:',
         'date_added'           => 'Date Added',
         'add_new_promotion'    => 'Add New Promotion:',
         'promotion_image'      => 'Promotion Image:',
