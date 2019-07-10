@@ -19,7 +19,7 @@ class CreateMaterialsTable extends Migration
             $table->string('title');
             $table->string('short_text');
             $table->text('full_text');
-            $table->string('address');
+            $table->string('address')->nullable();
             $table->string('phone_number');
             $table->string('website');
             $table->timestamps();
