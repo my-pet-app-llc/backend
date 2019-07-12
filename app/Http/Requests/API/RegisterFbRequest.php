@@ -22,7 +22,7 @@ class RegisterFbRequest extends MainFormRequest
     public function rules()
     {
         return [
-            'facebook_id' => 'required|unique:users,facebook_id,NULL,id,deleted_at,NOT_NULL',
+            'facebook_id' => 'required|unique:users,facebook_id,NULL,id,deleted_at,NULL',
             'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
             'utc' => 'required|integer|min:-12|max:12'
         ];
