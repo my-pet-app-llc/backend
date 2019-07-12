@@ -30,10 +30,10 @@ class StoreMaterialRequest extends FormRequest
             'full_text'    => 'required',
             'phone_number' => 'required|min:14',
             'website'      => 'required|url',
-            'state'        => 'required'
         ];
 
-        if ($this->get('is_ecommerce', null)) $rules['address'] = 'required';
+        if (! $this->get('is_ecommerce', null)) $rules['address'] = 'required';
+        if (! $this->get('is_ecommerce', null)) $rules['state'] = 'required';
 
         return $rules;
     }
